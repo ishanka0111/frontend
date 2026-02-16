@@ -1,0 +1,100 @@
+/* Button Component Styles */
+
+.button {
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Variants */
+.button--primary {
+  background-color: #ea580c;
+  color: white;
+}
+
+.button--primary:hover:not(:disabled) {
+  background-color: #c2410c;
+}
+
+.button--secondary {
+  background-color: #4b5563;
+  color: white;
+}
+
+.button--secondary:hover:not(:disabled) {
+  background-color: #374151;
+}
+
+.button--danger {
+  background-color: #dc2626;
+  color: white;
+}
+
+.button--danger:hover:not(:disabled) {
+  background-color: #b91c1c;
+}
+
+.button--success {
+  background-color: #10b981;
+  color: white;
+}
+
+.button--success:hover:not(:disabled) {
+  background-color: #059669;
+}
+
+/* Sizes */
+.button--sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.button--md {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+}
+
+.button--lg {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+}
+
+/* Loading State */
+.button--loading {
+  position: relative;
+}
+
+.button__spinner {
+  animation: spin 1s linear infinite;
+  height: 1.25rem;
+  width: 1.25rem;
+  margin-right: 0.5rem;
+}
+
+.button__spinner-circle {
+  opacity: 0.25;
+}
+
+.button__spinner-path {
+  opacity: 0.75;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

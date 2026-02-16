@@ -1,0 +1,232 @@
+/* Kitchen Dashboard Styles */
+
+.kitchen-dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  font-size: 2rem;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.orders-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.order-column {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  min-height: 500px;
+}
+
+.column-header {
+  padding: 1.5rem;
+  border-bottom: 2px solid #f3f4f6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.column-header h2 {
+  font-size: 1.25rem;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.count {
+  background: #d97706;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.order-column.placed .column-header {
+  border-color: #fbbf24;
+}
+
+.order-column.preparing .column-header {
+  border-color: #3b82f6;
+}
+
+.order-column.ready .column-header {
+  border-color: #10b981;
+}
+
+.order-list {
+  padding: 1rem;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.order-card {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.order-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.order-id {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.order-table {
+  background: #d97706;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.order-time {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+}
+
+.order-items {
+  margin-bottom: 0.75rem;
+}
+
+.order-item {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  font-size: 0.875rem;
+}
+
+.item-quantity {
+  font-weight: 600;
+  color: #d97706;
+  min-width: 1.5rem;
+}
+
+.item-name {
+  color: #1f2937;
+}
+
+.order-card-footer {
+  margin-top: 0.75rem;
+}
+
+.order-action-btn {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.start-btn {
+  background: #3b82f6;
+  color: white;
+}
+
+.start-btn:hover {
+  background: #2563eb;
+}
+
+.ready-btn {
+  background: #10b981;
+  color: white;
+}
+
+.ready-btn:hover {
+  background: #059669;
+}
+
+.order-ready-status {
+  text-align: center;
+  padding: 0.5rem;
+  color: #059669;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: #d1fae5;
+  border-radius: 6px;
+}
+
+.empty-state {
+  padding: 1rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: #9ca3af;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.kitchen-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #d97706;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .orders-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .kitchen-dashboard {
+    padding: 1rem;
+  }
+
+  .kitchen-stats {
+    grid-template-columns: 1fr;
+  }
+}

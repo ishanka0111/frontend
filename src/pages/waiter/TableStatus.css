@@ -1,0 +1,288 @@
+.table-status {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: 30px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 15px;
+}
+
+.page-header h1 {
+  font-size: 28px;
+  margin: 0 0 5px 0;
+  color: #333;
+}
+
+.page-header p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Stats Row */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card.available {
+  border-left: 4px solid #4CAF50;
+}
+
+.stat-card.occupied {
+  border-left: 4px solid #FF9800;
+}
+
+.stat-card.reserved {
+  border-left: 4px solid #2196F3;
+}
+
+.stat-card.dirty {
+  border-left: 4px solid #9E9E9E;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Filters */
+.filters-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 10px 16px;
+  border: 2px solid #e0e0e0;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  border-color: #4CAF50;
+  background: #f5f5f5;
+}
+
+.filter-btn.active {
+  background: #4CAF50;
+  color: white;
+  border-color: #4CAF50;
+}
+
+/* Tables Grid */
+.tables-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.table-card {
+  background: white;
+  border: 3px solid;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0,0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.table-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.table-number {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.status-icon {
+  font-size: 24px;
+}
+
+.table-status-badge {
+  display: inline-block;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  color: white;
+  margin-bottom: 15px;
+}
+
+.table-details {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 15px;
+}
+
+.table-details p {
+  margin: 5px 0;
+  font-size: 13px;
+  color: #555;
+}
+
+/* Table Order Info */
+.table-order-info {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 10px;
+}
+
+.table-order-info .info-row {
+  margin: 5px 0;
+  font-size: 13px;
+  color: #555;
+}
+
+.table-order-info .info-row.time {
+  font-size: 12px;
+  color: #888;
+  margin-top: 8px;
+}
+
+.lock-notice {
+  margin-top: 12px;
+  padding: 8px;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #856404;
+  text-align: center;
+}
+
+/* Table Actions */
+.table-actions {
+  margin-top: 12px;
+  padding: 12px;
+  background: #e8f5e9;
+  border-radius: 8px;
+}
+
+.status-note {
+  font-size: 12px;
+  color: #2e7d32;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.status-btn {
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  margin-bottom: 6px;
+  color: white;
+}
+
+.status-btn:last-child {
+  margin-bottom: 0;
+}
+
+.status-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.available-btn {
+  background: #4CAF50;
+}
+
+.reserved-btn {
+  background: #2196F3;
+}
+
+.dirty-btn {
+  background: #9E9E9E;
+}
+
+/* Status Colors */
+.status-available {
+  border-color: #4CAF50;
+}
+
+.status-available .table-status-badge {
+  background: #4CAF50;
+}
+
+.status-occupied {
+  border-color: #FF9800;
+}
+
+.status-occupied .table-status-badge {
+  background: #FF9800;
+}
+
+.status-reserved {
+  border-color: #2196F3;
+}
+
+.status-reserved .table-status-badge {
+  background: #2196F3;
+}
+
+.status-dirty {
+  border-color: #9E9E9E;
+}
+
+.status-dirty .table-status-badge {
+  background: #9E9E9E;
+}
+
+@media (max-width: 768px) {
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tables-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
