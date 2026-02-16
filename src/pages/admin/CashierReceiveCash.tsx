@@ -3,6 +3,16 @@
  */
 
 import React, { useState, useMemo } from 'react';
+import {
+  IoCashOutline,
+  IoCheckmarkCircle,
+  IoCloseCircle,
+  IoHelpCircleOutline,
+  IoQrCodeOutline,
+  IoReceiptOutline,
+  IoSearchOutline,
+  IoStatsChartOutline,
+} from 'react-icons/io5';
 import { Layout } from '../../components';
 import './CashierReceiveCash.css';
 
@@ -127,7 +137,7 @@ const CashierReceiveCash: React.FC = () => {
     removeFromWaiterPendingList(scannedData.collectionId);
 
     alert(
-      `✅ Cash Received Successfully!\nOrder #${scannedData.orderId}\nAmount: $${scannedData.amount.toFixed(2)}`
+      `Cash Received Successfully!\nOrder #${scannedData.orderId}\nAmount: $${scannedData.amount.toFixed(2)}`
     );
 
     // Reset
@@ -158,21 +168,28 @@ const CashierReceiveCash: React.FC = () => {
     <Layout>
       <div className="cashier-receive-cash">
         <div className="page-header">
-          <h1>💰 Receive Cash from Waiters</h1>
+          <h1>
+            <IoCashOutline className="title-icon" />
+            Receive Cash from Waiters
+          </h1>
           <p>Scan waiter QR codes to confirm cash collection</p>
         </div>
 
         {/* Today's Summary */}
         <div className="today-summary">
           <div className="summary-card total">
-            <div className="summary-icon">💵</div>
+            <div className="summary-icon">
+              <IoCashOutline />
+            </div>
             <div className="summary-content">
               <div className="summary-label">Total Received Today</div>
               <div className="summary-value">${totalReceived.toFixed(2)}</div>
             </div>
           </div>
           <div className="summary-card count">
-            <div className="summary-icon">📊</div>
+            <div className="summary-icon">
+              <IoStatsChartOutline />
+            </div>
             <div className="summary-content">
               <div className="summary-label">Transactions Today</div>
               <div className="summary-value">
@@ -187,7 +204,10 @@ const CashierReceiveCash: React.FC = () => {
         {/* QR Scanner Section */}
         <div className="scanner-section">
           <div className="scanner-card">
-            <h2>📱 Scan Waiter QR Code</h2>
+            <h2>
+              <IoQrCodeOutline className="title-icon" />
+              Scan Waiter QR Code
+            </h2>
             <p className="scanner-instruction">
               Ask the waiter to show their QR code, then paste the QR data below
             </p>
@@ -205,12 +225,16 @@ const CashierReceiveCash: React.FC = () => {
                 onClick={handleScanQR}
                 disabled={!qrInput.trim()}
               >
-                🔍 Process QR Code
+                <IoSearchOutline className="btn-icon" />
+                Process QR Code
               </button>
             </div>
 
             <div className="scanner-help">
-              <h4>💡 How to use:</h4>
+              <h4>
+                <IoHelpCircleOutline className="title-icon" />
+                How to use:
+              </h4>
               <ol>
                 <li>Waiter shows QR code on their device</li>
                 <li>Copy the QR code data from waiter's screen</li>
@@ -225,7 +249,10 @@ const CashierReceiveCash: React.FC = () => {
         {/* Recent Transactions */}
         <div className="transactions-section">
           <div className="transactions-header">
-            <h2>📋 Recent Cash Receipts</h2>
+            <h2>
+              <IoReceiptOutline className="title-icon" />
+              Recent Cash Receipts
+            </h2>
             <span className="transaction-count">
               {receivedCashList.length} total
             </span>
@@ -268,7 +295,10 @@ const CashierReceiveCash: React.FC = () => {
                       </div>
                     </div>
                     <div className="transaction-status">
-                      <span className="status-badge received">✓ Received</span>
+                      <span className="status-badge received">
+                        <IoCheckmarkCircle className="status-icon" />
+                        Received
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -281,7 +311,10 @@ const CashierReceiveCash: React.FC = () => {
           <div className="modal-overlay">
             <div className="modal">
               <div className="modal-header">
-                <h2>💰 Confirm Cash Receipt</h2>
+                <h2>
+                  <IoCashOutline className="title-icon" />
+                  Confirm Cash Receipt
+                </h2>
               </div>
               
               <div className="modal-content">
@@ -320,10 +353,12 @@ const CashierReceiveCash: React.FC = () => {
 
               <div className="modal-footer">
                 <button className="cancel-btn" onClick={handleCancelConfirm}>
-                  ✕ Cancel
+                  <IoCloseCircle className="btn-icon" />
+                  Cancel
                 </button>
                 <button className="confirm-btn" onClick={handleConfirmReceipt}>
-                  ✓ Confirm Cash Received
+                  <IoCheckmarkCircle className="btn-icon" />
+                  Confirm Cash Received
                 </button>
               </div>
             </div>

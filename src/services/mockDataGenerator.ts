@@ -36,9 +36,13 @@ export interface Order {
   estimatedTime?: number; // minutes
 }
 
+export type CategoryIconKey = 'appetizers' | 'pasta' | 'mains' | 'seafood' | 'desserts' | 'beverages';
+
 export interface Category {
   id: number;
   name: string;
+  description: string;
+  iconKey: CategoryIconKey;
   displayOrder: number;
 }
 
@@ -46,12 +50,48 @@ export interface Category {
 // CATEGORIES
 // ============================================================================
 export const MOCK_CATEGORIES: Category[] = [
-  { id: 1, name: 'Appetizers', displayOrder: 1 },
-  { id: 2, name: 'Pasta & Risotto', displayOrder: 2 },
-  { id: 3, name: 'Mains', displayOrder: 3 },
-  { id: 4, name: 'Seafood', displayOrder: 4 },
-  { id: 5, name: 'Desserts', displayOrder: 5 },
-  { id: 6, name: 'Beverages', displayOrder: 6 },
+  {
+    id: 1,
+    name: 'Appetizers',
+    description: 'Small plates and starters to begin your meal',
+    iconKey: 'appetizers',
+    displayOrder: 1,
+  },
+  {
+    id: 2,
+    name: 'Pasta & Risotto',
+    description: 'Fresh pasta and creamy risotto classics',
+    iconKey: 'pasta',
+    displayOrder: 2,
+  },
+  {
+    id: 3,
+    name: 'Mains',
+    description: 'Signature main courses and chef specials',
+    iconKey: 'mains',
+    displayOrder: 3,
+  },
+  {
+    id: 4,
+    name: 'Seafood',
+    description: 'Ocean-fresh seafood selections',
+    iconKey: 'seafood',
+    displayOrder: 4,
+  },
+  {
+    id: 5,
+    name: 'Desserts',
+    description: 'Sweet finishes and dessert favorites',
+    iconKey: 'desserts',
+    displayOrder: 5,
+  },
+  {
+    id: 6,
+    name: 'Beverages',
+    description: 'Wine, cocktails, and non-alcoholic drinks',
+    iconKey: 'beverages',
+    displayOrder: 6,
+  },
 ];
 
 // ============================================================================

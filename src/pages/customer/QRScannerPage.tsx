@@ -3,6 +3,7 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
+import { IoCameraOutline, IoInformationCircleOutline, IoWarning } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Layout, Button } from '../../components';
@@ -97,7 +98,9 @@ const QRScannerPage: React.FC = () => {
           <div className="qr-scanner-camera">
             {!isCameraActive ? (
               <div className="qr-scanner-placeholder">
-                <div className="qr-scanner-icon">📷</div>
+                <div className="qr-scanner-icon">
+                  <IoCameraOutline />
+                </div>
                 <p>Camera not active</p>
                 <Button onClick={startCamera} variant="primary">
                   Start Camera
@@ -134,7 +137,9 @@ const QRScannerPage: React.FC = () => {
           {/* Error Message */}
           {error && (
             <div className="qr-scanner-error">
-              <span className="qr-scanner-error-icon">⚠️</span>
+              <span className="qr-scanner-error-icon">
+                <IoWarning />
+              </span>
               {error}
             </div>
           )}
@@ -167,7 +172,10 @@ const QRScannerPage: React.FC = () => {
 
           {/* Info Section */}
           <div className="qr-scanner-info">
-            <h4>💡 How to use:</h4>
+            <h4>
+              <IoInformationCircleOutline className="title-icon" />
+              How to use:
+            </h4>
             <ul>
               <li>Find the QR code sticker on your table</li>
               <li>Click "Start Camera" and point at the QR code</li>

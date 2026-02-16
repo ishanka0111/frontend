@@ -3,6 +3,15 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import {
+  IoCheckmarkCircle,
+  IoCloseCircle,
+  IoDocumentTextOutline,
+  IoFlameOutline,
+  IoNotificationsOutline,
+  IoRestaurantOutline,
+  IoTimeOutline,
+} from 'react-icons/io5';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Layout, Button, LoadingSpinner } from '../../components';
 import { getOrderById } from '../../api/orders';
@@ -76,7 +85,9 @@ const OrderTrackingPage: React.FC = () => {
       <Layout title="Order Tracking">
         <div className="order-tracking-page">
           <div className="tracking-error">
-            <div className="tracking-error__icon">❌</div>
+            <div className="tracking-error__icon">
+              <IoCloseCircle />
+            </div>
             <h2>Order Not Found</h2>
             <p>{error || 'The order you are looking for does not exist'}</p>
             <Button onClick={() => navigate('/orders')}>View My Orders</Button>
@@ -95,7 +106,9 @@ const OrderTrackingPage: React.FC = () => {
           {/* Success Banner */}
           {currentStep === 1 && (
             <div className="tracking-success-banner">
-              <div className="success-icon">🎉</div>
+              <div className="success-icon">
+                <IoCheckmarkCircle />
+              </div>
               <div>
                 <h2>Order Placed Successfully!</h2>
                 <p>Your order has been sent to the kitchen</p>
@@ -107,7 +120,10 @@ const OrderTrackingPage: React.FC = () => {
           <div className="tracking-header">
             <div className="tracking-header__left">
               <h1>Order #{order.id}</h1>
-              <p className="tracking-table">🪑 Table {order.tableId}</p>
+              <p className="tracking-table">
+                <IoRestaurantOutline className="status-icon" />
+                Table {order.tableId}
+              </p>
             </div>
             <div className="tracking-header__right">
               <span className="tracking-time">Placed at {formatTime(order.createdAt)}</span>
@@ -119,7 +135,11 @@ const OrderTrackingPage: React.FC = () => {
             <div className="progress-steps">
               <div className={`progress-step ${currentStep >= 1 ? 'progress-step--active' : ''} ${currentStep > 1 ? 'progress-step--completed' : ''}`}>
                 <div className="progress-step__icon">
-                  {currentStep > 1 ? '✓' : '📝'}
+                  {currentStep > 1 ? (
+                    <IoCheckmarkCircle />
+                  ) : (
+                    <IoDocumentTextOutline />
+                  )}
                 </div>
                 <div className="progress-step__label">Order Placed</div>
               </div>
@@ -128,7 +148,11 @@ const OrderTrackingPage: React.FC = () => {
 
               <div className={`progress-step ${currentStep >= 2 ? 'progress-step--active' : ''} ${currentStep > 2 ? 'progress-step--completed' : ''}`}>
                 <div className="progress-step__icon">
-                  {currentStep > 2 ? '✓' : '👨‍🍳'}
+                  {currentStep > 2 ? (
+                    <IoCheckmarkCircle />
+                  ) : (
+                    <IoFlameOutline />
+                  )}
                 </div>
                 <div className="progress-step__label">Preparing</div>
               </div>
@@ -137,7 +161,11 @@ const OrderTrackingPage: React.FC = () => {
 
               <div className={`progress-step ${currentStep >= 3 ? 'progress-step--active' : ''} ${currentStep > 3 ? 'progress-step--completed' : ''}`}>
                 <div className="progress-step__icon">
-                  {currentStep > 3 ? '✓' : '🔔'}
+                  {currentStep > 3 ? (
+                    <IoCheckmarkCircle />
+                  ) : (
+                    <IoNotificationsOutline />
+                  )}
                 </div>
                 <div className="progress-step__label">Ready</div>
               </div>
@@ -146,7 +174,11 @@ const OrderTrackingPage: React.FC = () => {
 
               <div className={`progress-step ${currentStep >= 4 ? 'progress-step--active' : ''} ${currentStep > 4 ? 'progress-step--completed' : ''}`}>
                 <div className="progress-step__icon">
-                  {currentStep > 4 ? '✓' : '🍽️'}
+                  {currentStep > 4 ? (
+                    <IoCheckmarkCircle />
+                  ) : (
+                    <IoRestaurantOutline />
+                  )}
                 </div>
                 <div className="progress-step__label">Served</div>
               </div>
@@ -154,14 +186,18 @@ const OrderTrackingPage: React.FC = () => {
 
             {order.estimatedTime && ['PLACED', 'PREPARING'].includes(order.status) && (
               <div className="estimated-time">
-                <span className="estimated-time__icon">⏱️</span>
+                <span className="estimated-time__icon">
+                  <IoTimeOutline />
+                </span>
                 <span className="estimated-time__text">Estimated time: ~{order.estimatedTime} minutes</span>
               </div>
             )}
 
             {order.status === 'READY' && (
               <div className="ready-alert">
-                <span className="ready-alert__icon">🔔</span>
+                <span className="ready-alert__icon">
+                  <IoNotificationsOutline />
+                </span>
                 <span className="ready-alert__text">Your order is ready for pickup!</span>
               </div>
             )}

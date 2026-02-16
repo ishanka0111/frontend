@@ -3,6 +3,13 @@
  */
 
 import React, { useState } from 'react';
+import {
+  IoCheckmarkCircle,
+  IoCreateOutline,
+  IoLockClosedOutline,
+  IoTrashOutline,
+  IoWarning,
+} from 'react-icons/io5';
 import { useAuth } from '../../hooks/useAuth';
 import { updateProfile } from '../../api/auth';
 import { Button, Layout, Modal } from '../../components';
@@ -152,7 +159,9 @@ const ProfilePage: React.FC = () => {
             
             <div className="actions-grid">
               <button className="action-button action-primary" onClick={handleEdit}>
-                <span className="action-icon">✏️</span>
+                <span className="action-icon">
+                  <IoCreateOutline />
+                </span>
                 <div className="action-content">
                   <h3>Edit Profile</h3>
                   <p>Update your personal information</p>
@@ -160,7 +169,9 @@ const ProfilePage: React.FC = () => {
               </button>
 
               <button className="action-button action-secondary" onClick={handleChangePassword}>
-                <span className="action-icon">🔒</span>
+                <span className="action-icon">
+                  <IoLockClosedOutline />
+                </span>
                 <div className="action-content">
                   <h3>Change Password</h3>
                   <p>Update your account password</p>
@@ -168,7 +179,9 @@ const ProfilePage: React.FC = () => {
               </button>
 
               <button className="action-button action-danger" onClick={handleDeleteAccount}>
-                <span className="action-icon">🗑️</span>
+                <span className="action-icon">
+                  <IoTrashOutline />
+                </span>
                 <div className="action-content">
                   <h3>Delete Account</h3>
                   <p>Permanently remove your account</p>
@@ -188,7 +201,9 @@ const ProfilePage: React.FC = () => {
           <div className="modal-form">
             {error && (
               <div className="alert alert-error">
-                <span className="alert-icon">⚠️</span>
+                <span className="alert-icon">
+                  <IoWarning />
+                </span>
                 {error}
               </div>
             )}
@@ -256,7 +271,9 @@ const ProfilePage: React.FC = () => {
           size="sm"
         >
           <div className="modal-confirm">
-            <div className="confirm-icon confirm-icon-danger">⚠️</div>
+            <div className="confirm-icon confirm-icon-danger">
+              <IoWarning />
+            </div>
             <h3 className="confirm-title">Are you sure?</h3>
             <p className="confirm-message">
               This action cannot be undone. All your data will be permanently deleted.
@@ -287,7 +304,9 @@ const ProfilePage: React.FC = () => {
           size="sm"
         >
           <div className="modal-success">
-            <div className="success-icon">✅</div>
+            <div className="success-icon">
+              <IoCheckmarkCircle />
+            </div>
             <h3 className="success-title">Profile Updated</h3>
             <p className="success-message">
               Your profile has been successfully updated!

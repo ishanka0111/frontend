@@ -3,6 +3,14 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import {
+  IoBrushOutline,
+  IoCalendarOutline,
+  IoCheckmarkCircle,
+  IoGridOutline,
+  IoLockClosedOutline,
+  IoRestaurantOutline,
+} from 'react-icons/io5';
 import { Layout } from '../../components';
 import { MOCK_ORDERS } from '../../services/mockDataGenerator';
 import type { Order } from '../../services/mockDataGenerator';
@@ -67,13 +75,33 @@ const TableStatus: React.FC = () => {
   const getStatusLabel = (status: string) => {
     switch (status) {
       case 'AVAILABLE':
-        return '✓ Available';
+        return (
+          <>
+            <IoCheckmarkCircle className="status-icon" />
+            Available
+          </>
+        );
       case 'OCCUPIED':
-        return '🍽️ Occupied';
+        return (
+          <>
+            <IoRestaurantOutline className="status-icon" />
+            Occupied
+          </>
+        );
       case 'RESERVED':
-        return '📅 Reserved';
+        return (
+          <>
+            <IoCalendarOutline className="status-icon" />
+            Reserved
+          </>
+        );
       case 'DIRTY':
-        return '🧹 Needs Cleaning';
+        return (
+          <>
+            <IoBrushOutline className="status-icon" />
+            Needs Cleaning
+          </>
+        );
       default:
         return 'Unknown';
     }
@@ -90,7 +118,10 @@ const TableStatus: React.FC = () => {
     <Layout>
       <div className="table-status">
         <div className="page-header">
-          <h1>🪑 Table Status</h1>
+          <h1>
+            <IoGridOutline className="title-icon" />
+            Table Status
+          </h1>
           <p>View table status • Change status only if no order assigned</p>
         </div>
 
@@ -138,7 +169,10 @@ const TableStatus: React.FC = () => {
                   {table.occupiedTime && (
                     <div className="info-row time">Since {table.occupiedTime}</div>
                   )}
-                  <div className="lock-notice">🔒 Order active - status locked</div>
+                  <div className="lock-notice">
+                    <IoLockClosedOutline className="status-icon" />
+                    Order active - status locked
+                  </div>
                 </div>
               )}
 

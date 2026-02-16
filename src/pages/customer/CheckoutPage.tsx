@@ -3,6 +3,12 @@
  */
 
 import React, { useState } from 'react';
+import {
+  IoCartOutline,
+  IoCloseCircle,
+  IoDocumentTextOutline,
+  IoInformationCircleOutline,
+} from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useCart } from '../../hooks/useCart';
@@ -62,7 +68,9 @@ const CheckoutPage: React.FC = () => {
       <Layout title="Checkout">
         <div className="checkout-page">
           <div className="checkout-error">
-            <div className="checkout-error__icon">❌</div>
+            <div className="checkout-error__icon">
+              <IoCloseCircle />
+            </div>
             <h2>No Table Selected</h2>
             <p>Please scan a QR code at your table to continue</p>
             <Button onClick={() => navigate('/menu')}>Back to Menu</Button>
@@ -77,7 +85,9 @@ const CheckoutPage: React.FC = () => {
       <Layout title="Checkout">
         <div className="checkout-page">
           <div className="checkout-error">
-            <div className="checkout-error__icon">🛒</div>
+            <div className="checkout-error__icon">
+              <IoCartOutline />
+            </div>
             <h2>Your Cart is Empty</h2>
             <p>Add some delicious items from our menu</p>
             <Button onClick={() => navigate('/menu')}>Browse Menu</Button>
@@ -114,7 +124,10 @@ const CheckoutPage: React.FC = () => {
                     <div className="checkout-item__info">
                       <h3 className="checkout-item__name">{item.name}</h3>
                       {item.notes && (
-                        <p className="checkout-item__notes">📝 {item.notes}</p>
+                        <p className="checkout-item__notes">
+                          <IoDocumentTextOutline className="status-icon" />
+                          {item.notes}
+                        </p>
                       )}
                     </div>
                     <div className="checkout-item__price">
@@ -168,7 +181,8 @@ const CheckoutPage: React.FC = () => {
           </div>
 
           <p className="checkout-note">
-            💡 Your order will be sent to the kitchen immediately
+            <IoInformationCircleOutline className="status-icon" />
+            Your order will be sent to the kitchen immediately
           </p>
         </div>
       </div>

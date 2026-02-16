@@ -3,6 +3,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { IoCheckmarkCircle, IoRestaurantOutline, IoTimeOutline } from 'react-icons/io5';
 import { Layout } from '../../components';
 import { MOCK_ORDERS, MOCK_MENU_ITEMS } from '../../services/mockDataGenerator';
 import type { Order } from '../../services/mockDataGenerator';
@@ -30,7 +31,7 @@ const ServeOrders: React.FC = () => {
     if (orderIndex !== -1) {
       MOCK_ORDERS[orderIndex] = { ...MOCK_ORDERS[orderIndex], status: 'SERVED' };
       loadOrders();
-      setFeedbackMessage(`✅ Order #${orderId} served to Table ${tableId}!`);
+      setFeedbackMessage(`Order #${orderId} served to Table ${tableId}!`);
       setShowSuccessFeedback(true);
       setTimeout(() => setShowSuccessFeedback(false), 3000);
     }
@@ -49,7 +50,10 @@ const ServeOrders: React.FC = () => {
     <Layout>
       <div className="serve-orders">
         <div className="page-header">
-          <h1>🍽️ Serve Orders</h1>
+          <h1>
+            <IoRestaurantOutline className="title-icon" />
+            Serve Orders
+          </h1>
           <p>Take prepared orders and serve them to tables</p>
         </div>
 
@@ -111,7 +115,17 @@ const ServeOrders: React.FC = () => {
                     onClick={() => handleServeOrder(order.id, order.tableId)}
                     disabled={order.status !== 'READY'}
                   >
-                    {order.status === 'READY' ? '✓ Mark as Served' : '⏳ Preparing'}
+                    {order.status === 'READY' ? (
+                      <>
+                        <IoCheckmarkCircle className="btn-icon" />
+                        Mark as Served
+                      </>
+                    ) : (
+                      <>
+                        <IoTimeOutline className="btn-icon" />
+                        Preparing
+                      </>
+                    )}
                   </button>
                 </div>
               </div>

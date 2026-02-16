@@ -3,6 +3,17 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import {
+  IoCashOutline,
+  IoCheckmarkCircle,
+  IoCloseCircle,
+  IoCopyOutline,
+  IoDocumentTextOutline,
+  IoPhonePortraitOutline,
+  IoPrintOutline,
+  IoQrCodeOutline,
+  IoWarning,
+} from 'react-icons/io5';
 import { QRCodeSVG } from 'qrcode.react';
 import { Layout } from '../../components';
 import { MOCK_MENU_ITEMS, MOCK_ORDERS, MOCK_CATEGORIES } from '../../services/mockDataGenerator';
@@ -188,7 +199,7 @@ const ProxyOrder: React.FC = () => {
     });
 
     navigator.clipboard.writeText(qrData).then(() => {
-      alert('✅ QR data copied to clipboard!\nGo to Cashier page and paste this data.');
+      alert('QR data copied to clipboard!\nGo to Cashier page and paste this data.');
     }).catch(() => {
       alert('Failed to copy. Please manually copy the QR data.');
     });
@@ -201,7 +212,10 @@ const ProxyOrder: React.FC = () => {
     <Layout>
       <div className="proxy-order">
         <div className="page-header">
-          <h1>📝 Proxy Order</h1>
+          <h1>
+            <IoDocumentTextOutline className="title-icon" />
+            Proxy Order
+          </h1>
           <p>Take orders on behalf of customers</p>
         </div>
 
@@ -230,7 +244,10 @@ const ProxyOrder: React.FC = () => {
                     )}
                   </select>
                   {availableTables.length === 0 && (
-                    <small className="text-warning">⚠️ All tables are currently occupied</small>
+                    <small className="text-warning">
+                      <IoWarning className="status-icon" />
+                      All tables are currently occupied
+                    </small>
                   )}
                 </div>
                 <div className="form-field">
@@ -335,7 +352,10 @@ const ProxyOrder: React.FC = () => {
                 <span>Total Amount:</span>
                 <span className="total-amount">${totalAmount.toFixed(2)}</span>
               </div>
-              <div className="payment-note">💵 Customer pays cash after receiving order</div>
+              <div className="payment-note">
+                <IoCashOutline className="status-icon" />
+                Customer pays cash after receiving order
+              </div>
               <button
                 className="place-order-btn"
                 onClick={handlePlaceOrder}
@@ -351,7 +371,10 @@ const ProxyOrder: React.FC = () => {
         {pendingCollections.length > 0 && (
           <div className="pending-collections">
             <div className="pending-header">
-              <h2>💰 Pending Cash Collections</h2>
+              <h2>
+                <IoCashOutline className="title-icon" />
+                Pending Cash Collections
+              </h2>
               <span className="pending-count">{pendingCollections.length} pending</span>
             </div>
             <div className="pending-grid">
@@ -385,7 +408,8 @@ const ProxyOrder: React.FC = () => {
                     className="view-qr-btn" 
                     onClick={() => handleViewQR(collection)}
                   >
-                    📱 Show QR Code
+                    <IoPhonePortraitOutline className="btn-icon" />
+                    Show QR Code
                   </button>
                 </div>
               ))}
@@ -398,9 +422,12 @@ const ProxyOrder: React.FC = () => {
           <div className="qr-modal-overlay" onClick={handleCloseQRModal}>
             <div className="qr-modal" onClick={(e) => e.stopPropagation()}>
               <div className="qr-modal-header">
-                <h2>✅ Cash Collection QR Code</h2>
+                <h2>
+                  <IoCheckmarkCircle className="title-icon" />
+                  Cash Collection QR Code
+                </h2>
                 <button className="close-btn" onClick={handleCloseQRModal}>
-                  ✕
+                  <IoCloseCircle />
                 </button>
               </div>
               
@@ -438,12 +465,18 @@ const ProxyOrder: React.FC = () => {
                     size={220}
                     level="H"
                   />
-                  <p className="qr-instruction">📱 Scan this QR code at cashier to process payment</p>
+                  <p className="qr-instruction">
+                    <IoQrCodeOutline className="status-icon" />
+                    Scan this QR code at cashier to process payment
+                  </p>
                 </div>
 
                 <div className="payment-instructions">
                   <div className="instruction-box">
-                    <h4>💵 Payment Process:</h4>
+                    <h4>
+                      <IoCashOutline className="status-icon" />
+                      Payment Process:
+                    </h4>
                     <ol>
                       <li>Collect <strong>${selectedCollection.totalAmount.toFixed(2)}</strong> cash from customer after they receive order</li>
                       <li>Show this QR code to cashier</li>
@@ -456,16 +489,19 @@ const ProxyOrder: React.FC = () => {
 
               <div className="qr-modal-footer">
                 <button className="copy-qr-btn" onClick={handleCopyQRData}>
-                  📋 Copy QR Data
+                  <IoCopyOutline className="btn-icon" />
+                  Copy QR Data
                 </button>
                 <button className="print-btn" onClick={() => globalThis.print()}>
-                  🖨️ Print
+                  <IoPrintOutline className="btn-icon" />
+                  Print
                 </button>
                 <button 
                   className="handover-btn" 
                   onClick={() => handleMarkAsHandedOver(selectedCollection.id)}
                 >
-                  ✅ Mark as Handed Over
+                  <IoCheckmarkCircle className="btn-icon" />
+                  Mark as Handed Over
                 </button>
                 <button className="done-btn" onClick={handleCloseQRModal}>
                   Close

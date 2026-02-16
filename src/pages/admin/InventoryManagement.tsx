@@ -3,6 +3,7 @@
  */
 
 import React, { useState } from 'react';
+import { IoAddCircle, IoCheckmarkCircle, IoCubeOutline, IoWarning } from 'react-icons/io5';
 import { Layout } from '../../components';
 import './InventoryManagement.css';
 
@@ -78,7 +79,7 @@ const InventoryManagement: React.FC = () => {
     );
 
     setShowRestockModal(false);
-    setFeedbackMessage(`✅ Successfully restocked ${amount} ${selectedItem.unit} of ${selectedItem.name}`);
+    setFeedbackMessage(`Successfully restocked ${amount} ${selectedItem.unit} of ${selectedItem.name}`);
     setShowSuccessFeedback(true);
     setTimeout(() => setShowSuccessFeedback(false), 3000);
   };
@@ -93,7 +94,10 @@ const InventoryManagement: React.FC = () => {
     <Layout>
       <div className="inventory-management">
         <div className="page-header">
-          <h1>📦 Inventory Management</h1>
+          <h1>
+            <IoCubeOutline className="title-icon" />
+            Inventory Management
+          </h1>
         </div>
 
         {/* Stats Cards */}
@@ -116,7 +120,7 @@ const InventoryManagement: React.FC = () => {
         <div className="filters-section">
           <input
             type="text"
-            placeholder="🔍 Search items or suppliers..."
+            placeholder="Search items or suppliers..."
             className="search-input"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -185,7 +189,17 @@ const InventoryManagement: React.FC = () => {
                       <td>{item.minStock} {item.unit}</td>
                       <td>
                         <span className={`status-badge ${isLow ? 'low' : 'good'}`}>
-                          {isLow ? '⚠️ Low Stock' : '✓ Good'}
+                          {isLow ? (
+                            <>
+                              <IoWarning className="status-icon" />
+                              Low Stock
+                            </>
+                          ) : (
+                            <>
+                              <IoCheckmarkCircle className="status-icon" />
+                              Good
+                            </>
+                          )}
                         </span>
                       </td>
                       <td>{item.supplier}</td>
@@ -195,7 +209,8 @@ const InventoryManagement: React.FC = () => {
                           className="restock-btn"
                           onClick={() => handleOpenRestockModal(item)}
                         >
-                          ➕ Restock
+                          <IoAddCircle className="btn-icon" />
+                          Restock
                         </button>
                       </td>
                     </tr>
@@ -217,7 +232,10 @@ const InventoryManagement: React.FC = () => {
         {showRestockModal && selectedItem && (
           <div className="modal-overlay" onClick={() => setShowRestockModal(false)}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <h2>📦 Restock Item</h2>
+              <h2>
+                <IoAddCircle className="title-icon" />
+                Restock Item
+              </h2>
               <div className="modal-body">
                 <div className="item-detail">
                   <strong>{selectedItem.name}</strong>
@@ -246,7 +264,8 @@ const InventoryManagement: React.FC = () => {
                   Cancel
                 </button>
                 <button className="btn-primary" onClick={handleRestockSubmit}>
-                  ✓ Confirm Restock
+                  <IoCheckmarkCircle className="btn-icon" />
+                  Confirm Restock
                 </button>
               </div>
             </div>

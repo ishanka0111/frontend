@@ -3,6 +3,7 @@
  */
 
 import React, { useState } from 'react';
+import { IoCheckmarkCircle } from 'react-icons/io5';
 import { useNavigate, Link } from 'react-router-dom';
 import { register } from '../../api/auth';
 import { Button, Card } from '../../components';
@@ -46,7 +47,9 @@ const Register: React.FC = () => {
     return (
       <div className="register-page">
         <Card className="register-card">
-          <div style={{ fontSize: '4rem', marginBottom: '1rem', textAlign: 'center' }}>✅</div>
+          <div style={{ fontSize: '4rem', marginBottom: '1rem', textAlign: 'center' }}>
+            <IoCheckmarkCircle />
+          </div>
           <h2 className="register-title" style={{ marginBottom: '0.5rem' }}>Registration Successful!</h2>
           <p className="register-subtitle">Redirecting to login page...</p>
         </Card>

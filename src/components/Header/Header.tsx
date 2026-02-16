@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { IoRestaurant, IoLocationSharp, IoWarning, IoCart } from 'react-icons/io5';
 import { useAuth } from '../../hooks/useAuth';
 import { useCart } from '../../hooks/useCart';
 import { useRole } from '../../hooks/useRole';
@@ -17,7 +18,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ 
-  title = '🍽️ Restaurant', 
+  title = 'Restaurant', 
   showNavigation = true,
   showTableId = false 
 }) => {
@@ -35,23 +36,31 @@ const Header: React.FC<HeaderProps> = ({
     <header className="header">
       <div className="header__container">
         <div className="header__left">
-          <h1 className="header__title">{title}</h1>
+          <div className="header__title">
+            <IoRestaurant className="header__title-icon" />
+            <h1>{title}</h1>
+          </div>
           {isCustomer && (
             tableId ? (
               <span className="header__table-badge">
-                📍 Table {tableId}
+                <IoLocationSharp className="badge-icon" />
+                Table {tableId}
               </span>
             ) : (
               <span 
                 className="header__table-badge header__table-badge--warning"
                 title="Please scan QR code at your table"
               >
-                ⚠️ Scan QR Code
+                <IoWarning className="badge-icon" />
+                Scan QR Code
               </span>
             )
           )}
           {showTableId && !isCustomer && tableId && (
-            <span className="header__table-badge">Table {tableId}</span>
+            <span className="header__table-badge">
+              <IoLocationSharp className="badge-icon" />
+              Table {tableId}
+            </span>
           )}
         </div>
 
@@ -97,7 +106,7 @@ const Header: React.FC<HeaderProps> = ({
               {/* Cart Icon (only for customers) */}
               {isCustomer && (
                 <button onClick={openCart} className="header__cart-btn">
-                  <span className="header__cart-icon">🛒</span>
+                  <IoCart className="header__cart-icon" />
                   {itemCount > 0 && (
                     <span className="header__cart-badge">{itemCount}</span>
                   )}

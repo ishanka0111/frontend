@@ -3,6 +3,7 @@
  */
 
 import React, { useState } from 'react';
+import { IoCheckmarkCircle, IoCloseCircle, IoEllipseOutline, IoPeopleOutline } from 'react-icons/io5';
 import { Layout } from '../../components';
 import './CustomersList.css';
 
@@ -119,7 +120,10 @@ const CustomersList: React.FC = () => {
     <Layout>
       <div className="customers-list">
         <div className="page-header">
-          <h1>👥 Customers List</h1>
+          <h1>
+            <IoPeopleOutline className="title-icon" />
+            Customers List
+          </h1>
           <p>View all registered customers and manage their status</p>
         </div>
 
@@ -147,7 +151,7 @@ const CustomersList: React.FC = () => {
         <div className="filters-section">
           <input
             type="text"
-            placeholder="🔍 Search customers..."
+            placeholder="Search customers..."
             className="search-input"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -211,9 +215,24 @@ const CustomersList: React.FC = () => {
                     <td>{customer.phone || 'N/A'}</td>
                     <td>
                       <span className={`status-badge status-${customer.status.toLowerCase()}`}>
-                        {customer.status === 'ACTIVE' && '✓ Active'}
-                        {customer.status === 'INACTIVE' && '○ Inactive'}
-                        {customer.status === 'BLOCKED' && '✖ Blocked'}
+                        {customer.status === 'ACTIVE' && (
+                          <>
+                            <IoCheckmarkCircle className="status-icon" />
+                            Active
+                          </>
+                        )}
+                        {customer.status === 'INACTIVE' && (
+                          <>
+                            <IoEllipseOutline className="status-icon" />
+                            Inactive
+                          </>
+                        )}
+                        {customer.status === 'BLOCKED' && (
+                          <>
+                            <IoCloseCircle className="status-icon" />
+                            Blocked
+                          </>
+                        )}
                       </span>
                     </td>
                     <td className="text-center">{customer.totalOrders}</td>

@@ -3,6 +3,15 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import {
+  IoAddCircle,
+  IoCheckmarkCircle,
+  IoCloseCircle,
+  IoCreateOutline,
+  IoPauseCircle,
+  IoPeopleOutline,
+  IoTrashOutline,
+} from 'react-icons/io5';
 import { Layout } from '../../components';
 import { MOCK_USERS } from '../../services/mockDataGenerator';
 import type { UserProfile } from '../../api/types';
@@ -198,9 +207,13 @@ const StaffManagement: React.FC = () => {
     <Layout>
       <div className="staff-management">
         <div className="page-header">
-          <h1>👥 Staff Management</h1>
+          <h1>
+            <IoPeopleOutline className="title-icon" />
+            Staff Management
+          </h1>
           <button className="btn btn-primary" onClick={handleAddStaff}>
-            ➕ Add Staff Member
+            <IoAddCircle className="btn-icon" />
+            Add Staff Member
           </button>
         </div>
 
@@ -232,7 +245,7 @@ const StaffManagement: React.FC = () => {
         <div className="filters-section">
           <input
             type="text"
-            placeholder="🔍 Search by name or email..."
+            placeholder="Search by name or email..."
             className="search-input"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -303,7 +316,17 @@ const StaffManagement: React.FC = () => {
                         onClick={() => handleToggleStatus(staff.id)}
                         title="Click to toggle status"
                       >
-                        {staff.status === 'active' ? '✓ Active' : '⏸ Inactive'}
+                        {staff.status === 'active' ? (
+                          <>
+                            <IoCheckmarkCircle className="status-icon" />
+                            Active
+                          </>
+                        ) : (
+                          <>
+                            <IoPauseCircle className="status-icon" />
+                            Inactive
+                          </>
+                        )}
                       </button>
                     </td>
                     <td>{new Date(staff.createdAt).toLocaleDateString()}</td>
@@ -313,14 +336,14 @@ const StaffManagement: React.FC = () => {
                         onClick={() => handleEditStaff(staff)}
                         title="Edit"
                       >
-                        ✏️
+                        <IoCreateOutline />
                       </button>
                       <button
                         className="action-btn delete-btn"
                         onClick={() => handleDeleteStaff(staff.id)}
                         title="Delete"
                       >
-                        🗑️
+                        <IoTrashOutline />
                       </button>
                     </td>
                   </tr>
@@ -337,7 +360,7 @@ const StaffManagement: React.FC = () => {
               <div className="modal-header">
                 <h2>{editingStaff ? 'Edit Staff Member' : 'Add New Staff Member'}</h2>
                 <button className="close-btn" onClick={() => setShowModal(false)}>
-                  ✕
+                  <IoCloseCircle />
                 </button>
               </div>
               <form onSubmit={handleSubmit}>

@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from 'react';
+import { IoInformationCircleOutline } from 'react-icons/io5';
 import { useAuth } from '../../hooks/useAuth';
 import Button from '../Button/Button';
 import './TableSelector.css';
@@ -84,7 +85,8 @@ const TableSelector: React.FC<TableSelectorProps> = ({ onClose }) => {
         {!tableId && (
           <div className="table-selector__info">
             <p className="table-selector__info-text">
-              💡 Tip: You can also scan the QR code on your table to automatically set your table number.
+              <IoInformationCircleOutline className="status-icon" />
+              Tip: You can also scan the QR code on your table to automatically set your table number.
             </p>
           </div>
         )}

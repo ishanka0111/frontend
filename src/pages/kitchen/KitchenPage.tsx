@@ -3,6 +3,12 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import {
+  IoCheckmarkCircle,
+  IoFlameOutline,
+  IoNotificationsOutline,
+  IoTimeOutline,
+} from 'react-icons/io5';
 import { useAuth } from '../../hooks/useAuth';
 import { Layout } from '../../components';
 import { getActiveOrders, updateOrderStatus } from '../../api/orders';
@@ -108,7 +114,10 @@ const KitchenPage: React.FC = () => {
           {/* New Orders Column */}
           <div className="order-column placed">
             <div className="column-header">
-              <h2>🔔 New Orders</h2>
+              <h2>
+                <IoNotificationsOutline className="title-icon" />
+                New Orders
+              </h2>
               <span className="count">{placedOrders.length}</span>
             </div>
             <div className="order-list">
@@ -123,7 +132,9 @@ const KitchenPage: React.FC = () => {
                 ))
               ) : (
                 <div className="empty-state">
-                  <div className="empty-icon">⏳</div>
+                  <div className="empty-icon">
+                    <IoTimeOutline />
+                  </div>
                   <p>No new orders</p>
                 </div>
               )}
@@ -133,7 +144,10 @@ const KitchenPage: React.FC = () => {
           {/* Preparing Column */}
           <div className="order-column preparing">
             <div className="column-header">
-              <h2>👨‍🍳 Preparing</h2>
+              <h2>
+                <IoFlameOutline className="title-icon" />
+                Preparing
+              </h2>
               <span className="count">{preparingOrders.length}</span>
             </div>
             <div className="order-list">
@@ -148,7 +162,9 @@ const KitchenPage: React.FC = () => {
                 ))
               ) : (
                 <div className="empty-state">
-                  <div className="empty-icon">🍳</div>
+                  <div className="empty-icon">
+                    <IoTimeOutline />
+                  </div>
                   <p>No orders in preparation</p>
                 </div>
               )}
@@ -158,7 +174,10 @@ const KitchenPage: React.FC = () => {
           {/* Ready Column */}
           <div className="order-column ready">
             <div className="column-header">
-              <h2>✅ Ready</h2>
+              <h2>
+                <IoCheckmarkCircle className="title-icon" />
+                Ready
+              </h2>
               <span className="count">{readyOrders.length}</span>
             </div>
             <div className="order-list">
@@ -170,7 +189,9 @@ const KitchenPage: React.FC = () => {
                 ))
               ) : (
                 <div className="empty-state">
-                  <div className="empty-icon">🔔</div>
+                  <div className="empty-icon">
+                    <IoNotificationsOutline />
+                  </div>
                   <p>No orders ready for service</p>
                 </div>
               )}

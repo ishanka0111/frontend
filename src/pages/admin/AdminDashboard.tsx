@@ -3,6 +3,15 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import {
+  IoBarChartOutline,
+  IoCashOutline,
+  IoCubeOutline,
+  IoListOutline,
+  IoPeopleOutline,
+  IoPricetagOutline,
+  IoTrendingUpOutline,
+} from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Layout } from '../../components';
@@ -60,43 +69,57 @@ const AdminDashboard: React.FC = () => {
 
         <div className="dashboard-grid">
           <Link to="/admin/cashier" className="dashboard-card admin-card cashier-highlight">
-            <div className="card-icon">💰</div>
+            <div className="card-icon">
+              <IoCashOutline />
+            </div>
             <h3>Cashier - Receive Cash</h3>
             <p>Scan waiter QR codes and receive cash</p>
           </Link>
 
           <Link to="/admin/staff" className="dashboard-card admin-card">
-            <div className="card-icon">👥</div>
+            <div className="card-icon">
+              <IoPeopleOutline />
+            </div>
             <h3>Staff Management</h3>
             <p>Manage kitchen staff and waiters</p>
           </Link>
 
           <Link to="/admin/menu" className="dashboard-card admin-card">
-            <div className="card-icon">📋</div>
+            <div className="card-icon">
+              <IoListOutline />
+            </div>
             <h3>Menu Management</h3>
             <p>Add, edit, and remove menu items</p>
           </Link>
 
           <Link to="/admin/categories" className="dashboard-card admin-card">
-            <div className="card-icon">🏷️</div>
+            <div className="card-icon">
+              <IoPricetagOutline />
+            </div>
             <h3>Category Management</h3>
             <p>Organize menu categories</p>
           </Link>
 
           <Link to="/admin/inventory" className="dashboard-card admin-card">
-            <div className="card-icon">📦</div>
+            <div className="card-icon">
+              <IoCubeOutline />
+            </div>
             <h3>Inventory</h3>
             <p>Track stock levels and reorders</p>
           </Link>
 
           <Link to="/admin/orders" className="dashboard-card admin-card">
-            <div className="card-icon">📊</div>
+            <div className="card-icon">
+              <IoBarChartOutline />
+            </div>
             <h3>Order Overview</h3>
             <p>Monitor all restaurant orders</p>
           </Link>
 
           <Link to="/admin/analytics" className="dashboard-card admin-card">
-            <div className="card-icon">📈</div>
+            <div className="card-icon">
+              <IoTrendingUpOutline />
+            </div>
             <h3>Analytics</h3>
             <p>Sales reports and insights</p>
           </Link>

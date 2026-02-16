@@ -3,19 +3,51 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import type { IconType } from 'react-icons';
+import {
+  IoAddCircle,
+  IoCloseCircle,
+  IoCreateOutline,
+  IoFishOutline,
+  IoFlameOutline,
+  IoIceCreamOutline,
+  IoPizzaOutline,
+  IoPricetagOutline,
+  IoRestaurantOutline,
+  IoTrashOutline,
+  IoWineOutline,
+} from 'react-icons/io5';
 import { Layout } from '../../components';
 import { MOCK_CATEGORIES, MOCK_MENU_ITEMS } from '../../services/mockDataGenerator';
-import type { MenuCategory } from '../../services/mockDataGenerator';
+import type { Category, CategoryIconKey } from '../../services/mockDataGenerator';
 import './CategoryManagement.css';
 
+const CATEGORY_ICON_MAP: Record<CategoryIconKey, IconType> = {
+  appetizers: IoRestaurantOutline,
+  pasta: IoPizzaOutline,
+  mains: IoFlameOutline,
+  seafood: IoFishOutline,
+  desserts: IoIceCreamOutline,
+  beverages: IoWineOutline,
+};
+
+const iconOptions: CategoryIconKey[] = [
+  'appetizers',
+  'pasta',
+  'mains',
+  'seafood',
+  'desserts',
+  'beverages',
+];
+
 const CategoryManagement: React.FC = () => {
-  const [categories, setCategories] = useState<MenuCategory[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [showModal, setShowModal] = useState(false);
-  const [editingCategory, setEditingCategory] = useState<MenuCategory | null>(null);
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    icon: '🍽️',
+    iconKey: 'appetizers' as CategoryIconKey,
     displayOrder: 1,
   });
 
@@ -28,18 +60,18 @@ const CategoryManagement: React.FC = () => {
     setFormData({
       name: '',
       description: '',
-      icon: '🍽️',
+      iconKey: 'appetizers',
       displayOrder: categories.length + 1,
     });
     setShowModal(true);
   };
 
-  const handleEditCategory = (category: MenuCategory) => {
+  const handleEditCategory = (category: Category) => {
     setEditingCategory(category);
     setFormData({
       name: category.name,
       description: category.description,
-      icon: category.icon,
+      iconKey: category.iconKey,
       displayOrder: category.displayOrder,
     });
     setShowModal(true);
@@ -70,7 +102,7 @@ const CategoryManagement: React.FC = () => {
         )
       );
     } else {
-      const newCategory: MenuCategory = {
+      const newCategory: Category = {
         id: Date.now(),
         ...formData,
       };
@@ -84,15 +116,17 @@ const CategoryManagement: React.FC = () => {
     return MOCK_MENU_ITEMS.filter((item) => item.categoryId === categoryId && item.isActive).length;
   };
 
-  const iconOptions = ['🍽️', '🥗', '🍝', '🥩', '🍰', '🍷', '🍕', '🍜', '🍱', '🥘', '🍲', '🥙'];
-
   return (
     <Layout>
       <div className="category-management">
         <div className="page-header">
-          <h1>🏷️ Category Management</h1>
+          <h1>
+            <IoPricetagOutline className="title-icon" />
+            Category Management
+          </h1>
           <button className="btn btn-primary" onClick={handleAddCategory}>
-            ➕ Add Category
+            <IoAddCircle className="btn-icon" />
+            Add Category
           </button>
         </div>
 
@@ -101,7 +135,12 @@ const CategoryManagement: React.FC = () => {
             .sort((a, b) => a.displayOrder - b.displayOrder)
             .map((category) => (
               <div key={category.id} className="category-card">
-                <div className="category-icon">{category.icon}</div>
+                <div className="category-icon">
+                  {(() => {
+                    const Icon = CATEGORY_ICON_MAP[category.iconKey];
+                    return <Icon />;
+                  })()}
+                </div>
                 <div className="category-content">
                   <h3>{category.name}</h3>
                   <p className="category-description">{category.description}</p>
@@ -116,13 +155,15 @@ const CategoryManagement: React.FC = () => {
                       className="action-btn edit-btn"
                       onClick={() => handleEditCategory(category)}
                     >
-                      ✏️ Edit
+                      <IoCreateOutline className="btn-icon" />
+                      Edit
                     </button>
                     <button
                       className="action-btn delete-btn"
                       onClick={() => handleDeleteCategory(category.id)}
                     >
-                      🗑️ Delete
+                      <IoTrashOutline className="btn-icon" />
+                      Delete
                     </button>
                   </div>
                 </div>
@@ -137,7 +178,7 @@ const CategoryManagement: React.FC = () => {
               <div className="modal-header">
                 <h2>{editingCategory ? 'Edit Category' : 'Add New Category'}</h2>
                 <button className="close-btn" onClick={() => setShowModal(false)}>
-                  ✕
+                  <IoCloseCircle />
                 </button>
               </div>
               <form onSubmit={handleSubmit}>
@@ -168,14 +209,17 @@ const CategoryManagement: React.FC = () => {
                 <div className="form-group">
                   <label>Icon *</label>
                   <div className="icon-picker">
-                    {iconOptions.map((icon) => (
+                    {iconOptions.map((iconKey) => (
                       <button
-                        key={icon}
+                        key={iconKey}
                         type="button"
-                        className={`icon-option ${formData.icon === icon ? 'selected' : ''}`}
-                        onClick={() => setFormData({ ...formData, icon })}
+                        className={`icon-option ${formData.iconKey === iconKey ? 'selected' : ''}`}
+                        onClick={() => setFormData({ ...formData, iconKey })}
                       >
-                        {icon}
+                        {(() => {
+                          const Icon = CATEGORY_ICON_MAP[iconKey];
+                          return <Icon />;
+                        })()}
                       </button>
                     ))}
                   </div>

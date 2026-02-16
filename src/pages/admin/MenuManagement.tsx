@@ -3,10 +3,35 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import type { IconType } from 'react-icons';
+import {
+  IoAddCircle,
+  IoCheckmarkCircle,
+  IoCloseCircle,
+  IoCreateOutline,
+  IoFishOutline,
+  IoFlameOutline,
+  IoIceCreamOutline,
+  IoListOutline,
+  IoPauseCircle,
+  IoPizzaOutline,
+  IoRestaurantOutline,
+  IoTrashOutline,
+  IoWineOutline,
+} from 'react-icons/io5';
 import { Layout } from '../../components';
 import { MOCK_MENU_ITEMS, MOCK_CATEGORIES } from '../../services/mockDataGenerator';
-import type { MenuItem } from '../../services/mockDataGenerator';
+import type { CategoryIconKey, MenuItem } from '../../services/mockDataGenerator';
 import './MenuManagement.css';
+
+const CATEGORY_ICON_MAP: Record<CategoryIconKey, IconType> = {
+  appetizers: IoRestaurantOutline,
+  pasta: IoPizzaOutline,
+  mains: IoFlameOutline,
+  seafood: IoFishOutline,
+  desserts: IoIceCreamOutline,
+  beverages: IoWineOutline,
+};
 
 const MenuManagement: React.FC = () => {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
@@ -147,9 +172,13 @@ const MenuManagement: React.FC = () => {
     <Layout>
       <div className="menu-management">
         <div className="page-header">
-          <h1>📋 Menu Management</h1>
+          <h1>
+            <IoListOutline className="title-icon" />
+            Menu Management
+          </h1>
           <button className="btn btn-primary" onClick={handleAddItem}>
-            ➕ Add Menu Item
+            <IoAddCircle className="btn-icon" />
+            Add Menu Item
           </button>
         </div>
 
@@ -177,7 +206,7 @@ const MenuManagement: React.FC = () => {
         <div className="filters-section">
           <input
             type="text"
-            placeholder="🔍 Search menu items..."
+            placeholder="Search menu items..."
             className="search-input"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -196,7 +225,11 @@ const MenuManagement: React.FC = () => {
                   className={`filter-btn ${categoryFilter === category.id ? 'active' : ''}`}
                   onClick={() => setCategoryFilter(category.id)}
                 >
-                  {category.icon} {category.name}
+                  {(() => {
+                    const Icon = CATEGORY_ICON_MAP[category.iconKey];
+                    return <Icon className="btn-icon" />;
+                  })()}
+                  {category.name}
                 </button>
               ))}
             </div>
@@ -250,19 +283,31 @@ const MenuManagement: React.FC = () => {
                       className={`toggle-btn ${item.isActive ? 'active' : 'inactive'}`}
                       onClick={() => handleToggleActive(item.id)}
                     >
-                      {item.isActive ? '✓ Active' : '⏸ Inactive'}
+                      {item.isActive ? (
+                        <>
+                          <IoCheckmarkCircle className="btn-icon" />
+                          Active
+                        </>
+                      ) : (
+                        <>
+                          <IoPauseCircle className="btn-icon" />
+                          Inactive
+                        </>
+                      )}
                     </button>
                     <button
                       className="action-btn edit-btn"
                       onClick={() => handleEditItem(item)}
                     >
-                      ✏️ Edit
+                      <IoCreateOutline className="btn-icon" />
+                      Edit
                     </button>
                     <button
                       className="action-btn delete-btn"
                       onClick={() => handleDeleteItem(item.id)}
                     >
-                      🗑️ Delete
+                      <IoTrashOutline className="btn-icon" />
+                      Delete
                     </button>
                   </div>
                 </div>
@@ -278,7 +323,7 @@ const MenuManagement: React.FC = () => {
               <div className="modal-header">
                 <h2>{editingItem ? 'Edit Menu Item' : 'Add New Menu Item'}</h2>
                 <button className="close-btn" onClick={() => setShowModal(false)}>
-                  ✕
+                  <IoCloseCircle />
                 </button>
               </div>
               <form onSubmit={handleSubmit}>
@@ -305,7 +350,7 @@ const MenuManagement: React.FC = () => {
                   >
                     {MOCK_CATEGORIES.map((category) => (
                       <option key={category.id} value={category.id}>
-                        {category.icon} {category.name}
+                        {category.name}
                       </option>
                     ))}
                   </select>

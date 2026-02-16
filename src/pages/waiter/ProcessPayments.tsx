@@ -3,6 +3,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { IoCardOutline, IoCashOutline, IoCheckmarkCircle } from 'react-icons/io5';
 import { Layout } from '../../components';
 import { MOCK_ORDERS } from '../../services/mockDataGenerator';
 import type { Order } from '../../services/mockDataGenerator';
@@ -57,7 +58,10 @@ const ProcessPayments: React.FC = () => {
     <Layout>
       <div className="process-payments">
         <div className="page-header">
-          <h1>💰 Process Payments</h1>
+          <h1>
+            <IoCashOutline className="title-icon" />
+            Process Payments
+          </h1>
           <p>Handle cash and card payments</p>
         </div>
 
@@ -131,13 +135,15 @@ const ProcessPayments: React.FC = () => {
                     className={`method-btn ${paymentMethod === 'CASH' ? 'active' : ''}`}
                     onClick={() => setPaymentMethod('CASH')}
                   >
-                    💵 Cash
+                    <IoCashOutline className="btn-icon" />
+                    Cash
                   </button>
                   <button
                     className={`method-btn ${paymentMethod === 'CARD' ? 'active' : ''}`}
                     onClick={() => setPaymentMethod('CARD')}
                   >
-                    💳 Card
+                    <IoCardOutline className="btn-icon" />
+                    Card
                   </button>
                 </div>
               </div>
@@ -181,7 +187,17 @@ const ProcessPayments: React.FC = () => {
 
               {/* Action Button */}
               <button className="payment-btn" onClick={handlePayment}>
-                {paymentMethod === 'CASH' ? '✓ Confirm Payment' : '💳 Process Card'}
+                {paymentMethod === 'CASH' ? (
+                  <>
+                    <IoCheckmarkCircle className="btn-icon" />
+                    Confirm Payment
+                  </>
+                ) : (
+                  <>
+                    <IoCardOutline className="btn-icon" />
+                    Process Card
+                  </>
+                )}
               </button>
             </div>
           )}

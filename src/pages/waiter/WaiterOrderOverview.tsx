@@ -3,6 +3,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { IoListOutline } from 'react-icons/io5';
 import { Layout, OrderStatsRow, OrderStatusFilter } from '../../components';
 import type { StatItem } from '../../components/OrderStatsRow';
 import type { FilterOption } from '../../components/OrderStatusFilter';
@@ -62,7 +63,10 @@ const WaiterOrderOverview: React.FC = () => {
     <Layout>
       <div className="waiter-order-overview">
         <div className="page-header">
-          <h1>📋 Order Overview</h1>
+          <h1>
+            <IoListOutline className="title-icon" />
+            Order Overview
+          </h1>
           <p>Track all active orders and their status</p>
         </div>
 

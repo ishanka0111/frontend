@@ -3,6 +3,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { IoBarChartOutline, IoEyeOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { Layout, OrderStatsRow, OrderStatusFilter } from '../../components';
 import type { StatItem } from '../../components/OrderStatsRow';
@@ -76,7 +77,10 @@ const OrderOverview: React.FC = () => {
     <Layout>
       <div className="order-overview">
         <div className="page-header">
-          <h1>📊 Order Overview</h1>
+          <h1>
+            <IoBarChartOutline className="title-icon" />
+            Order Overview
+          </h1>
         </div>
 
         {/* Stats Cards */}
@@ -86,7 +90,7 @@ const OrderOverview: React.FC = () => {
         <div className="filters-section">
           <input
             type="text"
-            placeholder="🔍 Search by Order ID or Table..."
+            placeholder="Search by Order ID or Table..."
             className="search-input"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -112,7 +116,8 @@ const OrderOverview: React.FC = () => {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
+                        <IoEyeOutline className="btn-icon" />
+                        View
               {filteredOrders.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="empty-state">
@@ -140,7 +145,8 @@ const OrderOverview: React.FC = () => {
                     <td>{new Date(order.createdAt).toLocaleString()}</td>
                     <td>
                       <Link to={`/orders/${order.id}`} className="view-btn">
-                        👁️ View
+                        <IoEyeOutline className="btn-icon" />
+                        View
                       </Link>
                     </td>
                   </tr>

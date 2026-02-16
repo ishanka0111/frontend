@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import { IoTrendingUpOutline } from 'react-icons/io5';
 import { Layout } from '../../components';
 import { MOCK_ORDERS } from '../../services/mockDataGenerator';
 import './Analytics.css';
@@ -39,7 +40,10 @@ const Analytics: React.FC = () => {
     <Layout>
       <div className="analytics-page">
         <div className="page-header">
-          <h1>📈 Analytics & Reports</h1>
+          <h1>
+            <IoTrendingUpOutline className="title-icon" />
+            Analytics & Reports
+          </h1>
           <p>Key performance metrics and sales insights</p>
         </div>
 
