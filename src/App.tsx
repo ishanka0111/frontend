@@ -16,7 +16,7 @@ import ProfilePage from './pages/auth/ProfilePage';
 
 // Customer Pages
 import CustomerDashboard from './pages/customer/CustomerDashboard';
-import MenuPage from './pages/menu/MenuPage';
+import MenuPage from './pages/customer/MenuPage';
 import CheckoutPage from './pages/customer/CheckoutPage';
 import MyOrdersPage from './pages/customer/MyOrdersPage';
 import OrderTrackingPage from './pages/customer/OrderTrackingPage';

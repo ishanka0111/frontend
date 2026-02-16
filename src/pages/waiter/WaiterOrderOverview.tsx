@@ -2,7 +2,7 @@
  * Waiter Order Overview - Track all active orders
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import { IoListOutline } from 'react-icons/io5';
 import { Layout, OrderStatsRow, OrderStatusFilter } from '../../components';
 import type { StatItem } from '../../components/OrderStatsRow';
@@ -14,19 +14,14 @@ import { getMenuItemNameById } from '../../utils/menuHelpers';
 import './WaiterOrderOverview.css';
 
 const WaiterOrderOverview: React.FC = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const orders = useMemo(
+    () =>
+      [...MOCK_ORDERS].sort(
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      ),
+    []
+  );
   const [statusFilter, setStatusFilter] = useState<'all' | 'PREPARING' | 'READY' | 'SERVED'>('all');
-
-  const loadOrders = () => {
-    const sorted = [...MOCK_ORDERS].sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
-    setOrders(sorted);
-  };
-
-  useEffect(() => {
-    loadOrders();
-  }, []);
 
   const filteredOrders = orders.filter((order) => {
     if (statusFilter === 'all') return true;

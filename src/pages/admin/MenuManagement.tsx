@@ -2,7 +2,7 @@
  * Menu Management - Manage menu items (Add, Edit, Delete, Toggle Active)
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import type { IconType } from 'react-icons';
 import {
   IoAddCircle,
@@ -34,8 +34,7 @@ const CATEGORY_ICON_MAP: Record<CategoryIconKey, IconType> = {
 };
 
 const MenuManagement: React.FC = () => {
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-  const [filteredItems, setFilteredItems] = useState<MenuItem[]>([]);
+  const [menuItems, setMenuItems] = useState<MenuItem[]>(() => [...MOCK_MENU_ITEMS]);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<number | null>(null);
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive'>('all');
@@ -50,20 +49,9 @@ const MenuManagement: React.FC = () => {
     isActive: true,
   });
 
-  // Load menu items
-  useEffect(() => {
-    setMenuItems([...MOCK_MENU_ITEMS]);
-  }, []);
-
-  // Filter items
-  useEffect(() => {
-    filterItems();
-  }, [searchTerm, categoryFilter, statusFilter, menuItems]);
-
-  const filterItems = () => {
+  const filteredItems = useMemo(() => {
     let filtered = [...menuItems];
 
-    // Search filter
     if (searchTerm) {
       filtered = filtered.filter(
         (item) =>
@@ -72,20 +60,18 @@ const MenuManagement: React.FC = () => {
       );
     }
 
-    // Category filter
     if (categoryFilter !== null) {
       filtered = filtered.filter((item) => item.categoryId === categoryFilter);
     }
 
-    // Status filter
     if (statusFilter === 'active') {
       filtered = filtered.filter((item) => item.isActive);
     } else if (statusFilter === 'inactive') {
       filtered = filtered.filter((item) => !item.isActive);
     }
 
-    setFilteredItems(filtered);
-  };
+    return filtered;
+  }, [menuItems, searchTerm, categoryFilter, statusFilter]);
 
   const handleAddItem = () => {
     setEditingItem(null);
@@ -107,7 +93,7 @@ const MenuManagement: React.FC = () => {
       categoryId: item.categoryId,
       description: item.description,
       price: item.price,
-      imageUrl: item.imageUrl,
+      imageUrl: item.imageUrl || '',
       isActive: item.isActive,
     });
     setShowModal(true);

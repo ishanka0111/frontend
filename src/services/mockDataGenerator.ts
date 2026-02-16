@@ -12,6 +12,7 @@ export interface MenuItem {
   description: string;
   price: number;
   categoryId: number;
+  categoryName?: string;
   imageUrl?: string;
   isActive: boolean;
   allergens?: string[];
@@ -306,3 +307,9 @@ export function getMockData() {
     inventory: MOCK_INVENTORY,
   };
 }
+
+// Alias for backward compatibility with categoryName added
+export const MOCK_MENU = MOCK_MENU_ITEMS.map(item => ({
+  ...item,
+  categoryName: MOCK_CATEGORIES.find(cat => cat.id === item.categoryId)?.name || 'Unknown'
+}));

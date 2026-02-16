@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import { IoCartOutline, IoCloseCircle, IoDocumentTextOutline, IoTrashOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../hooks/useCart';
 import Button from '../Button/Button';
@@ -53,14 +54,16 @@ const Cart: React.FC = () => {
             <span className="cart__count">{itemCount} {itemCount === 1 ? 'item' : 'items'}</span>
           </div>
           <button onClick={closeCart} className="cart__close-btn">
-            ✕
+            <IoCloseCircle />
           </button>
         </div>
 
         <div className="cart__content">
           {items.length === 0 ? (
             <div className="cart__empty">
-              <div className="cart__empty-icon">🛒</div>
+              <div className="cart__empty-icon">
+                <IoCartOutline />
+              </div>
               <p className="cart__empty-text">Your cart is empty</p>
               <Button 
                 variant="primary" 
@@ -79,7 +82,10 @@ const Cart: React.FC = () => {
                     <div className="cart-item__details">
                       <h3 className="cart-item__name">{item.name}</h3>
                       {item.notes && (
-                        <p className="cart-item__notes">📝 {item.notes}</p>
+                        <p className="cart-item__notes">
+                          <IoDocumentTextOutline className="status-icon" />
+                          {item.notes}
+                        </p>
                       )}
                       <div className="cart-item__price">
                         ${item.price.toFixed(2)} × {item.quantity} = ${(item.price * item.quantity).toFixed(2)}
@@ -111,7 +117,7 @@ const Cart: React.FC = () => {
                         className="cart-item__remove-btn"
                         title="Remove item"
                       >
-                        🗑️
+                        <IoTrashOutline />
                       </button>
                     </div>
                   </div>

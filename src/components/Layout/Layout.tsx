@@ -4,6 +4,7 @@
 
 import React from 'react';
 import Header from '../Header/Header';
+import CustomerBottomNav from '../CustomerBottomNav/CustomerBottomNav';
 import './Layout.css';
 
 interface LayoutProps {
@@ -29,6 +30,7 @@ const Layout: React.FC<LayoutProps> = ({
       <main className="layout__main">
         {children}
       </main>
+      <CustomerBottomNav />
     </div>
   );
 };

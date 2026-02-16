@@ -2,7 +2,7 @@
  * Order Tracking Page - Track individual order status
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   IoCheckmarkCircle,
   IoCloseCircle,
@@ -26,16 +26,7 @@ const OrderTrackingPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (orderId) {
-      loadOrder();
-      // Auto-refresh every 10 seconds
-      const interval = setInterval(loadOrder, 10000);
-      return () => clearInterval(interval);
-    }
-  }, [orderId]);
-
-  const loadOrder = async () => {
+  const loadOrder = useCallback(async () => {
     try {
       if (!orderId) return;
       const orderData = await getOrderById(orderId);
@@ -47,7 +38,15 @@ const OrderTrackingPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [orderId]);
+
+  useEffect(() => {
+    if (orderId) {
+      loadOrder();
+      const interval = setInterval(loadOrder, 10000);
+      return () => clearInterval(interval);
+    }
+  }, [orderId, loadOrder]);
 
   const getMenuItemName = (menuItemId: number): string => {
     const item = MOCK_MENU_ITEMS.find(i => i.id === menuItemId);

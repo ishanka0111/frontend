@@ -2,7 +2,7 @@
  * Admin Dashboard - Restaurant management hub
  */
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   IoBarChartOutline,
   IoCashOutline,
@@ -15,30 +15,16 @@ import {
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Layout } from '../../components';
-import { getActiveOrders } from '../../api/orders';
 import { MOCK_MENU_ITEMS, MOCK_ORDERS } from '../../services/mockDataGenerator';
-import type { Order } from '../../services/mockDataGenerator';
 import './AdminDashboard.css';
 
 const AdminDashboard: React.FC = () => {
   const { user } = useAuth();
-  const [activeOrders, setActiveOrders] = useState<Order[]>([]);
-
-  const loadStats = async () => {
-    try {
-      const orders = await getActiveOrders();
-      setActiveOrders(orders);
-    } catch (error) {
-      console.error('Failed to load stats:', error);
-    }
-  };
-
-  useEffect(() => {
-    loadStats();
-  }, []);
 
   const calculateStats = () => {
-    const totalActiveOrders = activeOrders.length;
+    const totalActiveOrders = MOCK_ORDERS.filter(
+      (order) => ['PLACED', 'PREPARING', 'READY'].includes(order.status)
+    ).length;
     const staffOnline = 8; // Mock: 2 kitchen + 2 waiter + 1 admin + 3 others
     
     // Calculate today's revenue from PAID orders

@@ -58,7 +58,7 @@ const MenuPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <Layout title="🍽️ Restaurant Menu" showTableId={isCustomer && !!tableId}>
+      <Layout title="Restaurant Menu" showTableId={isCustomer && !!tableId}>
         <div className="menu-container">
           <LoadingSpinner />
         </div>
@@ -68,7 +68,7 @@ const MenuPage: React.FC = () => {
 
   if (error) {
     return (
-      <Layout title="🍽️ Restaurant Menu" showTableId={isCustomer && !!tableId}>
+      <Layout title="Restaurant Menu" showTableId={isCustomer && !!tableId}>
         <div className="menu-container">
           <div className="menu-error">
             <p className="menu-error__text">{error}</p>
@@ -82,7 +82,7 @@ const MenuPage: React.FC = () => {
   }
 
   return (
-    <Layout title="🍽️ Restaurant Menu" showTableId={isCustomer && !!tableId}>
+    <Layout title="Restaurant Menu" showTableId={isCustomer && !!tableId}>
       <div className="menu-container">
         <div className="menu-header">
           <h1 className="menu-header__title">Our Menu</h1>
@@ -94,7 +94,7 @@ const MenuPage: React.FC = () => {
           <div className="menu-search">
             <input
               type="text"
-              placeholder="🔍 Search menu items..."
+              placeholder="Search menu items..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="menu-search__input"

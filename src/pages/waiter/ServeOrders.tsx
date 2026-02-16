@@ -2,7 +2,7 @@
  * Serve Orders - See prepared orders and serve them to tables
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { IoCheckmarkCircle, IoRestaurantOutline, IoTimeOutline } from 'react-icons/io5';
 import { Layout } from '../../components';
 import { MOCK_ORDERS, MOCK_MENU_ITEMS } from '../../services/mockDataGenerator';
@@ -10,31 +10,19 @@ import type { Order } from '../../services/mockDataGenerator';
 import './ServeOrders.css';
 
 const ServeOrders: React.FC = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<Order[]>(() =>
+    MOCK_ORDERS.filter((o) => o.status === 'READY').sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+  );
   const [showSuccessFeedback, setShowSuccessFeedback] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState('');
 
-  useEffect(() => {
-    loadOrders();
-  }, []);
-
-  const loadOrders = () => {
-    // Only show READY orders (preparing orders should stay in kitchen)
-    const readyOrders = MOCK_ORDERS.filter(
-      (o) => o.status === 'READY'
-    ).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-    setOrders(readyOrders);
-  };
-
   const handleServeOrder = (orderId: string, tableId: string) => {
-    const orderIndex = MOCK_ORDERS.findIndex((o) => o.id === orderId);
-    if (orderIndex !== -1) {
-      MOCK_ORDERS[orderIndex] = { ...MOCK_ORDERS[orderIndex], status: 'SERVED' };
-      loadOrders();
-      setFeedbackMessage(`Order #${orderId} served to Table ${tableId}!`);
-      setShowSuccessFeedback(true);
-      setTimeout(() => setShowSuccessFeedback(false), 3000);
-    }
+    setOrders((prev) => prev.filter((order) => order.id !== orderId));
+    setFeedbackMessage(`Order #${orderId} served to Table ${tableId}!`);
+    setShowSuccessFeedback(true);
+    setTimeout(() => setShowSuccessFeedback(false), 3000);
   };
 
   const getMenuItemName = (menuItemId: number) => {

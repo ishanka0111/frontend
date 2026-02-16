@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import { IoBanOutline } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
 
 const UnauthorizedPage: React.FC = () => {
@@ -11,7 +12,9 @@ const UnauthorizedPage: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8 text-center">
-        <div className="text-6xl mb-4">🚫</div>
+        <div className="text-6xl mb-4">
+          <IoBanOutline />
+        </div>
         <h2 className="text-3xl font-bold text-gray-800 mb-2">Access Denied</h2>
         <p className="text-gray-600 mb-6">
           You don't have permission to access this page.

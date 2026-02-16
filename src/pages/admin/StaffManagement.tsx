@@ -2,7 +2,7 @@
  * Staff Management - Manage restaurant staff (kitchen, waiters, admins)
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   IoAddCircle,
   IoCheckmarkCircle,
@@ -14,7 +14,7 @@ import {
 } from 'react-icons/io5';
 import { Layout } from '../../components';
 import { MOCK_USERS } from '../../services/mockDataGenerator';
-import type { UserProfile } from '../../api/types';
+import type { UserProfile } from '../../types';
 import './StaffManagement.css';
 
 interface StaffMember extends UserProfile {
@@ -29,8 +29,56 @@ const ROLE_NAMES: Record<number, string> = {
 };
 
 const StaffManagement: React.FC = () => {
-  const [staffList, setStaffList] = useState<StaffMember[]>([]);
-  const [filteredStaff, setFilteredStaff] = useState<StaffMember[]>([]);
+  const [staffList, setStaffList] = useState<StaffMember[]>(() => [
+    { ...MOCK_USERS.admin, status: 'active' },
+    { ...MOCK_USERS.kitchen, status: 'active' },
+    { ...MOCK_USERS.waiter, status: 'active' },
+    {
+      id: 2002,
+      fullName: 'Michael Brown',
+      email: 'michael@restaurant.com',
+      role: 2,
+      phone: '555-0202',
+      createdAt: new Date('2024-02-01').toISOString(),
+      status: 'active',
+    },
+    {
+      id: 3002,
+      fullName: 'Lisa Garcia',
+      email: 'lisa@restaurant.com',
+      role: 3,
+      phone: '555-0302',
+      createdAt: new Date('2024-03-01').toISOString(),
+      status: 'active',
+    },
+    {
+      id: 3003,
+      fullName: 'James Wilson',
+      email: 'james@restaurant.com',
+      role: 3,
+      phone: '555-0303',
+      createdAt: new Date('2024-03-15').toISOString(),
+      status: 'inactive',
+    },
+    {
+      id: 4002,
+      fullName: 'Jennifer Lee',
+      email: 'jennifer@restaurant.com',
+      role: 4,
+      phone: '555-0402',
+      createdAt: new Date('2024-04-01').toISOString(),
+      status: 'active',
+    },
+    {
+      id: 4003,
+      fullName: 'David Martinez',
+      email: 'david@restaurant.com',
+      role: 4,
+      phone: '555-0403',
+      createdAt: new Date('2024-04-10').toISOString(),
+      status: 'active',
+    },
+  ]);
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
@@ -42,76 +90,9 @@ const StaffManagement: React.FC = () => {
     role: 3,
   });
 
-  // Load staff on mount
-  useEffect(() => {
-    loadStaff();
-  }, []);
-
-  // Filter staff when search or role changes
-  useEffect(() => {
-    filterStaff();
-  }, [searchTerm, roleFilter, staffList]);
-
-  const loadStaff = () => {
-    // Get all staff (admin, kitchen, waiter - exclude customers)
-    const staff: StaffMember[] = [
-      { ...MOCK_USERS.admin, status: 'active' },
-      { ...MOCK_USERS.kitchen, status: 'active' },
-      { ...MOCK_USERS.waiter, status: 'active' },
-      // Add more mock staff
-      {
-        id: 2002,
-        fullName: 'Michael Brown',
-        email: 'michael@restaurant.com',
-        role: 2,
-        phone: '555-0202',
-        createdAt: new Date('2024-02-01').toISOString(),
-        status: 'active',
-      },
-      {
-        id: 3002,
-        fullName: 'Lisa Garcia',
-        email: 'lisa@restaurant.com',
-        role: 3,
-        phone: '555-0302',
-        createdAt: new Date('2024-03-01').toISOString(),
-        status: 'active',
-      },
-      {
-        id: 3003,
-        fullName: 'James Wilson',
-        email: 'james@restaurant.com',
-        role: 3,
-        phone: '555-0303',
-        createdAt: new Date('2024-03-15').toISOString(),
-        status: 'inactive',
-      },
-      {
-        id: 4002,
-        fullName: 'Jennifer Lee',
-        email: 'jennifer@restaurant.com',
-        role: 4,
-        phone: '555-0402',
-        createdAt: new Date('2024-04-01').toISOString(),
-        status: 'active',
-      },
-      {
-        id: 4003,
-        fullName: 'David Martinez',
-        email: 'david@restaurant.com',
-        role: 4,
-        phone: '555-0403',
-        createdAt: new Date('2024-04-10').toISOString(),
-        status: 'active',
-      },
-    ];
-    setStaffList(staff);
-  };
-
-  const filterStaff = () => {
+  const filteredStaff = useMemo(() => {
     let filtered = [...staffList];
 
-    // Filter by search term (name or email)
     if (searchTerm) {
       filtered = filtered.filter(
         (s) =>
@@ -120,13 +101,12 @@ const StaffManagement: React.FC = () => {
       );
     }
 
-    // Filter by role
     if (roleFilter !== null) {
       filtered = filtered.filter((s) => s.role === roleFilter);
     }
 
-    setFilteredStaff(filtered);
-  };
+    return filtered;
+  }, [searchTerm, roleFilter, staffList]);
 
   const handleAddStaff = () => {
     setEditingStaff(null);

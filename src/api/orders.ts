@@ -69,7 +69,7 @@ async function mockPlaceOrder(customerId: number, request: PlaceOrderRequest): P
   MOCK_ORDERS.push(newOrder);
 
   if (CONFIG.DEBUG) {
-    console.log(`✅ Mock placeOrder - Order ${orderId} placed for customer ${customerId}, table ${request.tableId}`);
+    console.log(`Mock placeOrder - Order ${orderId} placed for customer ${customerId}, table ${request.tableId}`);
   }
 
   return withDelay<PlaceOrderResponse>({
@@ -84,7 +84,7 @@ async function mockGetOrdersByTable(tableId: string): Promise<Order[]> {
   const orders = MOCK_ORDERS.filter((o) => o.tableId === tableId);
 
   if (CONFIG.DEBUG) {
-    console.log(`✅ Mock getOrdersByTable - returning ${orders.length} orders for table ${tableId}`);
+    console.log(`Mock getOrdersByTable - returning ${orders.length} orders for table ${tableId}`);
   }
 
   return withDelay<Order[]>(orders);
@@ -98,7 +98,7 @@ async function mockGetOrderById(orderId: string): Promise<Order> {
   }
 
   if (CONFIG.DEBUG) {
-    console.log(`✅ Mock getOrderById - returning order ${orderId}`);
+    console.log(`Mock getOrderById - returning order ${orderId}`);
   }
 
   return withDelay<Order>(order);
@@ -108,7 +108,7 @@ async function mockGetActiveOrders(): Promise<Order[]> {
   const activeOrders = MOCK_ORDERS.filter((o) => ['PLACED', 'PREPARING', 'READY'].includes(o.status));
 
   if (CONFIG.DEBUG) {
-    console.log(`✅ Mock getActiveOrders - returning ${activeOrders.length} active orders`);
+    console.log(`Mock getActiveOrders - returning ${activeOrders.length} active orders`);
   }
 
   return withDelay<Order[]>(activeOrders);
@@ -125,7 +125,7 @@ async function mockUpdateOrderStatus(orderId: string, status: Order['status']): 
   order.updatedAt = new Date().toISOString();
 
   if (CONFIG.DEBUG) {
-    console.log(`✅ Mock updateOrderStatus - Order ${orderId} status updated to ${status}`);
+    console.log(`Mock updateOrderStatus - Order ${orderId} status updated to ${status}`);
   }
 
   return withDelay<Order>(order);
@@ -145,7 +145,7 @@ async function mockProcessPayment(orderId: string, _amount: number, paymentMetho
   order.updatedAt = new Date().toISOString();
 
   if (CONFIG.DEBUG) {
-    console.log(`✅ Mock processPayment - Order ${orderId} payment processed via ${paymentMethod}`);
+    console.log(`Mock processPayment - Order ${orderId} payment processed via ${paymentMethod}`);
   }
 
   return withDelay<Order>(order);

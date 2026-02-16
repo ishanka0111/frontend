@@ -22,9 +22,10 @@ const Analytics: React.FC = () => {
   );
 
   const topTables = MOCK_ORDERS.reduce((acc, order) => {
-    acc[order.tableId] = (acc[order.tableId] || 0) + 1;
+    const tableId = String(order.tableId ?? 'Unknown');
+    acc[tableId] = ((acc[tableId]) || 0) + 1;
     return acc;
-  }, {} as Record<number, number>);
+  }, {} as Record<string, number>);
 
   const topTableList = Object.entries(topTables)
     .map(([table, count]) => ({ table, count }))

@@ -3,6 +3,7 @@
  */
 
 import React, { useEffect } from 'react';
+import { IoCloseCircle } from 'react-icons/io5';
 import './Modal.css';
 
 interface ModalProps {
@@ -60,7 +61,7 @@ export const Modal: React.FC<ModalProps> = ({
               onClick={onClose}
               aria-label="Close modal"
             >
-              ✕
+              <IoCloseCircle />
             </button>
           )}
         </div>

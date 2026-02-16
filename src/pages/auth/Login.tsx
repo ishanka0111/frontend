@@ -3,6 +3,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { IoRestaurantOutline } from 'react-icons/io5';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { login } from '../../api/auth';
 import { useAuth } from '../../hooks/useAuth';
@@ -82,7 +83,10 @@ const Login: React.FC = () => {
     <div className="login-page">
       <Card className="login-card">
         <div>
-          <h2 className="login-title">🍽️ Restaurant Login</h2>
+          <h2 className="login-title">
+            <IoRestaurantOutline className="title-icon" />
+            Restaurant Login
+          </h2>
           <p className="login-subtitle">Sign in to order delicious food!</p>
         </div>
 

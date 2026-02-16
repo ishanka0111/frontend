@@ -3,6 +3,7 @@
  */
 
 import React, { useState } from 'react';
+import { IoLeaf, IoLeafOutline, IoRestaurantOutline, IoTimeOutline, IoWarning } from 'react-icons/io5';
 import Button from '../Button/Button';
 import type { MenuItem } from '../../types';
 import './MenuCard.css';
@@ -49,7 +50,7 @@ const MenuCard: React.FC<MenuCardProps> = ({ item, onAddToCart }) => {
           />
         ) : (
           <div className="menu-card__image-placeholder">
-            🍽️
+            <IoRestaurantOutline />
           </div>
         )}
         {!item.isActive && (
@@ -57,8 +58,16 @@ const MenuCard: React.FC<MenuCardProps> = ({ item, onAddToCart }) => {
         )}
         {item.dietaryTags && item.dietaryTags.length > 0 && (
           <div className="menu-card__tags">
-            {item.dietaryTags.includes('vegetarian') && <span className="menu-card__tag menu-card__tag--veg">🌱</span>}
-            {item.dietaryTags.includes('vegan') && <span className="menu-card__tag menu-card__tag--vegan">🥗</span>}
+            {item.dietaryTags.includes('vegetarian') && (
+              <span className="menu-card__tag menu-card__tag--veg">
+                <IoLeafOutline />
+              </span>
+            )}
+            {item.dietaryTags.includes('vegan') && (
+              <span className="menu-card__tag menu-card__tag--vegan">
+                <IoLeaf />
+              </span>
+            )}
             {item.dietaryTags.includes('gluten-free') && <span className="menu-card__tag menu-card__tag--gf">GF</span>}
           </div>
         )}
@@ -75,14 +84,18 @@ const MenuCard: React.FC<MenuCardProps> = ({ item, onAddToCart }) => {
 
         {item.allergens && item.allergens.length > 0 && (
           <div className="menu-card__allergens">
-            <span className="menu-card__allergens-label">⚠️ Contains:</span>
+            <span className="menu-card__allergens-label">
+              <IoWarning className="status-icon" />
+              Contains:
+            </span>
             <span className="menu-card__allergens-list">{item.allergens.join(', ')}</span>
           </div>
         )}
 
         {item.preparationTime && (
           <div className="menu-card__prep-time">
-            ⏱️ ~{item.preparationTime} min
+            <IoTimeOutline className="status-icon" />
+            ~{item.preparationTime} min
           </div>
         )}
 

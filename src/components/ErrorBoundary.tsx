@@ -4,7 +4,10 @@
  * Redirects back to role-based landing page on error
  */
 
-import React, { ReactNode, ErrorInfo } from 'react';
+import React from 'react';
+import type { ReactNode, ErrorInfo } from 'react';
+import { IoWarning } from 'react-icons/io5';
+import type { NavigateFunction } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
@@ -17,8 +20,10 @@ interface State {
   error: Error | null;
 }
 
-class ErrorBoundaryClass extends React.Component<Props & { navigate: any; userRole: number | undefined }, State> {
-  constructor(props: Props & { navigate: any; userRole: number | undefined }) {
+type ErrorBoundaryInnerProps = Props & { navigate: NavigateFunction; userRole: number | undefined };
+
+class ErrorBoundaryClass extends React.Component<ErrorBoundaryInnerProps, State> {
+  constructor(props: ErrorBoundaryInnerProps) {
     super(props);
     this.state = {
       hasError: false,
@@ -62,7 +67,9 @@ class ErrorBoundaryClass extends React.Component<Props & { navigate: any; userRo
       return (
         <div className="error-boundary-container">
           <div className="error-boundary-content">
-            <div className="error-icon">⚠️</div>
+            <div className="error-icon">
+              <IoWarning />
+            </div>
             <h1 className="error-title">Something went wrong</h1>
             <p className="error-message">
               {this.state.error?.message || 'An unexpected error occurred'}

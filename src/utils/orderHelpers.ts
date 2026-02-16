@@ -5,9 +5,9 @@
 import type { Order } from '../services/mockDataGenerator';
 import { ORDER_STATUS_BADGE_CLASSES, ORDER_STATUS_LABELS, OrderStatus } from '../constants/orderStatus';
 
-// Map Order status to OrderStatus enum
-const mapOrderStatus = (status: Order['status']): OrderStatus => {
-  const statusMap: Record<Order['status'], OrderStatus> = {
+// Map Order status to OrderStatus values
+const mapOrderStatus = (status: Order['status']): string => {
+  const statusMap: Record<Order['status'], string> = {
     PLACED: OrderStatus.PENDING,
     PREPARING: OrderStatus.PREPARING,
     READY: OrderStatus.READY,

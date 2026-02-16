@@ -17,7 +17,7 @@ export const STORAGE_KEYS = {
  * Type-safe storage operations
  */
 export const storage = {
-  get: <T = any>(key: string): T | null => {
+  get: <T = unknown>(key: string): T | null => {
     try {
       const item = localStorage.getItem(key);
       if (!item) return null;
@@ -27,7 +27,7 @@ export const storage = {
     }
   },
 
-  set: <T = any>(key: string, value: T): void => {
+  set: <T = unknown>(key: string, value: T): void => {
     try {
       const stringValue = typeof value === 'string' ? value : JSON.stringify(value);
       localStorage.setItem(key, stringValue);
@@ -59,13 +59,13 @@ export const tokenStorage = {
 };
 
 export const userStorage = {
-  get: () => storage.get<any>(STORAGE_KEYS.USER),
-  set: (user: any) => storage.set(STORAGE_KEYS.USER, user),
+  get: () => storage.get<unknown>(STORAGE_KEYS.USER),
+  set: (user: unknown) => storage.set(STORAGE_KEYS.USER, user),
   remove: () => storage.remove(STORAGE_KEYS.USER),
 };
 
 export const cartStorage = {
-  get: () => storage.get<any[]>(STORAGE_KEYS.CART) || [],
-  set: (cart: any[]) => storage.set(STORAGE_KEYS.CART, cart),
+  get: () => storage.get<unknown[]>(STORAGE_KEYS.CART) || [],
+  set: (cart: unknown[]) => storage.set(STORAGE_KEYS.CART, cart),
   remove: () => storage.remove(STORAGE_KEYS.CART),
 };

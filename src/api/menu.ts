@@ -14,7 +14,7 @@ import type { MenuItem, Category } from '../services/mockDataGenerator';
 
 async function mockGetCategories(): Promise<Category[]> {
   if (CONFIG.DEBUG) {
-    console.log(`✅ Mock getCategories - returning ${MOCK_CATEGORIES.length} categories`);
+    console.log(`Mock getCategories - returning ${MOCK_CATEGORIES.length} categories`);
   }
   return withDelay<Category[]>(MOCK_CATEGORIES);
 }
@@ -28,7 +28,7 @@ async function mockGetMenuItems(categoryId?: number): Promise<MenuItem[]> {
 
   if (CONFIG.DEBUG) {
     const suffix = categoryId ? ` for category ${categoryId}` : '';
-    console.log(`✅ Mock getMenuItems - returning ${items.length} items${suffix}`);
+    console.log(`Mock getMenuItems - returning ${items.length} items${suffix}`);
   }
 
   return withDelay<MenuItem[]>(items);
@@ -42,7 +42,7 @@ async function mockGetMenuItem(itemId: number): Promise<MenuItem> {
   }
 
   if (CONFIG.DEBUG) {
-    console.log(`✅ Mock getMenuItem - returning item ${itemId}: ${item.name}`);
+    console.log(`Mock getMenuItem - returning item ${itemId}: ${item.name}`);
   }
 
   return withDelay<MenuItem>(item);
@@ -50,7 +50,7 @@ async function mockGetMenuItem(itemId: number): Promise<MenuItem> {
 
 async function mockGetInventory(): Promise<Record<number, { stock: number; reorderLevel: number }>> {
   if (CONFIG.DEBUG) {
-    console.log(`✅ Mock getInventory - returning inventory data`);
+    console.log(`Mock getInventory - returning inventory data`);
   }
   return withDelay<Record<number, { stock: number; reorderLevel: number }>>(MOCK_INVENTORY);
 }

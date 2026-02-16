@@ -16,7 +16,7 @@ export async function withDelay<T>(data: T, customDelay?: number): Promise<T> {
   return new Promise((resolve) => {
     setTimeout(() => {
       if (CONFIG.DEBUG) {
-        console.log(`⏱️  Mock API response after ${delay}ms`);
+        console.log(`Mock API response after ${delay}ms`);
       }
       resolve(data);
     }, delay);
@@ -33,7 +33,7 @@ export async function withDelayError<T extends Error>(error: T, customDelay?: nu
   return new Promise((_, reject) => {
     setTimeout(() => {
       if (CONFIG.DEBUG) {
-        console.error(`❌ Mock API error after ${delay}ms:`, error);
+        console.error(`Mock API error after ${delay}ms:`, error);
       }
       reject(error);
     }, delay);

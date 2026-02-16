@@ -2,7 +2,7 @@
  * Category Management - Manage menu categories
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import type { IconType } from 'react-icons';
 import {
   IoAddCircle,
@@ -41,7 +41,7 @@ const iconOptions: CategoryIconKey[] = [
 ];
 
 const CategoryManagement: React.FC = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[]>(() => [...MOCK_CATEGORIES]);
   const [showModal, setShowModal] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [formData, setFormData] = useState({
@@ -50,10 +50,6 @@ const CategoryManagement: React.FC = () => {
     iconKey: 'appetizers' as CategoryIconKey,
     displayOrder: 1,
   });
-
-  useEffect(() => {
-    setCategories([...MOCK_CATEGORIES]);
-  }, []);
 
   const handleAddCategory = () => {
     setEditingCategory(null);

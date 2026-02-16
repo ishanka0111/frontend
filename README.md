@@ -2,7 +2,7 @@
 
 A modern, full-featured React-based frontend for a comprehensive restaurant management system with role-based authentication, interactive UI components, and complete workflow management.
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # 1. Install dependencies
@@ -17,9 +17,9 @@ npm run dev
 
 The app runs with **mock API by default** - no backend needed for testing!
 
-## 🎯 Features
+## Features
 
-### ✅ Fully Implemented Features
+### Fully Implemented Features
 
 #### **Authentication & Authorization**
 - Complete login & register system with JWT tokens
@@ -27,7 +27,7 @@ The app runs with **mock API by default** - no backend needed for testing!
 - Protected routes and automatic token refresh
 - User profile management with interactive modals
 
-#### **Customer Features** 🛍️
+#### **Customer Features**
 - QR code-based table identification (scan to access menu)
 - Browse menu with search, filters, and categories
 - Shopping cart with real-time updates
@@ -35,7 +35,7 @@ The app runs with **mock API by default** - no backend needed for testing!
 - View order history with status badges
 - Interactive profile page with modals
 
-#### **Admin Features** 👨‍💼
+#### **Admin Features**
 - **Dashboard**: System overview with analytics
 - **Customer Management**: View all customers with search, filters, and status management (Active/Inactive/Blocked)
 - **Staff Management**: Create and manage kitchen/waiter staff accounts
@@ -43,20 +43,20 @@ The app runs with **mock API by default** - no backend needed for testing!
 - **Inventory Management**: Track stock levels with restock modal and validation
 - **Order Overview**: Monitor all system orders
 
-#### **Kitchen Features** 👨‍🍳
+#### **Kitchen Features**
 - Kitchen display system for active orders
 - Update order status (Preparing → Ready)
 - View order details and special instructions
 - Real-time order queue management
 
-#### **Waiter Features** 🤵
+#### **Waiter Features**
 - **Proxy Orders**: Place orders on behalf of customers (table-based)
 - **Available Tables Filter**: See only unoccupied tables to prevent conflicts
 - **Serve Orders**: Mark ready orders as served with success feedback
 - **Order Status Filtering**: View only orders ready to serve
 - **Cash Payment Management**: Handle cash transactions at tables
 
-### 🎨 Modern UI/UX
+### Modern UI/UX
 - **Modal Dialogs**: Reusable modal component with animations
 - **Success Toasts**: Non-blocking feedback notifications (auto-dismiss)
 - **Gradient Cards**: Beautiful stat cards with color-coded statuses
@@ -64,7 +64,7 @@ The app runs with **mock API by default** - no backend needed for testing!
 - **Loading States**: Skeleton screens and spinners
 - **Status Badges**: Color-coded order and user statuses
 
-## 🔑 Test Credentials
+## Test Credentials
 
 | Role     | Email              | Password    | Description |
 |----------|-------------------|-------------|-------------|
@@ -73,7 +73,7 @@ The app runs with **mock API by default** - no backend needed for testing!
 | Kitchen  | kitchen@test.com  | kitchen123  | Manage active orders |
 | Waiter   | waiter@test.com   | waiter123   | Proxy orders, serve tables |
 
-## 🏗️ Architecture
+## Architecture
 
 ### Technology Stack
 - **React 18** - UI framework with latest features
@@ -107,11 +107,13 @@ src/
 ```
 
 ### Code Quality Features
-- ✅ **Shared Components**: Reusable Modal, OrderCard, StatusFilter components
-- ✅ **Shared Utilities**: Order helpers, menu helpers, validators
-- ✅ **Centralized Constants**: Role enums, storage keys, order statuses
-- ✅ **Type Safety**: Full TypeScript coverage with strict mode
-- ✅ **De-duplicated Code**: Eliminated redundant code across components## 🛠️ Available Scripts
+- **Shared Components**: Reusable Modal, OrderCard, StatusFilter components
+- **Shared Utilities**: Order helpers, menu helpers, validators
+- **Centralized Constants**: Role enums, storage keys, order statuses
+- **Type Safety**: Full TypeScript coverage with strict mode
+- **De-duplicated Code**: Eliminated redundant code across components
+
+## Available Scripts
 
 | Command           | Description                    |
 |------------------|--------------------------------|
@@ -120,42 +122,42 @@ src/
 | `npm run preview`| Preview production build       |
 | `npm run lint`   | Run ESLint                     |
 
-## 📱 Application Routes
+## Application Routes
 
 ### Public Routes
 | Route        | Description           | Status      |
 |-------------|----------------------|-------------|
-| `/login`    | User login           | ✅ Complete |
-| `/register` | Customer registration | ✅ Complete |
+| `/login`    | User login           | Complete |
+| `/register` | Customer registration | Complete |
 
 ### Customer Routes (Role: 1)
 | Route      | Description              | Status      |
 |-----------|-------------------------|-------------|
-| `/menu`   | Browse menu & add to cart | ✅ Complete |
-| `/orders` | View order history       | ✅ Complete |
-| `/profile`| User profile management  | ✅ Complete |
+| `/menu`   | Browse menu & add to cart | Complete |
+| `/orders` | View order history       | Complete |
+| `/profile`| User profile management  | Complete |
 
 ### Admin Routes (Role: 2)
 | Route                | Description                  | Status      |
 |---------------------|----------------------------|-------------|
-| `/admin`            | Admin dashboard            | ✅ Complete |
-| `/admin/customers`  | Customer management        | ✅ Complete |
-| `/admin/staff`      | Staff management           | ✅ Complete |
-| `/admin/menu`       | Menu management            | ✅ Complete |
-| `/admin/inventory`  | Inventory & restock        | ✅ Complete |
+| `/admin`            | Admin dashboard            | Complete |
+| `/admin/customers`  | Customer management        | Complete |
+| `/admin/staff`      | Staff management           | Complete |
+| `/admin/menu`       | Menu management            | Complete |
+| `/admin/inventory`  | Inventory & restock        | Complete |
 
 ### Kitchen Routes (Role: 3)
 | Route      | Description              | Status      |
 |-----------|-------------------------|-------------|
-| `/kitchen`| Kitchen order display    | ✅ Complete |
+| `/kitchen`| Kitchen order display    | Complete |
 
 ### Waiter Routes (Role: 4)
 | Route              | Description                      | Status      |
 |-------------------|----------------------------------|-------------|
-| `/waiter/proxy`   | Place proxy orders for tables    | ✅ Complete |
-| `/waiter/serve`   | Serve ready orders               | ✅ Complete |
+| `/waiter/proxy`   | Place proxy orders for tables    | Complete |
+| `/waiter/serve`   | Serve ready orders               | Complete |
 
-## 🎨 Key Components
+## Key Components
 
 ### Shared Components
 - **Modal**: Reusable modal dialog with overlay and animations
@@ -171,7 +173,7 @@ src/
 - **Proxy Order**: Available tables filter to prevent double-booking
 - **Profile Page**: Interactive modals for password change, address update, and logout
 
-## 📚 Documentation
+## Documentation
 
 ### Core Documentation
 - [API Documentation](docs/api.md) - Backend API endpoints and schemas
@@ -185,7 +187,7 @@ src/
 - [Customer Features](docs/CUSTOMER_FEATURES.md) - Customer-facing features
 - [System Details](docs/details.md) - Detailed system flows and user roles
 
-## 🔄 Mock API vs Real Backend
+## Mock API vs Real Backend
 
 ### Current Mode: Mock API (Default)
 The application uses mock data by default for standalone testing:
@@ -205,22 +207,22 @@ VITE_BASE_URL=http://localhost:8080/api/
 
 Backend services run on ports 3001-3011 with API Gateway on port 8080.
 
-## ✨ Recent Improvements
+## Recent Improvements
 
 ### User Experience Enhancements
-- ✅ Modal dialogs replace basic prompts for better UX
-- ✅ Success toast notifications with auto-dismiss
-- ✅ Filtered dropdowns prevent workflow errors
-- ✅ Status badges with color coding for quick identification
-- ✅ Gradient stat cards for improved data visualization
+- Modal dialogs replace basic prompts for better UX
+- Success toast notifications with auto-dismiss
+- Filtered dropdowns prevent workflow errors
+- Status badges with color coding for quick identification
+- Gradient stat cards for improved data visualization
 
 ### Code Quality
-- ✅ De-duplicated shared components and utilities
-- ✅ Centralized constants with TypeScript enums
-- ✅ Type-safe throughout with strict TypeScript
-- ✅ Accessibility improvements for modals and forms
+- De-duplicated shared components and utilities
+- Centralized constants with TypeScript enums
+- Type-safe throughout with strict TypeScript
+- Accessibility improvements for modals and forms
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Development Server Issues
 ```bash
@@ -237,7 +239,7 @@ npm install
 - Restart dev server after environment variable changes
 - Check browser console for error messages
 
-## 💡 Development Tips
+## Development Tips
 
 - **Hot Module Replacement**: Changes appear instantly without refresh
 - **TypeScript**: Full autocomplete and type checking in VS Code
@@ -245,7 +247,7 @@ npm install
 - **Component Reuse**: Check `src/components/` before creating new components
 - **Constants**: Use centralized constants from `src/constants/` instead of magic strings
 
-## 🚀 Getting Started Guide
+## Getting Started Guide
 
 ### For Customers
 1. Register a new account at `/register`
@@ -261,10 +263,10 @@ npm install
 4. Kitchen: View and update order statuses
 5. Waiter: Take proxy orders and serve tables
 
-## 📝 License
+## License
 
 Restaurant Management System - All rights reserved
 
 ---
 
-**Built with ❤️ using React + TypeScript + Vite**
+**Built with React + TypeScript + Vite**

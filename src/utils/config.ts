@@ -28,7 +28,7 @@ export const CONFIG = {
  */
 export function logConfig() {
   if (CONFIG.DEBUG) {
-    console.log('🔧 App Configuration:', {
+    console.log('App Configuration:', {
       USE_MOCK_API: CONFIG.USE_MOCK_API,
       API_BASE_URL: CONFIG.API_BASE_URL,
       WS_URL: CONFIG.WS_URL,

@@ -14,6 +14,7 @@ export { default as RootRedirect } from './RootRedirect';
 export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as MenuCard } from './MenuCard/MenuCard';
 export { default as Cart } from './Cart/Cart';
+export { default as CustomerBottomNav } from './CustomerBottomNav';
 
 // Order-related components
 export { OrderStatsRow } from './OrderStatsRow';

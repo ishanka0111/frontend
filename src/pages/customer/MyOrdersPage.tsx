@@ -2,7 +2,8 @@
  * My Orders Page - Customer order history
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { IoListOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Layout, Button, LoadingSpinner, OrderCard } from '../../components';
@@ -17,11 +18,7 @@ const MyOrdersPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
 
-  useEffect(() => {
-    loadOrders();
-  }, [user]);
-
-  const loadOrders = async () => {
+  const loadOrders = useCallback(async () => {
     try {
       setIsLoading(true);
       // Filter orders by current user
@@ -35,7 +32,11 @@ const MyOrdersPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    loadOrders();
+  }, [loadOrders]);
 
   const filteredOrders = orders.filter(order => {
     if (filter === 'all') return true;
@@ -88,7 +89,9 @@ const MyOrdersPage: React.FC = () => {
           {/* Orders List */}
           {filteredOrders.length === 0 ? (
             <div className="my-orders-empty">
-              <div className="my-orders-empty__icon">📋</div>
+              <div className="my-orders-empty__icon">
+                <IoListOutline />
+              </div>
               <h2>No Orders Found</h2>
               <p>You haven't placed any orders yet</p>
               <Button onClick={() => navigate('/menu')}>Browse Menu</Button>

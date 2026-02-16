@@ -38,10 +38,10 @@ async function refreshAccessToken(): Promise<boolean> {
 /**
  * Enhanced fetch with automatic authentication and token refresh
  */
-export async function fetchWithAuth(
+export async function fetchWithAuth<T = unknown>(
   endpoint: string,
   options: FetchOptions = {}
-): Promise<any> {
+): Promise<T> {
   const { skipAuth, ...fetchOptions } = options;
   const url = endpoint.startsWith('http') ? endpoint : `${BASE_URL}${endpoint}`;
 
@@ -88,9 +88,9 @@ export async function fetchWithAuth(
     // Parse response based on content type
     const contentType = response.headers.get('content-type');
     if (contentType?.includes('application/json')) {
-      return await response.json();
+      return (await response.json()) as T;
     } else {
-      return await response.text();
+      return (await response.text()) as T;
     }
   } catch (error) {
     console.error('API request failed:', error);

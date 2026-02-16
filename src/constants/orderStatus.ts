@@ -2,75 +2,75 @@
  * Order Status Constants - Centralized order status definitions
  */
 
-export enum OrderStatus {
-  PENDING = 'pending',
-  CONFIRMED = 'confirmed',
-  PREPARING = 'preparing',
-  READY = 'ready',
-  SERVED = 'served',
-  COMPLETED = 'completed',
-  CANCELLED = 'cancelled',
-  PAID = 'paid',
-}
+export const OrderStatus = {
+  PENDING: 'pending',
+  CONFIRMED: 'confirmed',
+  PREPARING: 'preparing',
+  READY: 'ready',
+  SERVED: 'served',
+  COMPLETED: 'completed',
+  CANCELLED: 'cancelled',
+  PAID: 'paid',
+} as const;
 
-export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
-  [OrderStatus.PENDING]: '⏳ Pending',
-  [OrderStatus.CONFIRMED]: '✔️ Confirmed',
-  [OrderStatus.PREPARING]: '👨‍🍳 Preparing',
-  [OrderStatus.READY]: '🔔 Ready',
-  [OrderStatus.SERVED]: '🍽️ Served',
-  [OrderStatus.COMPLETED]: '✅ Completed',
-  [OrderStatus.CANCELLED]: '❌ Cancelled',
-  [OrderStatus.PAID]: '💳 Paid',
+export const ORDER_STATUS_LABELS: Record<string, string> = {
+  pending: 'Pending',
+  confirmed: 'Confirmed',
+  preparing: 'Preparing',
+  ready: 'Ready',
+  served: 'Served',
+  completed: 'Completed',
+  cancelled: 'Cancelled',
+  paid: 'Paid',
 };
 
-export const ORDER_STATUS_BADGE_CLASSES: Record<OrderStatus, string> = {
-  [OrderStatus.PENDING]: 'badge-pending',
-  [OrderStatus.CONFIRMED]: 'badge-confirmed',
-  [OrderStatus.PREPARING]: 'badge-preparing',
-  [OrderStatus.READY]: 'badge-ready',
-  [OrderStatus.SERVED]: 'badge-served',
-  [OrderStatus.COMPLETED]: 'badge-completed',
-  [OrderStatus.CANCELLED]: 'badge-cancelled',
-  [OrderStatus.PAID]: 'badge-paid',
+export const ORDER_STATUS_BADGE_CLASSES: Record<string, string> = {
+  pending: 'badge-pending',
+  confirmed: 'badge-confirmed',
+  preparing: 'badge-preparing',
+  ready: 'badge-ready',
+  served: 'badge-served',
+  completed: 'badge-completed',
+  cancelled: 'badge-cancelled',
+  paid: 'badge-paid',
 };
 
 /**
  * Payment Status Constants
  */
-export enum PaymentStatus {
-  PENDING = 'pending',
-  PAID = 'paid',
-  FAILED = 'failed',
-  REFUNDED = 'refunded',
-}
+export const PaymentStatus = {
+  PENDING: 'pending',
+  PAID: 'paid',
+  FAILED: 'failed',
+  REFUNDED: 'refunded',
+} as const;
 
-export const PAYMENT_STATUS_LABELS: Record<PaymentStatus, string> = {
-  [PaymentStatus.PENDING]: 'Pending Payment',
-  [PaymentStatus.PAID]: 'Paid',
-  [PaymentStatus.FAILED]: 'Payment Failed',
-  [PaymentStatus.REFUNDED]: 'Refunded',
+export const PAYMENT_STATUS_LABELS: Record<string, string> = {
+  pending: 'Pending Payment',
+  paid: 'Paid',
+  failed: 'Payment Failed',
+  refunded: 'Refunded',
 };
 
 /**
  * Order status workflow helpers
  */
-export const ORDER_STATUS_FLOW: Record<OrderStatus, OrderStatus[]> = {
-  [OrderStatus.PENDING]: [OrderStatus.CONFIRMED, OrderStatus.CANCELLED],
-  [OrderStatus.CONFIRMED]: [OrderStatus.PREPARING, OrderStatus.CANCELLED],
-  [OrderStatus.PREPARING]: [OrderStatus.READY, OrderStatus.CANCELLED],
-  [OrderStatus.READY]: [OrderStatus.SERVED],
-  [OrderStatus.SERVED]: [OrderStatus.COMPLETED],
-  [OrderStatus.COMPLETED]: [OrderStatus.PAID],
-  [OrderStatus.PAID]: [],
-  [OrderStatus.CANCELLED]: [],
+export const ORDER_STATUS_FLOW: Record<string, string[]> = {
+  pending: ['confirmed', 'cancelled'],
+  confirmed: ['preparing', 'cancelled'],
+  preparing: ['ready', 'cancelled'],
+  ready: ['served'],
+  served: ['completed'],
+  completed: ['paid'],
+  paid: [],
+  cancelled: [],
 };
 
 /**
  * Get available next statuses for an order
  */
-export const getNextStatuses = (currentStatus: string): OrderStatus[] => {
-  return ORDER_STATUS_FLOW[currentStatus as OrderStatus] || [];
+export const getNextStatuses = (currentStatus: string): string[] => {
+  return ORDER_STATUS_FLOW[currentStatus] || [];
 };
 
 /**
@@ -78,23 +78,23 @@ export const getNextStatuses = (currentStatus: string): OrderStatus[] => {
  */
 export const isValidStatusTransition = (from: string, to: string): boolean => {
   const validNextStatuses = getNextStatuses(from);
-  return validNextStatuses.includes(to as OrderStatus);
+  return validNextStatuses.includes(to);
 };
 
 /**
  * Get status priority for sorting
  */
-export const ORDER_STATUS_PRIORITY: Record<OrderStatus, number> = {
-  [OrderStatus.READY]: 1,
-  [OrderStatus.PREPARING]: 2,
-  [OrderStatus.CONFIRMED]: 3,
-  [OrderStatus.PENDING]: 4,
-  [OrderStatus.SERVED]: 5,
-  [OrderStatus.COMPLETED]: 6,
-  [OrderStatus.PAID]: 7,
-  [OrderStatus.CANCELLED]: 8,
+export const ORDER_STATUS_PRIORITY: Record<string, number> = {
+  ready: 1,
+  preparing: 2,
+  confirmed: 3,
+  pending: 4,
+  served: 5,
+  completed: 6,
+  paid: 7,
+  cancelled: 8,
 };
 
 export const getStatusPriority = (status: string): number => {
-  return ORDER_STATUS_PRIORITY[status as OrderStatus] || 99;
+  return ORDER_STATUS_PRIORITY[status] || 99;
 };

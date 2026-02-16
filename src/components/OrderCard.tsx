@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import { IoRestaurantOutline, IoTimeOutline } from 'react-icons/io5';
 import type { Order } from '../services/mockDataGenerator';
 import { getOrderStatusBadgeClass, getOrderStatusLabel, formatRelativeDate } from '../utils/orderHelpers';
 import { getMenuItemNameById } from '../utils/menuHelpers';
@@ -53,10 +54,16 @@ export const OrderCard: React.FC<OrderCardProps> = ({
         {(showTable || showEstimatedTime) && (
           <div className="order-info">
             {showTable && (
-              <span className="order-table">🪑 Table {order.tableId}</span>
+              <span className="order-table">
+                <IoRestaurantOutline className="status-icon" />
+                Table {order.tableId}
+              </span>
             )}
             {showEstimatedTime && order.estimatedTime && ['PLACED', 'PREPARING'].includes(order.status) && (
-              <span className="order-eta">⏱️ ~{order.estimatedTime} min</span>
+              <span className="order-eta">
+                <IoTimeOutline className="status-icon" />
+                ~{order.estimatedTime} min
+              </span>
             )}
           </div>
         )}

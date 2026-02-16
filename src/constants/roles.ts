@@ -2,25 +2,25 @@
  * Role Constants - Centralized role definitions
  */
 
-export enum UserRole {
-  CUSTOMER = 1,
-  ADMIN = 2,
-  KITCHEN = 3,
-  WAITER = 4,
-}
+export const UserRole = {
+  CUSTOMER: 1,
+  ADMIN: 2,
+  KITCHEN: 3,
+  WAITER: 4,
+} as const;
 
-export const ROLE_NAMES: Record<UserRole, string> = {
-  [UserRole.CUSTOMER]: 'Customer',
-  [UserRole.ADMIN]: 'Admin',
-  [UserRole.KITCHEN]: 'Kitchen Staff',
-  [UserRole.WAITER]: 'Waiter',
+export const ROLE_NAMES: Record<number, string> = {
+  1: 'Customer',
+  2: 'Admin',
+  3: 'Kitchen Staff',
+  4: 'Waiter',
 };
 
-export const ROLE_PATHS: Record<UserRole, string> = {
-  [UserRole.CUSTOMER]: '/customer',
-  [UserRole.ADMIN]: '/admin',
-  [UserRole.KITCHEN]: '/kitchen',
-  [UserRole.WAITER]: '/waiter',
+export const ROLE_PATHS: Record<number, string> = {
+  1: '/customer',
+  2: '/admin',
+  3: '/kitchen',
+  4: '/waiter',
 };
 
 /**
@@ -30,7 +30,7 @@ export const getRoleName = (role?: number): string => {
   if (!role || !(role in ROLE_NAMES)) {
     return 'Unknown';
   }
-  return ROLE_NAMES[role as UserRole];
+  return ROLE_NAMES[role];
 };
 
 /**
@@ -40,7 +40,7 @@ export const getRolePath = (role?: number): string => {
   if (!role || !(role in ROLE_PATHS)) {
     return '/login';
   }
-  return ROLE_PATHS[role as UserRole];
+  return ROLE_PATHS[role];
 };
 
 /**

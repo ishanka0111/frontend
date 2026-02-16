@@ -30,7 +30,7 @@ async function mockLogin(credentials: LoginRequest): Promise<LoginResponse> {
   setRefreshToken(mockRefreshToken);
 
   if (CONFIG.DEBUG) {
-    console.log(`✅ Mock login successful for ${credentials.email}`);
+    console.log(`Mock login successful for ${credentials.email}`);
   }
 
   return withDelay<LoginResponse>({
@@ -65,7 +65,7 @@ async function mockRegister(data: RegisterRequest): Promise<RegisterResponse> {
   setRefreshToken(mockRefreshToken);
 
   if (CONFIG.DEBUG) {
-    console.log(`✅ Mock registration successful for ${data.email}`);
+    console.log(`Mock registration successful for ${data.email}`);
   }
 
   return withDelay<RegisterResponse>({
@@ -92,7 +92,7 @@ async function mockGetProfile(token: string): Promise<UserProfile> {
   }
 
   if (CONFIG.DEBUG) {
-    console.log(`✅ Mock getProfile successful for user ${userId}`);
+    console.log(`Mock getProfile successful for user ${userId}`);
   }
 
   return withDelay<UserProfile>(user);
@@ -103,7 +103,7 @@ async function mockUpdateProfile(token: string, updates: Partial<UserProfile>): 
   const updated = { ...profile, ...updates };
 
   if (CONFIG.DEBUG) {
-    console.log(`✅ Mock updateProfile successful for user ${profile.id}`);
+    console.log(`Mock updateProfile successful for user ${profile.id}`);
   }
 
   return withDelay<UserProfile>(updated);

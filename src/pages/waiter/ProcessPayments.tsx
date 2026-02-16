@@ -2,7 +2,7 @@
  * Process Payments - Handle cash and card payments
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { IoCardOutline, IoCashOutline, IoCheckmarkCircle } from 'react-icons/io5';
 import { Layout } from '../../components';
 import { MOCK_ORDERS } from '../../services/mockDataGenerator';
@@ -10,20 +10,13 @@ import type { Order } from '../../services/mockDataGenerator';
 import './ProcessPayments.css';
 
 const ProcessPayments: React.FC = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<Order[]>(() =>
+    MOCK_ORDERS.filter((o) => o.status === 'SERVED')
+  );
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<'CASH' | 'CARD'>('CASH');
   const [discount, setDiscount] = useState(0);
   const [tipAmount, setTipAmount] = useState(0);
-
-  useEffect(() => {
-    loadOrders();
-  }, []);
-
-  const loadOrders = () => {
-    const served = MOCK_ORDERS.filter((o) => o.status === 'SERVED');
-    setOrders(served);
-  };
 
   const handlePayment = () => {
     if (!selectedOrder) return;
@@ -40,7 +33,6 @@ const ProcessPayments: React.FC = () => {
     setSelectedOrder(null);
     setDiscount(0);
     setTipAmount(0);
-    loadOrders();
   };
 
   const finalAmount = selectedOrder

@@ -1,0 +1,501 @@
+/* Customer Bottom Navigation Styles */
+
+.customer-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 66px;
+  background: var(--ios-glass-bg);
+  box-shadow: var(--ios-shadow);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border-top: 1px solid var(--ios-glass-border);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  z-index: 40;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  text-decoration: none;
+  color: var(--ios-text-tertiary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.45rem 0.65rem;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+}
+
+.nav-item:active,
+.nav-item.active {
+  color: var(--ios-orange);
+  background: rgba(255, 159, 64, 0.1);
+}
+
+.nav-item:hover {
+  color: var(--ios-text-secondary);
+}
+
+.nav-icon {
+  font-size: 1.5rem;
+}
+
+.nav-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+/* Profile Overlay */
+.profile-overlay {
+  position: fixed;
+  bottom: 70px;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 35;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.profile-panel {
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  background: white;
+  border-radius: 20px 20px 0 0;
+  max-height: 70vh;
+  width: min(560px, 100%);
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--ios-gray5);
+  position: sticky;
+  top: 0;
+  background: white;
+  border-radius: 20px 20px 0 0;
+  z-index: 36;
+}
+
+.profile-header h3 {
+  font-size: 1.25rem;
+  color: var(--ios-text-primary);
+  margin: 0;
+}
+
+.close-btn {
+  background: var(--ios-gray6);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: var(--ios-text-primary);
+  transition: all 0.2s ease;
+}
+
+.close-btn:active {
+  background: var(--ios-gray5);
+  transform: scale(0.95);
+}
+
+.profile-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+/* Profile Card */
+.profile-card {
+  background: var(--ios-gray6);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.profile-avatar {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--ios-orange), var(--ios-yellow));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.profile-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.profile-info h4 {
+  font-size: 1.1rem;
+  color: var(--ios-text-primary);
+  margin: 0;
+  font-weight: 600;
+}
+
+.profile-info p {
+  font-size: 0.85rem;
+  color: var(--ios-text-secondary);
+  margin: 0;
+}
+
+.profile-info .phone {
+  font-size: 0.8rem;
+  color: var(--ios-text-tertiary);
+}
+
+/* Referral Section */
+.referral-section {
+  background: linear-gradient(135deg, rgba(255, 159, 64, 0.1), rgba(255, 193, 7, 0.1));
+  border: 1px solid rgba(255, 159, 64, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.referral-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.referral-icon {
+  font-size: 1.5rem;
+  color: var(--ios-orange);
+}
+
+.referral-header h5 {
+  font-size: 1rem;
+  color: var(--ios-text-primary);
+  margin: 0;
+  font-weight: 600;
+}
+
+.referral-code-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: white;
+  border: 1px solid var(--ios-gray5);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.referral-code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  color: var(--ios-orange);
+  font-weight: 600;
+  flex: 1;
+  word-break: break-all;
+}
+
+.copy-btn {
+  background: none;
+  border: none;
+  color: var(--ios-orange);
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.35rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-btn:active {
+  background: rgba(255, 159, 64, 0.1);
+  transform: scale(0.9);
+}
+
+.referral-text {
+  font-size: 0.8rem;
+  color: var(--ios-text-secondary);
+  margin: 0;
+  text-align: center;
+}
+
+/* Quick Links */
+.quick-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.quick-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--ios-gray6);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--ios-text-primary);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  font-size: 0.95rem;
+}
+
+.quick-link:active {
+  background: var(--ios-gray5);
+  transform: scale(0.98);
+}
+
+.quick-link svg {
+  font-size: 1.25rem;
+  color: var(--ios-orange);
+}
+
+/* Logout Button */
+.logout-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(255, 59, 48, 0.15), rgba(255, 59, 48, 0.1));
+  border: 1.5px solid rgba(255, 59, 48, 0.3);
+  border-radius: 10px;
+  color: var(--ios-red);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+  font-family: inherit;
+}
+
+.logout-btn:active {
+  background: linear-gradient(135deg, rgba(255, 59, 48, 0.25), rgba(255, 59, 48, 0.15));
+  transform: scale(0.98);
+  border-color: rgba(255, 59, 48, 0.5);
+}
+
+.logout-icon {
+  font-size: 1.25rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .customer-bottom-nav {
+    height: 65px;
+  }
+
+  .nav-item {
+    padding: 0.35rem;
+    padding-bottom: calc(0.35rem + env(safe-area-inset-bottom));
+  }
+
+  .nav-icon {
+    font-size: 1.35rem;
+  }
+
+  .nav-label {
+    font-size: 0.65rem;
+  }
+
+  .profile-panel {
+    max-height: 75vh;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .profile-header {
+    padding: 1rem;
+  }
+
+  .profile-content {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .referral-section {
+    padding: 1rem;
+  }
+
+  .profile-card {
+    padding: 1rem;
+  }
+
+  .profile-avatar {
+    width: 50px;
+    height: 50px;
+    font-size: 1.75rem;
+  }
+
+  .profile-info h4 {
+    font-size: 1rem;
+  }
+
+  .profile-info p {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .customer-bottom-nav {
+    height: 60px;
+  }
+
+  .nav-item {
+    padding: 0.25rem;
+    gap: 0.25rem;
+    padding-bottom: calc(0.25rem + env(safe-area-inset-bottom));
+  }
+
+  .nav-icon {
+    font-size: 1.25rem;
+  }
+
+  .nav-label {
+    font-size: 0.6rem;
+  }
+
+  .profile-overlay {
+    bottom: 60px;
+  }
+
+  .profile-panel {
+    bottom: 60px;
+    max-height: 80vh;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .profile-header {
+    padding: 0.85rem;
+  }
+
+  .profile-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .close-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+  }
+
+  .profile-content {
+    padding: 0.85rem;
+    gap: 0.85rem;
+  }
+
+  .profile-card {
+    padding: 0.85rem;
+    gap: 0.75rem;
+  }
+
+  .profile-avatar {
+    width: 45px;
+    height: 45px;
+    font-size: 1.5rem;
+  }
+
+  .profile-info h4 {
+    font-size: 0.95rem;
+  }
+
+  .profile-info p {
+    font-size: 0.75rem;
+  }
+
+  .referral-section {
+    padding: 0.85rem;
+  }
+
+  .referral-icon {
+    font-size: 1.25rem;
+  }
+
+  .referral-header h5 {
+    font-size: 0.95rem;
+  }
+
+  .referral-code {
+    font-size: 0.85rem;
+  }
+
+  .copy-btn {
+    font-size: 1rem;
+  }
+
+  .referral-text {
+    font-size: 0.75rem;
+  }
+
+  .quick-link {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .quick-link svg {
+    font-size: 1.1rem;
+  }
+
+  .logout-btn {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    margin-top: 0.35rem;
+  }
+
+  .logout-icon {
+    font-size: 1.1rem;
+  }
+}

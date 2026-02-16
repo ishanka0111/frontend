@@ -4,7 +4,7 @@
 
 import React, { createContext, useState, useEffect } from 'react';
 import type { MenuItem, CartItem } from '../types';
-import { STORAGE_KEYS, cartStorage } from '../constants/storage';
+import { cartStorage } from '../constants/storage';
 
 export interface CartContextType {
   items: CartItem[];
@@ -25,7 +25,8 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [items, setItems] = useState<CartItem[]>(() => {
     // Load cart from localStorage on init
-    return cartStorage.get();
+    const saved = cartStorage.get();
+    return Array.isArray(saved) ? (saved as CartItem[]) : [];
   });
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -90,7 +91,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const clearCart = () => {
     setItems([]);
-    localStorage.removeItem(CART_STORAGE_KEY);
+    cartStorage.remove();
   };
 
   const openCart = () => setIsCartOpen(true);

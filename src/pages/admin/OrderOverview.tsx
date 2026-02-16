@@ -2,7 +2,7 @@
  * Order Overview - Admin view of all restaurant orders
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { IoBarChartOutline, IoEyeOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { Layout, OrderStatsRow, OrderStatusFilter } from '../../components';
@@ -14,20 +14,14 @@ import { getOrderStatusBadgeClass } from '../../utils/orderHelpers';
 import './OrderOverview.css';
 
 const OrderOverview: React.FC = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const loadOrders = () => {
-    // Sort by most recent first
-    const sorted = [...MOCK_ORDERS].sort(
+  // Sort orders by most recent first
+  const orders = useMemo(() => {
+    return [...MOCK_ORDERS].sort(
       (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
-    setOrders(sorted);
-  };
-
-  useEffect(() => {
-    loadOrders();
   }, []);
 
   const filteredOrders = orders.filter((order) => {
@@ -116,8 +110,7 @@ const OrderOverview: React.FC = () => {
                 <th>Action</th>
               </tr>
             </thead>
-                        <IoEyeOutline className="btn-icon" />
-                        View
+            <tbody>
               {filteredOrders.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="empty-state">
