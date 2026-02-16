@@ -91,19 +91,20 @@ const CustomersList: React.FC = () => {
 
   const handleToggleStatus = (customerId: number) => {
     setCustomers(
-      customers.map((customer) =>
-        customer.id === customerId
-          ? {
-              ...customer,
-              status:
-                customer.status === 'ACTIVE'
-                  ? 'INACTIVE'
-                  : customer.status === 'INACTIVE'
-                  ? 'ACTIVE'
-                  : 'BLOCKED',
-            }
-          : customer
-      )
+      customers.map((customer) => {
+        if (customer.id !== customerId) return customer;
+        
+        let newStatus: 'ACTIVE' | 'INACTIVE' | 'BLOCKED';
+        if (customer.status === 'ACTIVE') {
+          newStatus = 'INACTIVE';
+        } else if (customer.status === 'INACTIVE') {
+          newStatus = 'ACTIVE';
+        } else {
+          newStatus = 'BLOCKED';
+        }
+        
+        return { ...customer, status: newStatus };
+      })
     );
   };
 

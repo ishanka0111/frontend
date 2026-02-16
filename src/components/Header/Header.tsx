@@ -68,6 +68,7 @@ const Header: React.FC<HeaderProps> = ({
               {isAdmin && (
                 <>
                   <Link to="/admin" className="header__nav-link">Dashboard</Link>
+                  <Link to="/admin/customers" className="header__nav-link">Customers</Link>
                   <Link to="/admin/staff" className="header__nav-link">Staff</Link>
                   <Link to="/admin/menu" className="header__nav-link">Menu</Link>
                   <Link to="/admin/inventory" className="header__nav-link">Inventory</Link>

@@ -26,11 +26,6 @@ interface PendingCashCollection {
   status: 'PENDING' | 'COMPLETED';
 }
 
-interface TableInfo {
-  tableId: number;
-  status: 'AVAILABLE' | 'OCCUPIED' | 'RESERVED' | 'DIRTY';
-}
-
 const STORAGE_KEY = 'waiter_pending_cash_collections';
 
 // Helper to load pending collections from localStorage

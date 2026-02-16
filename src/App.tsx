@@ -25,6 +25,7 @@ import QRScannerPage from './pages/customer/QRScannerPage';
 // Admin Pages
 import AdminDashboard from './pages/admin/AdminDashboard';
 import StaffManagement from './pages/admin/StaffManagement';
+import CustomersList from './pages/admin/CustomersList';
 import MenuManagement from './pages/admin/MenuManagement';
 import CategoryManagement from './pages/admin/CategoryManagement';
 import InventoryManagement from './pages/admin/InventoryManagement';
@@ -159,6 +160,14 @@ function App() {
             element={
               <RoleBasedRoute requiredRoles={[2]}>
                 <StaffManagement />
+              </RoleBasedRoute>
+            }
+          />
+          <Route
+            path="/admin/customers"
+            element={
+              <RoleBasedRoute requiredRoles={[2]}>
+                <CustomersList />
               </RoleBasedRoute>
             }
           />

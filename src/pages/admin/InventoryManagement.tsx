@@ -59,7 +59,7 @@ const InventoryManagement: React.FC = () => {
   };
 
   const handleRestockSubmit = () => {
-    if (!selectedItem || !restockAmount || isNaN(Number(restockAmount)) || Number(restockAmount) <= 0) {
+    if (!selectedItem || !restockAmount || Number.isNaN(Number(restockAmount)) || Number(restockAmount) <= 0) {
       alert('Please enter a valid restock amount');
       return;
     }
@@ -175,7 +175,6 @@ const InventoryManagement: React.FC = () => {
               ) : (
                 filteredInventory.map((item) => {
                   const isLow = item.currentStock < item.minStock;
-                  const stockPercent = (item.currentStock / item.minStock) * 100;
                   return (
                     <tr key={item.id} className={isLow ? 'low-stock-row' : ''}>
                       <td className="item-name">{item.name}</td>
@@ -236,7 +235,7 @@ const InventoryManagement: React.FC = () => {
                     autoFocus
                   />
                 </div>
-                {restockAmount && !isNaN(Number(restockAmount)) && (
+                {restockAmount && !Number.isNaN(Number(restockAmount)) && (
                   <div className="stock-preview">
                     <p>New Stock: {selectedItem.currentStock + Number(restockAmount)} {selectedItem.unit}</p>
                   </div>
