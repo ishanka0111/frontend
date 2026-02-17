@@ -1,0 +1,51 @@
+﻿
+     STITCH PROJECT - COMPLETE DOWNLOAD SUMMARY                 
+     Customer Menu App (ID: 14810343214807796044)                
+
+
+BATCH 1 - ORIGINAL 16 SCREENS:
+================================
+1.  Staff Login (Desktop)
+2.  Waiter: Floor Plan
+3.  Kitchen: Order Detail
+4.  Customer Login
+5.  Customer: Live Status
+6.  Kitchen: KDS Dashboard
+7.  Admin: Dashboard
+8.  Waiter: Order Entry
+9.  QR Scan Required Popup
+10. Customer: Menu
+11. Admin: Menu Management
+12. Customer: Checkout
+13. Customer Register
+14. Kitchen: Inventory Management
+15. Customer Profile & Settings
+16. Customer Cart Overlay
+
+BATCH 2 - ADDITIONAL 7 SCREENS:
+================================
+17. Admin: Staff Management
+18. Waiter Profile & Stats
+19. Inventory Alerts & Reorder
+20. Waiter: History & Shift Summary
+21. Admin: Reports & Analytics
+22. Kitchen: Order History
+23. Staff & Admin Account Settings
+
+DOWNLOAD STATISTICS:
+====================
+Total Screens Downloaded:  23/23
+Total HTML Files:          20/23
+Total Screenshots:         23/23
+Total Files:               45
+
+Total Download Size:       1.59 MB
+
+DOWNLOAD LOCATION:
+C:\Users\ishanka.senadeera\Desktop\merge\frontend\stitch-screens
+
+Each screen folder contains:
+  - code.html        (Generated front-end code)
+  - screenshot.png   (Design screenshot)
+
+Generated: 2026-02-17 14:41:22

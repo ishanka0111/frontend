@@ -1,125 +1,171 @@
-/**
- * Type Definitions for the Restaurant Management System
- */
+// ============================================
+// USER & AUTHENTICATION
+// ============================================
 
-// User & Authentication Types
-export interface UserProfile {
-  id: number;
-  fullName: string;
-  email: string;
-  phone: string;
-  role: number; // 1 = Customer, 2 = Admin, 3 = Kitchen
-  createdAt: string;
-}
-
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
-export interface LoginResponse {
-  accessToken: string;
-  refreshToken: string;
-  tokenType: string;
-}
-
-export interface RegisterRequest {
-  fullName: string;
-  email: string;
-  password: string;
-  phone: string;
-  role: number;
-}
-
-export interface RegisterResponse {
-  id: number;
-  email: string;
-  fullName: string;
-  role: number;
-  phone: string;
-  createdAt: string;
-}
-
-// Menu Types
-export interface Category {
-  id: number;
+export interface User {
+  id: string;
   name: string;
-  displayOrder: number;
+  email: string;
+  phone?: string;
+  address?: string;
+  role: UserRole;
+  password?: string;
+  createdAt: string;
 }
+
+export enum UserRole {
+  CUSTOMER = 1,
+  ADMIN = 2,
+  KITCHEN = 3,
+  WAITER = 4,
+}
+
+export interface AuthState {
+  user: User | null;
+  token: string | null;
+  isAuthenticated: boolean;
+  loading: boolean;
+  error: string | null;
+}
+
+// ============================================
+// MENU & PRODUCTS
+// ============================================
 
 export interface MenuItem {
-  id: number;
+  id: string;
   name: string;
   description: string;
+  category: string;
   price: number;
-  categoryId: number;
-  category?: string;
-  imageUrl?: string;
-  isActive: boolean;
-  dietaryTags?: string[];
+  image: string;
+  available: boolean;
+  preparationTime: number; // in minutes
+  ingredients?: string[];
   allergens?: string[];
-  preparationTime?: number;
-  createdAt: string;
 }
 
-// Cart Types
-export interface CartItem extends MenuItem {
-  quantity: number;
-  notes?: string;
+export interface MenuCategory {
+  id: string;
+  name: string;
+  description?: string;
+  icon?: string;
 }
 
-// Order Types
-export interface Order {
-  id: number;
-  userId: number;
-  tableId?: number;
-  items: OrderItem[];
-  totalPrice: number;
-  status: OrderStatusType;
-  createdAt: string;
-  updatedAt: string;
-}
+// ============================================
+// ORDERS
+// ============================================
 
 export interface OrderItem {
-  menuItemId: number;
-  menuItemName: string;
+  id: string;
+  menuItemId: string;
+  menuItem: MenuItem;
   quantity: number;
-  price: number;
-  notes?: string;
-}
-
-export interface PlaceOrderRequest {
-  tableId?: number;
-  items: {
-    menuItemId: number;
-    quantity: number;
-    notes?: string;
-  }[];
   specialRequests?: string;
+  price: number;
 }
 
-export interface PlaceOrderResponse {
-  orderId: number;
-  status: string;
+export enum OrderStatus {
+  PENDING = 'pending',
+  CONFIRMED = 'confirmed',
+  PREPARING = 'preparing',
+  READY = 'ready',
+  SERVED = 'served',
+  COMPLETED = 'completed',
+  CANCELLED = 'cancelled',
+}
+
+export interface Order {
+  id: string;
+  customerId: string;
+  customerName: string;
+  items: OrderItem[];
+  status: OrderStatus;
   totalPrice: number;
-  estimatedTime?: number;
+  tableNumber?: number;
+  orderTime: string;
+  estimatedTime?: string;
+  completedTime?: string;
+  notes?: string;
+  paymentMethod?: 'cash' | 'card' | 'digital';
+  isPaid: boolean;
 }
 
-export const OrderStatus = {
-  PENDING: 'PENDING',
-  PREPARING: 'PREPARING',
-  READY: 'READY',
-  DELIVERED: 'DELIVERED',
-  CANCELLED: 'CANCELLED',
-} as const;
+// ============================================
+// TABLES & RESTAURANTS
+// ============================================
 
-export type OrderStatusType = typeof OrderStatus[keyof typeof OrderStatus];
+export interface Table {
+  id: string;
+  tableNumber: number;
+  capacity: number;
+  status: TableStatus;
+  currentOrderId?: string;
+  occupiedAt?: string;
+}
 
-// Roles
-export const UserRole = {
-  CUSTOMER: 1,
-  ADMIN: 2,
-  KITCHEN: 3,
-} as const;
+export enum TableStatus {
+  AVAILABLE = 'available',
+  OCCUPIED = 'occupied',
+  RESERVED = 'reserved',
+  CLEANING = 'cleaning',
+}
 
-export type UserRoleType = typeof UserRole[keyof typeof UserRole];
+// ============================================
+// STAFF & KITCHEN
+// ============================================
+
+export interface Staff {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  phone: string;
+  shiftStart?: string;
+  shiftEnd?: string;
+  status: 'active' | 'inactive' | 'on-break';
+}
+
+export interface KitchenTicket {
+  id: string;
+  orderId: string;
+  items: OrderItem[];
+  status: OrderStatus;
+  startTime: string;
+  completedTime?: string;
+  priority: 'normal' | 'urgent';
+}
+
+// ============================================
+// INVENTORY
+// ============================================
+
+export interface InventoryItem {
+  id: string;
+  name: string;
+  quantity: number;
+  unit: string;
+  reorderLevel: number;
+  supplier: string;
+  lastRestocked: string;
+}
+
+// ============================================
+// ANALYTICS & REPORTS
+// ============================================
+
+export interface SalesReport {
+  date: string;
+  totalOrders: number;
+  totalRevenue: number;
+  averageOrderValue: number;
+  topItems: MenuItem[];
+}
+
+export interface StaffStats {
+  staffId: string;
+  staffName: string;
+  totalOrders: number;
+  rating: number;
+  shift: string;
+}

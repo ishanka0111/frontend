@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Restaurant Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<div class="relative flex h-full min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden">
+<!-- Header with Back Button -->
+<div class="flex items-center p-4 pb-2 justify-between">
+<div class="text-slate-900 dark:text-white flex size-12 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Welcome Back!</h2>
+</div>
+<!-- Hero / Branding Image Section -->
+<div class="@container px-4 py-3">
+<div class="w-full bg-center bg-no-repeat bg-cover flex flex-col justify-end overflow-hidden rounded-xl min-h-[220px] relative shadow-2xl" data-alt="Gourmet restaurant table setting with warm lighting" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDh4g_VA70OoCvnhp8AtTW_cC2DdMqYbPd2WhTno8h-RDT9zCPqbyzjUbA-jQ6ObBAHWNZlPcS_dMh3UK3z3FTcpZLUxkBaV9AL66hfwaQYhrzlmYEvlCCz7tAw6cYelJaXI6ujmuOPn_b3LzjIfePSlSKRMJZ_IiKeFfaURg7wBpB6oBIbn0oL86GhVdV3xUpB3QSA8O82WPYojKbrP0KEbf5diqqKze4m987R0LJW8oYBrORHso-PQ72fnYXLQxLT0249tZs2NgAq");'>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark/90 to-transparent"></div>
+<div class="relative p-6">
+<h1 class="text-white text-3xl font-bold leading-tight">Ready to Order?</h1>
+<p class="text-primary font-medium">Log in to your favorite tastes</p>
+</div>
+</div>
+</div>
+<!-- Login Form Container -->
+<div class="flex flex-col gap-6 px-6 py-8 max-w-md mx-auto w-full">
+<!-- Email Input -->
+<div class="flex flex-col gap-2">
+<label class="text-slate-700 dark:text-slate-300 text-sm font-semibold uppercase tracking-wider">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">mail</span>
+<input class="w-full pl-12 pr-4 py-4 rounded-lg bg-white dark:bg-[#2d1f16] border border-slate-200 dark:border-[#422e21] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#6b4e3a]" placeholder="your@email.com" type="email"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<label class="text-slate-700 dark:text-slate-300 text-sm font-semibold uppercase tracking-wider">Password</label>
+<a class="text-primary text-xs font-medium hover:underline" href="#">Forgot?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">lock</span>
+<input class="w-full pl-12 pr-12 py-4 rounded-lg bg-white dark:bg-[#2d1f16] border border-slate-200 dark:border-[#422e21] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#6b4e3a]" placeholder="••••••••" type="password"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer hover:text-primary">visibility</span>
+</div>
+</div>
+<!-- Login Button -->
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-lg shadow-lg shadow-primary/20 transition-all active:scale-[0.98] mt-2">
+                Login
+            </button>
+<!-- Social Login Separator -->
+<div class="flex items-center gap-4 my-2">
+<div class="h-px flex-1 bg-slate-200 dark:bg-[#422e21]"></div>
+<span class="text-slate-400 dark:text-[#6b4e3a] text-xs font-medium uppercase tracking-widest">Or continue with</span>
+<div class="h-px flex-1 bg-slate-200 dark:bg-[#422e21]"></div>
+</div>
+<!-- Social Buttons Row -->
+<div class="flex gap-4">
+<button class="flex-1 flex items-center justify-center py-3 px-4 border border-slate-200 dark:border-[#422e21] rounded-lg hover:bg-slate-50 dark:hover:bg-primary/5 transition-colors">
+<svg class="w-5 h-5 mr-2" viewbox="0 0 24 24">
+<path d="M12.48 10.92v3.28h7.84c-.24 1.84-.9 3.33-2.03 4.49-1.13 1.16-2.88 2.03-5.81 2.03-5.07 0-9.21-4.11-9.21-9.21s4.14-9.21 9.21-9.21c2.72 0 4.75 1.07 6.23 2.49l2.32-2.32C18.99 1.07 16.14 0 12.48 0 5.58 0 0 5.58 0 12.48s5.58 12.48 12.48 12.48c3.75 0 6.6-1.23 8.78-3.51 2.25-2.25 2.96-5.41 2.96-7.87 0-.77-.07-1.49-.19-2.15l-11.55-.01z" fill="#EA4335"></path>
+</svg>
+<span class="text-sm font-medium">Google</span>
+</button>
+<button class="flex-1 flex items-center justify-center py-3 px-4 border border-slate-200 dark:border-[#422e21] rounded-lg hover:bg-slate-50 dark:hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined mr-2">ios</span>
+<span class="text-sm font-medium">Apple</span>
+</button>
+</div>
+</div>
+<!-- Footer / Navigation -->
+<div class="mt-auto py-8 text-center px-6">
+<p class="text-slate-500 dark:text-[#cba990] text-sm font-medium">
+                New here? 
+                <a class="text-primary hover:text-primary/80 font-bold ml-1 transition-colors" href="#">Create an account</a>
+</p>
+</div>
+<!-- Subtle decorative element -->
+<div class="fixed bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-30"></div>
+</div>
+</body></html>

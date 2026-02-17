@@ -1,7 +1,5 @@
-/**
- * Constants Index - Central export point for all constants
- */
-
-export * from './roles';
-export * from './storage';
-export * from './orderStatus';
+export {
+  STITCH_SCREENS,
+  SCREEN_CATEGORIES,
+  DOWNLOAD_BASE_PATH,
+} from './stitchScreens';

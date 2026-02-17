@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Waiter Profile &amp; Stats</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #493222;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden">
+<!-- Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/20 bg-background-light dark:bg-background-dark px-6 md:px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">Staff Portal</h2>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 dark:bg-white/5 text-primary hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 dark:bg-white/5 text-primary hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="h-10 w-10 rounded-full border-2 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Professional headshot of a smiling waiter" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAYO8Ra3-S8D_0tiy4Bj_3-MFh-FxDIooYpM_J_7kh5ukz9gKeMhoAz4oFGGjWV2IQk9p_JNbBe1Wo4cm1LwwKVrFfDS1GcfNQNFxYqlxOJ9kNzyCjfFCzSZaTrGSuWkJAq6RgOFivJm01nBRppp2oKYjNICCq5RmHz9kZiDH5LdQ4vkzXxEjL1OGZ8cagSYD-o7_aPLColGqjjrW191Q_rUlMjhmfWZI6L6uTwWKG5miD26DNbhr07UmEd18MyB5rJi4SvhlDAXC6"/>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-[1400px] mx-auto w-full p-4 md:p-8 space-y-8">
+<!-- Hero Section: Profile Summary -->
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between bg-primary/5 dark:bg-white/5 p-6 rounded-xl border border-primary/10">
+<div class="flex gap-6 items-center">
+<div class="relative">
+<div class="size-24 rounded-2xl overflow-hidden border-4 border-primary/20">
+<img class="w-full h-full object-cover" data-alt="Senior waiter profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNxVHwfv6maQG7HhC-NYPo4p0c-g0-QfTarBP59k0N38KWy7V7Y__SMu8FkjKi2aAeALh65e49zx9J5o1qpWjq9P4AN9bO0LVYb_SjDuRyOK1fsSjt4oMJekr7e-mXr4wzpnJ1cqFdgnC9fwD465JqseS5t4MXSR5gHduFS79fxCIydJhmg0xt2pqkCl3uaSf6SlTxhHY2KAQyDnqnNXrq0MHwS0ovLrp_raiqVXrKWJ3i0Z0K1fJZuEAp1A7XJ_PMWDZalfc6gGrA"/>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-green-500 size-6 rounded-full border-4 border-background-dark flex items-center justify-center" title="Currently on Shift"></div>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h1 class="text-3xl font-bold dark:text-white">Alex Thompson</h1>
+<span class="px-2 py-0.5 bg-primary/20 text-primary text-xs font-bold rounded uppercase tracking-wider">Senior Waiter</span>
+</div>
+<p class="text-slate-500 dark:text-primary/70 font-medium">Floor A • Staff ID: #8824</p>
+<div class="flex gap-2 mt-3">
+<span class="flex items-center gap-1 text-xs bg-yellow-500/20 text-yellow-500 px-2 py-1 rounded-full font-semibold">
+<span class="material-symbols-outlined text-[14px]">military_tech</span> Top Performer Sept
+                            </span>
+<span class="flex items-center gap-1 text-xs bg-blue-500/20 text-blue-500 px-2 py-1 rounded-full font-semibold">
+<span class="material-symbols-outlined text-[14px]">verified</span> 5 Year Tenure
+                            </span>
+</div>
+</div>
+</div>
+<div class="flex gap-3 w-full md:w-auto">
+<button class="flex-1 md:flex-none px-6 py-2.5 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">event_busy</span> Request Time Off
+                    </button>
+<button class="flex-1 md:flex-none px-6 py-2.5 bg-white/10 dark:bg-white/5 text-slate-700 dark:text-white font-bold rounded-lg hover:bg-white/20 transition-all border border-primary/20">
+                        View Full History
+                    </button>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white/5 border border-primary/10 p-6 rounded-xl hover:border-primary/40 transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<p class="text-slate-400 font-medium">Avg Tips / Shift</p>
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">payments</span>
+</div>
+<p class="text-3xl font-bold dark:text-white">$142.50</p>
+<div class="flex items-center gap-1 mt-2 text-green-500 text-sm font-bold">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +12.4% vs last month
+                    </div>
+</div>
+<div class="bg-white/5 border border-primary/10 p-6 rounded-xl hover:border-primary/40 transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<p class="text-slate-400 font-medium">Orders Served</p>
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">receipt_long</span>
+</div>
+<p class="text-3xl font-bold dark:text-white">1,240</p>
+<div class="flex items-center gap-1 mt-2 text-green-500 text-sm font-bold">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +5.2% vs last month
+                    </div>
+</div>
+<div class="bg-white/5 border border-primary/10 p-6 rounded-xl hover:border-primary/40 transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<p class="text-slate-400 font-medium">Avg Table Turn</p>
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">timer</span>
+</div>
+<p class="text-3xl font-bold dark:text-white">42m</p>
+<div class="flex items-center gap-1 mt-2 text-red-500 text-sm font-bold">
+<span class="material-symbols-outlined text-[16px]">trending_down</span> -2.1% efficiency
+                    </div>
+</div>
+<div class="bg-white/5 border border-primary/10 p-6 rounded-xl hover:border-primary/40 transition-colors group">
+<div class="flex justify-between items-start mb-4">
+<p class="text-slate-400 font-medium">Customer Rating</p>
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">star</span>
+</div>
+<p class="text-3xl font-bold dark:text-white">4.92 / 5</p>
+<div class="flex items-center gap-1 mt-2 text-green-500 text-sm font-bold">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +0.05 increase
+                    </div>
+</div>
+</div>
+<!-- Bento Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Performance Trend (Main Column) -->
+<div class="lg:col-span-2 space-y-8">
+<div class="bg-white/5 border border-primary/10 rounded-xl p-6">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="text-xl font-bold dark:text-white">Tip Performance Trends</h3>
+<p class="text-sm text-slate-400">Daily earnings over the last 7 shifts</p>
+</div>
+<select class="bg-background-dark border border-primary/20 text-white rounded-lg text-sm focus:ring-primary focus:border-primary">
+<option>Last 7 Days</option>
+<option>Last 30 Days</option>
+</select>
+</div>
+<!-- Simplified Visualization Placeholder -->
+<div class="relative h-64 w-full bg-primary/5 rounded-lg overflow-hidden border border-primary/5 flex items-end px-4 pb-4 gap-4">
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t-sm relative group h-[60%]">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$120</div>
+</div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t-sm relative group h-[85%]">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$172</div>
+</div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t-sm relative group h-[45%]">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$95</div>
+</div>
+<div class="flex-1 bg-primary/30 hover:bg-primary/50 transition-colors rounded-t-sm relative group h-[95%]">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$198</div>
+</div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t-sm relative group h-[70%]">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$145</div>
+</div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t-sm relative group h-[65%]">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$130</div>
+</div>
+<div class="flex-1 bg-primary hover:bg-primary/90 transition-colors rounded-t-sm relative group h-[80%]">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$165</div>
+</div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest px-2">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+</div>
+</div>
+<!-- Recent Feedback -->
+<div class="bg-white/5 border border-primary/10 rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-xl font-bold dark:text-white">Recent Customer Feedback</h3>
+<button class="text-primary text-sm font-semibold hover:underline">View All</button>
+</div>
+<div class="space-y-4">
+<div class="p-4 bg-background-dark/50 border border-primary/5 rounded-lg">
+<div class="flex justify-between items-center mb-2">
+<div class="flex text-yellow-500">
+<span class="material-symbols-outlined text-[18px] fill-[1]">star</span>
+<span class="material-symbols-outlined text-[18px] fill-[1]">star</span>
+<span class="material-symbols-outlined text-[18px] fill-[1]">star</span>
+<span class="material-symbols-outlined text-[18px] fill-[1]">star</span>
+<span class="material-symbols-outlined text-[18px] fill-[1]">star</span>
+</div>
+<span class="text-xs text-slate-500">2 hours ago</span>
+</div>
+<p class="text-slate-300 italic text-sm font-medium">"Alex was incredibly attentive tonight. He knew the wine list perfectly and made excellent recommendations for our anniversary dinner."</p>
+<p class="text-xs text-primary mt-2 font-bold">— Table 12, Guest #442</p>
+</div>
+<div class="p-4 bg-background-dark/50 border border-primary/5 rounded-lg opacity-80">
+<div class="flex justify-between items-center mb-2">
+<div class="flex text-yellow-500">
+<span class="material-symbols-outlined text-[18px] fill-[1]">star</span>
+<span class="material-symbols-outlined text-[18px] fill-[1]">star</span>
+<span class="material-symbols-outlined text-[18px] fill-[1]">star</span>
+<span class="material-symbols-outlined text-[18px] fill-[1]">star</span>
+<span class="material-symbols-outlined text-[18px]">star</span>
+</div>
+<span class="text-xs text-slate-500">Yesterday</span>
+</div>
+<p class="text-slate-300 italic text-sm font-medium">"Great service! Very fast with the drinks. Table turnaround was quick too."</p>
+<p class="text-xs text-primary mt-2 font-bold">— Table 4, Lunch Service</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Content (Schedule & Badges) -->
+<div class="space-y-8">
+<!-- Shift Schedule -->
+<div class="bg-white/5 border border-primary/10 rounded-xl p-6">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+<h3 class="text-xl font-bold dark:text-white">Upcoming Shifts</h3>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-4 p-3 bg-primary/10 border-l-4 border-primary rounded-r-lg">
+<div class="bg-primary/20 text-primary text-center px-2 py-1 rounded min-w-[50px]">
+<p class="text-[10px] uppercase font-bold">Today</p>
+<p class="text-lg font-bold">23</p>
+</div>
+<div>
+<p class="text-sm font-bold dark:text-white">Dinner Service</p>
+<p class="text-xs text-slate-400">4:00 PM - 11:00 PM • Floor A</p>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 hover:bg-white/5 transition-colors rounded-lg border border-transparent">
+<div class="bg-slate-800 text-slate-400 text-center px-2 py-1 rounded min-w-[50px]">
+<p class="text-[10px] uppercase font-bold">Wed</p>
+<p class="text-lg font-bold">25</p>
+</div>
+<div>
+<p class="text-sm font-bold dark:text-white">Double Shift</p>
+<p class="text-xs text-slate-400">11:00 AM - 10:00 PM • Floor B</p>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 hover:bg-white/5 transition-colors rounded-lg border border-transparent">
+<div class="bg-slate-800 text-slate-400 text-center px-2 py-1 rounded min-w-[50px]">
+<p class="text-[10px] uppercase font-bold">Thu</p>
+<p class="text-lg font-bold">26</p>
+</div>
+<div>
+<p class="text-sm font-bold dark:text-white">Lunch Service</p>
+<p class="text-xs text-slate-400">11:00 AM - 4:00 PM • Floor A</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 border border-primary/20 text-primary font-bold text-sm rounded-lg hover:bg-primary hover:text-white transition-all">
+                            Open Schedule
+                        </button>
+</div>
+<!-- Achievements -->
+<div class="bg-white/5 border border-primary/10 rounded-xl p-6">
+<h3 class="text-xl font-bold dark:text-white mb-6">Milestones</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col items-center text-center p-4 bg-background-dark/50 rounded-lg border border-primary/5 hover:border-primary/30 transition-all cursor-default group">
+<div class="size-12 bg-primary/20 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">local_fire_department</span>
+</div>
+<p class="text-xs font-bold text-white mb-1">On Fire</p>
+<p class="text-[10px] text-slate-500">15-day shift streak</p>
+</div>
+<div class="flex flex-col items-center text-center p-4 bg-background-dark/50 rounded-lg border border-primary/5 hover:border-primary/30 transition-all cursor-default group">
+<div class="size-12 bg-primary/20 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">groups</span>
+</div>
+<p class="text-xs font-bold text-white mb-1">Team Player</p>
+<p class="text-[10px] text-slate-500">Helped 20 coworker tables</p>
+</div>
+<div class="flex flex-col items-center text-center p-4 bg-background-dark/50 rounded-lg border border-primary/5 hover:border-primary/30 transition-all cursor-default group">
+<div class="size-12 bg-primary/20 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">workspace_premium</span>
+</div>
+<p class="text-xs font-bold text-white mb-1">Wine Pro</p>
+<p class="text-[10px] text-slate-500">Highest wine sales Q3</p>
+</div>
+<div class="flex flex-col items-center text-center p-4 bg-background-dark/50 rounded-lg border border-primary/5 border-dashed opacity-50">
+<div class="size-12 bg-white/5 rounded-full flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-slate-500">lock</span>
+</div>
+<p class="text-xs font-bold text-slate-500 mb-1">Legendary</p>
+<p class="text-[10px] text-slate-600">Locked milestone</p>
+</div>
+</div>
+</div>
+<!-- Quick Actions Widget -->
+<div class="bg-primary rounded-xl p-6 text-white overflow-hidden relative shadow-xl shadow-primary/20">
+<div class="relative z-10">
+<h3 class="text-lg font-bold mb-2">Need a swap?</h3>
+<p class="text-white/80 text-xs mb-4">Post your shift to the marketplace and find a colleague to cover for you.</p>
+<button class="bg-white text-primary font-bold py-2 px-4 rounded-lg text-sm w-full">Post to Marketplace</button>
+</div>
+<span class="material-symbols-outlined absolute -bottom-4 -right-4 text-white/10 text-8xl pointer-events-none">swap_horiz</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom Nav (Quick Stats Only) -->
+<footer class="md:hidden sticky bottom-0 bg-background-dark border-t border-primary/20 p-4 flex justify-around">
+<button class="text-primary flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-bold uppercase">Stats</span>
+</button>
+<button class="text-slate-500 flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-[10px] font-bold uppercase">Schedule</span>
+</button>
+<button class="text-slate-500 flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">reviews</span>
+<span class="text-[10px] font-bold uppercase">Reviews</span>
+</button>
+<button class="text-slate-500 flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold uppercase">Profile</span>
+</button>
+</footer>
+</div>
+</body></html>

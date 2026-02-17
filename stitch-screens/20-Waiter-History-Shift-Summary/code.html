@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Waiter Dashboard - Shift Summary &amp; Order History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Work Sans", sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(244, 123, 37, 0.2);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/20 bg-background-light dark:bg-background-dark px-6 lg:px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8 flex items-center justify-center bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary">restaurant</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">BistroFlow</h2>
+</div>
+<div class="hidden md:flex items-center gap-2">
+<label class="flex flex-col min-w-40 h-10 w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-primary/20 bg-white/5 dark:bg-primary/5">
+<div class="text-primary/60 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent focus:outline-0 focus:ring-0 text-base font-normal placeholder:text-slate-400 dark:placeholder:text-slate-500" placeholder="Search orders or tables..." value=""/>
+</div>
+</label>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-4 lg:gap-8 items-center">
+<div class="flex gap-2">
+<button class="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors hover:bg-primary/20">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors hover:bg-primary/20">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="h-8 w-px bg-primary/20 hidden sm:block"></div>
+<div class="flex items-center gap-3">
+<div class="flex flex-col items-end hidden sm:flex">
+<p class="text-sm font-bold leading-none">Alex Johnson</p>
+<p class="text-xs text-primary font-medium">Main Dining Room</p>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary" data-alt="Profile picture of a waiter named Alex" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAiW5eCn5l_lPsc0T9ApFgZpTjIyFLAO86yw7whqPMabnudV7g1-Ne3hlDDC_1xcCON9AGgEcxFfWCvLM6Q49WGLY5ZX_1bSvR5wQer08WBmuue4cBzSXKW8BKjh1aobLdW1XaV5nXDN1ciqOrUT-trlHWEiEsH7t_e7uQvgaO45IN5lxAj2vfypC5fLl996e1gaVy84pFAfmb0qmwiSkVPBYTjrfsE553-91Y0WO4lrIY13F_KuocAPT6fQavsTL0wijjEPYLwQMNQ");'></div>
+</div>
+</div>
+</header>
+<div class="flex flex-1">
+<!-- Sidebar -->
+<aside class="w-64 border-r border-primary/10 bg-white/5 dark:bg-background-dark hidden lg:flex flex-col p-4 gap-6">
+<div class="flex flex-col gap-1">
+<p class="px-3 text-[10px] font-bold uppercase tracking-wider text-primary/60 mb-2">Shift Controls</p>
+<button class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary text-white font-medium shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">timer</span>
+<span>Active Shift: 05h 42m</span>
+</button>
+</div>
+<nav class="flex flex-col gap-1">
+<p class="px-3 text-[10px] font-bold uppercase tracking-wider text-primary/60 mb-2">Menu</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary/60 hover:text-primary hover:bg-primary/5 transition-all" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="text-sm font-medium">Live Floor Map</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-semibold" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="text-sm font-medium">Order History</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary/60 hover:text-primary hover:bg-primary/5 transition-all" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-sm font-medium">Earnings &amp; Tips</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary/60 hover:text-primary hover:bg-primary/5 transition-all" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-sm font-medium">Schedule</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-primary/10">
+<button class="flex w-full items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all font-bold">
+<span class="material-symbols-outlined">logout</span>
+<span>Clock Out</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col bg-background-light dark:bg-background-dark p-6 lg:p-10 gap-8 overflow-y-auto custom-scrollbar">
+<!-- Welcome & Action Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<h1 class="text-3xl font-black tracking-tight text-slate-900 dark:text-white">Shift Summary</h1>
+<p class="text-slate-500 dark:text-primary/60 mt-1">Great job today, Alex. You're currently the top earner this afternoon.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 dark:bg-primary/5 border border-primary/20 text-sm font-semibold hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-lg">download</span>
+<span>Report</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-bold shadow-lg shadow-primary/30 hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-lg">door_open</span>
+<span>Clock Out</span>
+</button>
+</div>
+</div>
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-primary/5 border border-primary/10 rounded-xl p-6 flex flex-col gap-1 relative overflow-hidden group">
+<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-8xl text-primary">shopping_basket</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-primary/70">Total Orders</p>
+<p class="text-3xl font-black text-slate-900 dark:text-white">24</p>
+<div class="flex items-center gap-1 text-emerald-500 text-sm font-bold mt-2">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+12%</span>
+</div>
+</div>
+<div class="bg-white dark:bg-primary/5 border border-primary/10 rounded-xl p-6 flex flex-col gap-1 relative overflow-hidden group">
+<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-8xl text-primary">volunteer_activism</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-primary/70">Tips Earned</p>
+<p class="text-3xl font-black text-slate-900 dark:text-white">$142.50</p>
+<div class="flex items-center gap-1 text-emerald-500 text-sm font-bold mt-2">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+8.4%</span>
+</div>
+</div>
+<div class="bg-white dark:bg-primary/5 border border-primary/10 rounded-xl p-6 flex flex-col gap-1 relative overflow-hidden group">
+<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-8xl text-primary">point_of_sale</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-primary/70">Gross Sales</p>
+<p class="text-3xl font-black text-slate-900 dark:text-white">$1,120.00</p>
+<div class="flex items-center gap-1 text-emerald-500 text-sm font-bold mt-2">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+15.2%</span>
+</div>
+</div>
+<div class="bg-white dark:bg-primary/5 border border-primary/10 rounded-xl p-6 flex flex-col gap-1 relative overflow-hidden group">
+<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-8xl text-primary">avg_time</span>
+</div>
+<p class="text-sm font-medium text-slate-500 dark:text-primary/70">Shift Time</p>
+<p class="text-3xl font-black text-slate-900 dark:text-white">05h 42m</p>
+<div class="flex items-center gap-1 text-primary/50 text-sm font-bold mt-2">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Ends in 02:18</span>
+</div>
+</div>
+</div>
+<!-- Recent Orders Table Section -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">receipt_long</span>
+                            Recent Orders History
+                        </h2>
+<div class="flex items-center gap-3">
+<select class="bg-transparent border-none text-sm font-bold text-primary focus:ring-0 cursor-pointer">
+<option>Last 10 Orders</option>
+<option>All Orders Today</option>
+<option>This Week</option>
+</select>
+</div>
+</div>
+<div class="overflow-hidden rounded-xl border border-primary/10 bg-white/5 shadow-xl">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-primary/10 text-primary uppercase text-[10px] font-black tracking-widest">
+<tr>
+<th class="px-6 py-4">Order ID</th>
+<th class="px-6 py-4">Table</th>
+<th class="px-6 py-4">Time</th>
+<th class="px-6 py-4">Total Amount</th>
+<th class="px-6 py-4">Tip</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-primary/5 text-sm">
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4 font-bold text-slate-900 dark:text-white">#ORD-4921</td>
+<td class="px-6 py-4">Table 12</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">14:22 PM</td>
+<td class="px-6 py-4 font-semibold text-slate-900 dark:text-white">$84.20</td>
+<td class="px-6 py-4 text-emerald-500 font-bold">+$12.50</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-500">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                                COMPLETED
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-primary/10 rounded-lg text-primary transition-all">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4 font-bold text-slate-900 dark:text-white">#ORD-4918</td>
+<td class="px-6 py-4">Table 05</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">14:05 PM</td>
+<td class="px-6 py-4 font-semibold text-slate-900 dark:text-white">$156.40</td>
+<td class="px-6 py-4 text-emerald-500 font-bold">+$25.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-500">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                                COMPLETED
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-primary/10 rounded-lg text-primary transition-all">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4 font-bold text-slate-900 dark:text-white">#ORD-4912</td>
+<td class="px-6 py-4">Table 18</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">13:48 PM</td>
+<td class="px-6 py-4 font-semibold text-slate-900 dark:text-white">$42.15</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-500 font-bold">$0.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-500/10 text-slate-400">
+<span class="size-1.5 rounded-full bg-slate-400"></span>
+                                                REFUNDED
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-primary/10 rounded-lg text-primary transition-all">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4 font-bold text-slate-900 dark:text-white">#ORD-4910</td>
+<td class="px-6 py-4">Table 01</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">13:30 PM</td>
+<td class="px-6 py-4 font-semibold text-slate-900 dark:text-white">$210.00</td>
+<td class="px-6 py-4 text-emerald-500 font-bold">+$40.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-500">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                                COMPLETED
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-primary/10 rounded-lg text-primary transition-all">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4 font-bold text-slate-900 dark:text-white">#ORD-4905</td>
+<td class="px-6 py-4">Table 08</td>
+<td class="px-6 py-4 text-slate-500 dark:text-slate-400">13:15 PM</td>
+<td class="px-6 py-4 font-semibold text-slate-900 dark:text-white">$65.80</td>
+<td class="px-6 py-4 text-emerald-500 font-bold">+$10.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-500">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                                COMPLETED
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-primary/10 rounded-lg text-primary transition-all">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-primary/5 flex items-center justify-between bg-white/5">
+<p class="text-xs text-slate-500 dark:text-primary/60 font-medium italic">Displaying 5 of 24 orders</p>
+<div class="flex gap-2">
+<button class="size-8 flex items-center justify-center rounded border border-primary/20 text-primary opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined text-sm text-primary">chevron_left</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded border border-primary/20 text-primary hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-sm text-primary">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Summary Banner -->
+<div class="mt-4 p-8 rounded-2xl bg-gradient-to-br from-primary to-[#ff9b44] text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl shadow-primary/20">
+<div class="flex items-center gap-6">
+<div class="size-16 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md">
+<span class="material-symbols-outlined text-4xl">emoji_events</span>
+</div>
+<div>
+<h3 class="text-xl font-black">Performance Streak</h3>
+<p class="opacity-90 font-medium">You have exceeded yesterday's tip total by $34.00!</p>
+</div>
+</div>
+<div class="flex flex-col gap-2 min-w-48">
+<div class="w-full bg-white/20 rounded-full h-2">
+<div class="bg-white h-2 rounded-full w-[85%]"></div>
+</div>
+<p class="text-xs font-bold text-right uppercase tracking-wider">Goal: $150.00 Tips (85%)</p>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

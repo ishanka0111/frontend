@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kitchen Display System - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                        "surface-dark": "#2d1e15",
+                        "card-dark": "#342418",
+                        "status-new": "#f47b25",
+                        "status-prep": "#493222",
+                        "status-late": "#fa3f38",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+        .late-pulse {
+            animation: pulse-border 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-border {
+            0%, 100% { border-color: #fa3f38; box-shadow: 0 0 0 0 rgba(250, 63, 56, 0.4); }
+            50% { border-color: #ff6b66; box-shadow: 0 0 15px 2px rgba(250, 63, 56, 0.6); }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
+<!-- Top Navigation & Stats Bar -->
+<header class="sticky top-0 z-50 bg-surface-dark border-b border-primary/20 px-6 py-4 shadow-xl">
+<div class="max-w-[1600px] mx-auto flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-3xl">restaurant_menu</span>
+<h1 class="text-xl font-bold tracking-tight">KITCHEN OPS <span class="text-white/60 font-normal">| Station 1</span></h1>
+</div>
+<nav class="hidden md:flex items-center gap-6 ml-4">
+<a class="text-primary border-b-2 border-primary pb-1 text-sm font-semibold tracking-wide uppercase" href="#">Active Orders</a>
+<a class="text-white/60 hover:text-white text-sm font-semibold tracking-wide uppercase transition-colors" href="#">Order History</a>
+<a class="text-white/60 hover:text-white text-sm font-semibold tracking-wide uppercase transition-colors" href="#">Inventory</a>
+<a class="text-white/60 hover:text-white text-sm font-semibold tracking-wide uppercase transition-colors" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center bg-black/20 rounded-lg px-3 py-1.5 border border-white/10">
+<span class="material-symbols-outlined text-green-500 text-sm mr-2">fiber_manual_record</span>
+<span class="text-xs font-bold uppercase tracking-widest text-white/80">System Online</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+</div>
+</div>
+<!-- Stats Bar -->
+<div class="flex flex-wrap gap-4">
+<div class="flex-1 min-w-[200px] bg-card-dark rounded-xl p-4 border border-white/5 shadow-inner flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">confirmation_number</span>
+</div>
+<div>
+<p class="text-xs uppercase tracking-widest text-white/40 font-bold">Active Tickets</p>
+<p class="text-2xl font-bold text-white leading-none mt-1">18</p>
+</div>
+<div class="ml-auto text-green-400 text-xs font-bold bg-green-400/10 px-2 py-1 rounded">+3 New</div>
+</div>
+<div class="flex-1 min-w-[200px] bg-card-dark rounded-xl p-4 border border-white/5 shadow-inner flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400">
+<span class="material-symbols-outlined text-3xl">timer</span>
+</div>
+<div>
+<p class="text-xs uppercase tracking-widest text-white/40 font-bold">Avg. Prep Time</p>
+<p class="text-2xl font-bold text-white leading-none mt-1">9m 42s</p>
+</div>
+<div class="ml-auto text-red-400 text-xs font-bold bg-red-400/10 px-2 py-1 rounded">-12%</div>
+</div>
+<div class="flex-1 min-w-[200px] bg-card-dark rounded-xl p-4 border border-white/5 shadow-inner flex items-center gap-4 border-l-4 border-l-status-late">
+<div class="w-12 h-12 rounded-lg bg-status-late/10 flex items-center justify-center text-status-late">
+<span class="material-symbols-outlined text-3xl">warning</span>
+</div>
+<div>
+<p class="text-xs uppercase tracking-widest text-white/40 font-bold">Late Tickets</p>
+<p class="text-2xl font-bold text-white leading-none mt-1">4</p>
+</div>
+<div class="ml-auto text-white/40 text-xs font-bold italic underline">Urgent</div>
+</div>
+<div class="flex-1 min-w-[200px] bg-card-dark rounded-xl p-4 border border-white/5 shadow-inner flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center text-green-400">
+<span class="material-symbols-outlined text-3xl">check_circle</span>
+</div>
+<div>
+<p class="text-xs uppercase tracking-widest text-white/40 font-bold">Completed (Hr)</p>
+<p class="text-2xl font-bold text-white leading-none mt-1">42</p>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="p-6 max-w-[1600px] mx-auto">
+<!-- Filter Tabs -->
+<div class="flex items-center gap-2 mb-6 border-b border-white/5 pb-4">
+<button class="px-6 py-2 rounded-full bg-primary text-background-dark font-bold text-sm tracking-wide transition-all shadow-lg shadow-primary/20">ALL ORDERS</button>
+<button class="px-6 py-2 rounded-full bg-white/5 text-white/60 hover:text-white hover:bg-white/10 font-bold text-sm tracking-wide transition-all">DINE-IN</button>
+<button class="px-6 py-2 rounded-full bg-white/5 text-white/60 hover:text-white hover:bg-white/10 font-bold text-sm tracking-wide transition-all">TAKEAWAY</button>
+<button class="px-6 py-2 rounded-full bg-white/5 text-white/60 hover:text-white hover:bg-white/10 font-bold text-sm tracking-wide transition-all">DELIVERY APP</button>
+</div>
+<!-- Order Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- ORDER CARD: LATE -->
+<div class="bg-card-dark rounded-xl flex flex-col border-2 late-pulse overflow-hidden">
+<div class="bg-status-late px-4 py-3 flex justify-between items-center text-white">
+<div>
+<h3 class="text-lg font-black leading-none">#1402</h3>
+<p class="text-xs font-bold uppercase opacity-80 mt-1">Table 12 • Mike R.</p>
+</div>
+<div class="text-right">
+<p class="text-2xl font-black leading-none tracking-tight">14:55</p>
+<p class="text-[10px] font-bold uppercase opacity-80 leading-none mt-1 italic">EXCEEDED (10m)</p>
+</div>
+</div>
+<div class="p-5 flex-grow space-y-4">
+<div class="space-y-3">
+<div class="flex gap-3">
+<span class="bg-white/10 text-white font-bold px-2 py-1 rounded text-sm min-w-[28px] h-fit flex items-center justify-center">2</span>
+<div class="flex-grow">
+<p class="font-bold text-white text-lg leading-tight uppercase">Classic Cheeseburger</p>
+<p class="text-status-late font-extrabold text-sm uppercase mt-1">!!! NO ONIONS !!!</p>
+<p class="text-white/50 text-sm italic">+ Extra Pickles</p>
+</div>
+</div>
+<div class="flex gap-3">
+<span class="bg-white/10 text-white font-bold px-2 py-1 rounded text-sm min-w-[28px] h-fit flex items-center justify-center">1</span>
+<div class="flex-grow">
+<p class="font-bold text-white text-lg leading-tight uppercase">Large Fries</p>
+<p class="text-white/50 text-sm italic">+ Truffle Mayo</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-black/20 border-t border-white/5">
+<button class="w-full bg-status-late hover:bg-red-500 text-white font-black py-4 rounded-lg uppercase tracking-widest text-sm transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined font-bold">check_circle</span>
+                        MARK AS READY
+                    </button>
+</div>
+</div>
+<!-- ORDER CARD: NEW -->
+<div class="bg-card-dark rounded-xl flex flex-col border-2 border-primary overflow-hidden">
+<div class="bg-primary px-4 py-3 flex justify-between items-center text-background-dark">
+<div>
+<h3 class="text-lg font-black leading-none">#1405</h3>
+<p class="text-xs font-bold uppercase opacity-80 mt-1 italic">Takeaway • UberEats</p>
+</div>
+<div class="text-right">
+<p class="text-2xl font-black leading-none tracking-tight">02:15</p>
+<p class="text-[10px] font-bold uppercase opacity-80 leading-none mt-1">NEW ORDER</p>
+</div>
+</div>
+<div class="p-5 flex-grow space-y-4">
+<div class="space-y-3">
+<div class="flex gap-3">
+<span class="bg-primary text-background-dark font-black px-2 py-1 rounded text-sm min-w-[28px] h-fit flex items-center justify-center">1</span>
+<div class="flex-grow">
+<p class="font-bold text-white text-lg leading-tight uppercase">BBQ Wings (12pc)</p>
+<p class="text-white/50 text-sm italic">+ Ranch Dip</p>
+</div>
+</div>
+<div class="flex gap-3">
+<span class="bg-white/10 text-white font-bold px-2 py-1 rounded text-sm min-w-[28px] h-fit flex items-center justify-center">1</span>
+<div class="flex-grow">
+<p class="font-bold text-white text-lg leading-tight uppercase">Diet Coke</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-black/20 border-t border-white/5">
+<button class="w-full bg-primary hover:bg-primary/90 text-background-dark font-black py-4 rounded-lg uppercase tracking-widest text-sm transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined font-bold">check_circle</span>
+                        MARK AS READY
+                    </button>
+</div>
+</div>
+<!-- ORDER CARD: PREP (NORMAL) -->
+<div class="bg-card-dark rounded-xl flex flex-col border border-white/10 overflow-hidden">
+<div class="bg-white/10 px-4 py-3 flex justify-between items-center text-white/80">
+<div>
+<h3 class="text-lg font-black leading-none">#1398</h3>
+<p class="text-xs font-bold uppercase opacity-60 mt-1">Table 4 • Sarah L.</p>
+</div>
+<div class="text-right">
+<p class="text-2xl font-black leading-none tracking-tight">07:42</p>
+<p class="text-[10px] font-bold uppercase opacity-60 leading-none mt-1 uppercase">IN PREP</p>
+</div>
+</div>
+<div class="p-5 flex-grow space-y-4">
+<div class="space-y-3">
+<div class="flex gap-3 opacity-50 line-through decoration-white/30">
+<span class="bg-white/10 text-white font-bold px-2 py-1 rounded text-sm min-w-[28px] h-fit flex items-center justify-center">1</span>
+<div class="flex-grow">
+<p class="font-bold text-white text-lg leading-tight uppercase">Garden Salad</p>
+<p class="text-green-400 font-bold text-xs uppercase mt-0.5">Ready</p>
+</div>
+</div>
+<div class="flex gap-3">
+<span class="bg-white/10 text-white font-bold px-2 py-1 rounded text-sm min-w-[28px] h-fit flex items-center justify-center">2</span>
+<div class="flex-grow">
+<p class="font-bold text-white text-lg leading-tight uppercase">Sirloin Steak</p>
+<p class="text-primary font-bold text-sm uppercase mt-1">MED-RARE</p>
+<p class="text-white/50 text-sm italic">+ Mash Potato</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-black/20 border-t border-white/5">
+<button class="w-full bg-primary hover:bg-primary/90 text-background-dark font-black py-4 rounded-lg uppercase tracking-widest text-sm transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined font-bold">check_circle</span>
+                        MARK AS READY
+                    </button>
+</div>
+</div>
+<!-- ORDER CARD: LATE 2 -->
+<div class="bg-card-dark rounded-xl flex flex-col border-2 late-pulse overflow-hidden">
+<div class="bg-status-late px-4 py-3 flex justify-between items-center text-white">
+<div>
+<h3 class="text-lg font-black leading-none">#1395</h3>
+<p class="text-xs font-bold uppercase opacity-80 mt-1 italic">Deliveroo • Sam P.</p>
+</div>
+<div class="text-right">
+<p class="text-2xl font-black leading-none tracking-tight text-white">12:10</p>
+<p class="text-[10px] font-bold uppercase opacity-80 leading-none mt-1 italic">EXCEEDED (10m)</p>
+</div>
+</div>
+<div class="p-5 flex-grow space-y-4">
+<div class="space-y-3">
+<div class="flex gap-3">
+<span class="bg-white/10 text-white font-bold px-2 py-1 rounded text-sm min-w-[28px] h-fit flex items-center justify-center">4</span>
+<div class="flex-grow">
+<p class="font-bold text-white text-lg leading-tight uppercase">Pepperoni Pizza</p>
+<p class="text-white/50 text-sm italic">+ Thin Crust</p>
+</div>
+</div>
+<div class="flex gap-3">
+<span class="bg-white/10 text-white font-bold px-2 py-1 rounded text-sm min-w-[28px] h-fit flex items-center justify-center">1</span>
+<div class="flex-grow">
+<p class="font-bold text-white text-lg leading-tight uppercase">Garlic Bread</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-black/20 border-t border-white/5">
+<button class="w-full bg-status-late hover:bg-red-500 text-white font-black py-4 rounded-lg uppercase tracking-widest text-sm transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined font-bold">check_circle</span>
+                        MARK AS READY
+                    </button>
+</div>
+</div>
+<!-- MORE CARDS -->
+<div class="bg-card-dark rounded-xl flex flex-col border border-white/10 overflow-hidden">
+<div class="bg-white/10 px-4 py-3 flex justify-between items-center text-white/80">
+<div>
+<h3 class="text-lg font-black leading-none">#1408</h3>
+<p class="text-xs font-bold uppercase opacity-60 mt-1">Table 22 • Chris W.</p>
+</div>
+<div class="text-right">
+<p class="text-2xl font-black leading-none tracking-tight">05:30</p>
+<p class="text-[10px] font-bold uppercase opacity-60 leading-none mt-1">IN PREP</p>
+</div>
+</div>
+<div class="p-5 flex-grow space-y-4">
+<div class="space-y-3">
+<div class="flex gap-3">
+<span class="bg-white/10 text-white font-bold px-2 py-1 rounded text-sm min-w-[28px] h-fit flex items-center justify-center">3</span>
+<div class="flex-grow">
+<p class="font-bold text-white text-lg leading-tight uppercase">Mushroom Risotto</p>
+<p class="text-status-new font-bold text-sm uppercase mt-1">GF / VEGAN</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-black/20 border-t border-white/5">
+<button class="w-full bg-primary hover:bg-primary/90 text-background-dark font-black py-4 rounded-lg uppercase tracking-widest text-sm transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined font-bold">check_circle</span>
+                        MARK AS READY
+                    </button>
+</div>
+</div>
+<!-- PREP CARD -->
+<div class="bg-card-dark rounded-xl flex flex-col border border-white/10 overflow-hidden">
+<div class="bg-white/10 px-4 py-3 flex justify-between items-center text-white/80">
+<div>
+<h3 class="text-lg font-black leading-none">#1410</h3>
+<p class="text-xs font-bold uppercase opacity-60 mt-1">Bar • Staff Drink</p>
+</div>
+<div class="text-right">
+<p class="text-2xl font-black leading-none tracking-tight">01:45</p>
+<p class="text-[10px] font-bold uppercase opacity-60 leading-none mt-1">PREP</p>
+</div>
+</div>
+<div class="p-5 flex-grow space-y-4">
+<div class="space-y-3">
+<div class="flex gap-3">
+<span class="bg-white/10 text-white font-bold px-2 py-1 rounded text-sm min-w-[28px] h-fit flex items-center justify-center">2</span>
+<div class="flex-grow">
+<p class="font-bold text-white text-lg leading-tight uppercase">Americano</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-black/20 border-t border-white/5">
+<button class="w-full bg-primary hover:bg-primary/90 text-background-dark font-black py-4 rounded-lg uppercase tracking-widest text-sm transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined font-bold">check_circle</span>
+                        MARK AS READY
+                    </button>
+</div>
+</div>
+<!-- PREP CARD 2 -->
+<div class="bg-card-dark rounded-xl flex flex-col border border-white/10 overflow-hidden opacity-90">
+<div class="bg-white/10 px-4 py-3 flex justify-between items-center text-white/80">
+<div>
+<h3 class="text-lg font-black leading-none">#1411</h3>
+<p class="text-xs font-bold uppercase opacity-60 mt-1">Table 9 • Janet D.</p>
+</div>
+<div class="text-right">
+<p class="text-2xl font-black leading-none tracking-tight">00:15</p>
+<p class="text-[10px] font-bold uppercase opacity-60 leading-none mt-1 uppercase tracking-tighter">NEWEST</p>
+</div>
+</div>
+<div class="p-5 flex-grow space-y-4">
+<div class="space-y-3">
+<div class="flex gap-3">
+<span class="bg-white/10 text-white font-bold px-2 py-1 rounded text-sm min-w-[28px] h-fit flex items-center justify-center">1</span>
+<div class="flex-grow">
+<p class="font-bold text-white text-lg leading-tight uppercase">Fish &amp; Chips</p>
+<p class="text-white/50 text-sm italic">+ Mushy Peas</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-black/20 border-t border-white/5">
+<button class="w-full bg-primary hover:bg-primary/90 text-background-dark font-black py-4 rounded-lg uppercase tracking-widest text-sm transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined font-bold">check_circle</span>
+                        MARK AS READY
+                    </button>
+</div>
+</div>
+<!-- PREP CARD 3 -->
+<div class="bg-card-dark rounded-xl flex flex-col border border-white/10 overflow-hidden opacity-90">
+<div class="bg-white/10 px-4 py-3 flex justify-between items-center text-white/80">
+<div>
+<h3 class="text-lg font-black leading-none">#1412</h3>
+<p class="text-xs font-bold uppercase opacity-60 mt-1">Dine In • Table 3</p>
+</div>
+<div class="text-right">
+<p class="text-2xl font-black leading-none tracking-tight">00:05</p>
+<p class="text-[10px] font-bold uppercase opacity-60 leading-none mt-1 uppercase tracking-tighter">NEWEST</p>
+</div>
+</div>
+<div class="p-5 flex-grow space-y-4">
+<div class="space-y-3">
+<div class="flex gap-3">
+<span class="bg-white/10 text-white font-bold px-2 py-1 rounded text-sm min-w-[28px] h-fit flex items-center justify-center">1</span>
+<div class="flex-grow">
+<p class="font-bold text-white text-lg leading-tight uppercase">Veggie Supreme Pizza</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-4 bg-black/20 border-t border-white/5">
+<button class="w-full bg-primary hover:bg-primary/90 text-background-dark font-black py-4 rounded-lg uppercase tracking-widest text-sm transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined font-bold">check_circle</span>
+                        MARK AS READY
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Global Footer Bar (Optional extra info) -->
+<footer class="fixed bottom-0 left-0 right-0 bg-surface-dark border-t border-white/10 px-6 py-2 flex justify-between items-center text-[10px] uppercase tracking-[0.2em] font-bold text-white/30">
+<div>SERVER IP: 192.168.1.104</div>
+<div class="flex gap-6">
+<span>LAST SYNC: 2 SEC AGO</span>
+<span class="text-primary">ALL STATIONS CLEAR IN 2.4s</span>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ZestMenu - Digital Dining Experience</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen font-display">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-background-light dark:bg-background-dark border-b border-primary/10 shadow-sm">
+<div class="flex items-center justify-between p-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">restaurant_menu</span>
+<h1 class="text-xl font-bold tracking-tight">ZestMenu</h1>
+</div>
+<div class="flex gap-4">
+<button class="p-2 rounded-full hover:bg-primary/10">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-2 rounded-full hover:bg-primary/10">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</div>
+<!-- Scrollable Categories -->
+<div class="flex overflow-x-auto hide-scrollbar px-4 pb-2 gap-6 items-center">
+<a class="flex flex-col items-center min-w-max pb-2 border-b-2 border-primary text-primary font-semibold text-sm" href="#">
+                Appetizers
+            </a>
+<a class="flex flex-col items-center min-w-max pb-2 border-b-2 border-transparent text-slate-500 dark:text-slate-400 font-medium text-sm hover:text-primary transition-colors" href="#">
+                Mains
+            </a>
+<a class="flex flex-col items-center min-w-max pb-2 border-b-2 border-transparent text-slate-500 dark:text-slate-400 font-medium text-sm hover:text-primary transition-colors" href="#">
+                Drinks
+            </a>
+<a class="flex flex-col items-center min-w-max pb-2 border-b-2 border-transparent text-slate-500 dark:text-slate-400 font-medium text-sm hover:text-primary transition-colors" href="#">
+                Desserts
+            </a>
+<a class="flex flex-col items-center min-w-max pb-2 border-b-2 border-transparent text-slate-500 dark:text-slate-400 font-medium text-sm hover:text-primary transition-colors" href="#">
+                Specials
+            </a>
+</div>
+</header>
+<main class="p-4 pb-32 space-y-6 max-w-2xl mx-auto">
+<!-- Search Bar Section -->
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 text-xl">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-3 bg-white dark:bg-[#2d1e15] border border-primary/10 rounded-xl focus:ring-primary focus:border-primary text-sm placeholder-slate-400" placeholder="Search for your favorites..." type="text"/>
+</div>
+<!-- Menu Section: Appetizers -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<h2 class="text-lg font-bold">Appetizers</h2>
+<span class="text-primary text-xs font-semibold uppercase tracking-widest">View All</span>
+</div>
+<!-- Item 1 -->
+<div class="bg-white dark:bg-[#2d1e15] rounded-xl overflow-hidden shadow-md flex flex-col sm:flex-row border border-primary/5">
+<div class="w-full sm:w-40 h-48 sm:h-auto bg-cover bg-center" data-alt="Gourmet bruschetta with tomatoes and balsamic glaze" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCAsGhYGQqOymbWqz9bTmE8FkmD8HFUtxsizYb_Tu2OfeoRvU1fAlfPISJg9KrHWCBOQ7syWaBHfoAt_mMJ4jTcZQgJCFo9gqO-RVlH1cb-PoHyqHwzk-OTLwTv4kYlAW4p1wXmQm4G6FDawGfvppFGM-q81UjaO6mogxRSo09r_KfsHSpOCYXeIRehgP3MaXIZiy1AF08bSV2bbzfOvIlT-sp68G4ttmGwocFp4ECrnFQJSvCVoN4fToL_veyrztpLSvWvn0KolmTp');"></div>
+<div class="p-4 flex flex-col justify-between flex-1">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-lg">Balsamic Bruschetta</h3>
+<span class="text-primary font-bold">$12.50</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">Toasted sourdough topped with heirloom tomatoes, fresh basil, and aged balsamic reduction.</p>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<div class="flex gap-1">
+<span class="bg-primary/10 text-primary text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">Vegan</span>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+                            Add
+                        </button>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-white dark:bg-[#2d1e15] rounded-xl overflow-hidden shadow-md flex flex-col sm:flex-row border border-primary/5">
+<div class="w-full sm:w-40 h-48 sm:h-auto bg-cover bg-center" data-alt="Crispy golden calamari rings with lemon" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBbURTO9TcRpwQ7gYitHh-3aT2IrQxQXvLZNdF3XFuSqsQS2HJfnbrxERZ7gFJ2GZaevceGV3DHzUYmT16ucJSWPAravvujAOh6yiVeqQ7EiEOhqEfSN0MhJ3rsQo07vEQ0CVpzvyKxwAgKdpPMeMvjIEHpPcdq99YTd2pdNrYkQXuHO_T6xIxF_b_fWLZv1qcAf4gI4aAvIuy6HuMVdGSDYQdJ1nNDMQqp_3chKfqoyEZR-ByX1r9cZB7I58pldKc9WWw3giax-yyA');"></div>
+<div class="p-4 flex flex-col justify-between flex-1">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-lg">Crispy Calamari</h3>
+<span class="text-primary font-bold">$15.00</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">Flash-fried calamari served with a zesty lemon-garlic aioli and fresh herbs.</p>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<div class="flex gap-1">
+<span class="bg-primary/10 text-primary text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">Popular</span>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+                            Add
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Menu Section: Mains -->
+<section class="space-y-4">
+<h2 class="text-lg font-bold">Mains</h2>
+<!-- Item 3 -->
+<div class="bg-white dark:bg-[#2d1e15] rounded-xl overflow-hidden shadow-md border border-primary/5">
+<div class="relative h-56 bg-cover bg-center" data-alt="Juicy truffle mushroom wagyu burger" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD5h7MGIQ2PxC6rxduMaWimxyiE4BlLcLWeUieUo76SdrJL8gj5vfQXMG1-cVBs2NzbixVeijCteHlG2Ar8k4lDciOyuG8HmXPU12zD75Izr96Bn_-6e7UAF7doERYWlYI4Zr1_xadFZC9CC2sUa90LdCXce5jJq6hEDCwHqxoyTG18s1wBeNmVfaxCcZeBn_we1L0Ao8qmIMRe6AmcGTBcz06ae9ek7X6S1SkG76wK9r3u1Pb0CsWYbtbuEGjH7dkf1rF9eEHWcQZN');">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<span class="bg-primary text-white text-[10px] px-2 py-1 rounded font-bold uppercase tracking-widest">Chef's Choice</span>
+</div>
+</div>
+<div class="p-4">
+<div class="flex justify-between items-center">
+<h3 class="font-bold text-xl">Truffle Mushroom Burger</h3>
+<span class="text-primary font-bold text-lg">$18.50</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Wagyu beef, swiss cheese, truffle aioli, sautéed mushrooms, and arugula on a toasted brioche bun.</p>
+<div class="mt-6 flex gap-4">
+<button class="flex-1 bg-primary hover:bg-primary/90 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+                            Add to Cart
+                        </button>
+<button class="p-3 border border-primary/20 rounded-xl text-primary hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="bg-white dark:bg-[#2d1e15] rounded-xl overflow-hidden shadow-md flex flex-col sm:flex-row border border-primary/5">
+<div class="w-full sm:w-40 h-48 sm:h-auto bg-cover bg-center" data-alt="Fresh spicy tuna sushi rolls" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBscHMPfoF4WJlJoSkuFdmiIJUSrU6csjw_5zg2DCwq3pnX-SGvHuz4BL_sMAUX-5l6VYx0NoBTK1_OJhvVy_otCfkO9NUHxwqWUKCeHnBDRg4AKu2qAn8swGotiQw4y_cSDyGZTf_mttR56AnPPmT3jresqG0kr1KvVkuD9Mzg3rxOWRcAmfiRtbaSmdc9ZcRVETg_lrwswxEVwIPk8BvVQ84lqiYI-Uohrv2nQBgW45m_o-asumdEfeq2kbjNcxSR6IK7Qx5yjjie');"></div>
+<div class="p-4 flex flex-col justify-between flex-1">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-lg">Spicy Tuna Roll</h3>
+<span class="text-primary font-bold">$14.00</span>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">Fresh tuna, spicy mayo, cucumber, avocado, and toasted sesame seeds.</p>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<div class="flex gap-1">
+<span class="bg-primary/10 text-primary text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">Spicy</span>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all active:scale-95">
+<span class="material-symbols-outlined text-sm">add_shopping_cart</span>
+                            Add
+                        </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Cart Bar -->
+<div class="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background-dark via-background-dark to-transparent z-50">
+<div class="max-w-2xl mx-auto">
+<button class="w-full bg-primary hover:bg-primary/90 text-white p-4 rounded-2xl flex items-center justify-between shadow-2xl shadow-primary/40 transition-transform active:scale-95">
+<div class="flex items-center gap-3">
+<div class="bg-white/20 px-3 py-1 rounded-lg text-sm font-bold">2</div>
+<div class="text-left">
+<p class="text-xs opacity-90 font-medium">View Cart</p>
+<p class="text-sm font-bold">$32.50</p>
+</div>
+</div>
+<div class="flex items-center gap-1 font-bold">
+<span>Checkout</span>
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</button>
+</div>
+</div>
+</body></html>

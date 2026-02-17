@@ -1,144 +1,234 @@
-/**
- * Authentication Context
- * Manages user authentication state and provides auth-related functions
- */
+import { createContext, useContext, useState, useCallback, useMemo, ReactNode } from 'react';
+import { User, AuthState, UserRole } from '../types';
 
-import React, { createContext, useState, useEffect, useCallback } from 'react';
-import type { ReactNode } from 'react';
-import type { UserProfile } from '../types';
-import { getProfile } from '../api/auth';
-import { clearTokens, isAuthenticated as checkIsAuthenticated } from '../utils/jwt';
-import { setCookie, getCookie, deleteCookie } from '../utils/cookies';
-import { STORAGE_KEYS, storage } from '../constants/storage';
-
-export type TableId = number | string | null;
-
-export interface AuthContextType {
-  user: UserProfile | null;
-  tableId: TableId;
-  isLoading: boolean;
-  isAuthenticated: boolean;
-  error: string | null;
+interface AuthContextType extends AuthState {
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  refreshUser: () => Promise<UserProfile>;
-  setError: (error: string | null) => void;
-  setTableId: (id: TableId) => void;
+  register: (name: string, email: string, password: string, role: UserRole) => Promise<void>;
+  updateProfile: (name: string, phone: string, address: string) => Promise<void>;
+  addStaff: (name: string, email: string, password: string, role: UserRole, phone: string) => Promise<void>;
+  getJwtToken: () => string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export { AuthContext };
-
-const TABLE_ID_COOKIE = 'tableId';
-const TABLE_EXPIRY_HOURS = 5; // 5 hours validity
+// Mock users database
+const MOCK_USERS: User[] = [
+  {
+    id: 'cust1',
+    name: 'John Customer',
+    email: 'customer@restaurant.com',
+    password: 'password123',
+    role: UserRole.CUSTOMER,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'admin1',
+    name: 'Admin User',
+    email: 'admin@restaurant.com',
+    password: 'admin123',
+    role: UserRole.ADMIN,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'kitchen1',
+    name: 'Chef John',
+    email: 'kitchen@restaurant.com',
+    password: 'kitchen123',
+    role: UserRole.KITCHEN,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'waiter1',
+    name: 'Waiter Mike',
+    email: 'waiter@restaurant.com',
+    password: 'waiter123',
+    role: UserRole.WAITER,
+    createdAt: new Date().toISOString(),
+  },
+];
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<UserProfile | null>(null);
-  const [tableId, internalSetTableId] = useState<number | string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [authState, setAuthState] = useState<AuthState>({
+    user: null,
+    token: null,
+    isAuthenticated: false,
+    loading: false,
+    error: null,
+  });
 
-  // Load user profile on mount
-  useEffect(() => {
-    const initAuth = async () => {
-      // Check for tableId in URL params
-      const params = new URLSearchParams(globalThis.location.search);
-      const urlTableId = params.get('tableId');
-      
-      if (urlTableId) {
-        internalSetTableId(urlTableId);
-        // Save to cookie with 5-hour expiration
-        setCookie(TABLE_ID_COOKIE, urlTableId, TABLE_EXPIRY_HOURS);
-        // Also save to localStorage as backup
-        storage.set(STORAGE_KEYS.TABLE_NUMBER, urlTableId);
-        console.log(`TableId ${urlTableId} saved (expires in ${TABLE_EXPIRY_HOURS} hours)`);
-      } else {
-        // Try to load from cookie first (preferred)
-        const cookieTableId = getCookie(TABLE_ID_COOKIE);
-        if (cookieTableId) {
-          internalSetTableId(cookieTableId);
-          console.log('TableId loaded from cookie:', cookieTableId);
-        } else {
-          // Fallback to localStorage
-          const savedTableId = storage.get<string>(STORAGE_KEYS.TABLE_NUMBER);
-          if (savedTableId) {
-            internalSetTableId(savedTableId);
-            // Restore to cookie if found in localStorage
-            setCookie(TABLE_ID_COOKIE, savedTableId, TABLE_EXPIRY_HOURS);
-            console.log('TableId restored from localStorage to cookie:', savedTableId);
-          }
-        }
-      }
+  const login = useCallback(async (email: string, password: string) => {
+    setAuthState((prev) => ({ ...prev, loading: true, error: null }));
 
-      // Check if user is authenticated
-      if (checkIsAuthenticated()) {
-        try {
-          const profile = await getProfile();
-          setUser(profile);
-        } catch (err) {
-          console.error('Failed to load user profile:', err);
-          setUser(null);
-        }
-      }
+    // Simulate API call delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
-      setIsLoading(false);
-    };
+    const user = MOCK_USERS.find((u) => u.email === email && u.password === password);
 
-    initAuth();
-  }, []);
-
-  const refreshUser = useCallback(async () => {
-    try {
-      const profile = await getProfile();
-      setUser(profile);
-      setError(null);
-      return profile; // Return the profile data
-    } catch (err) {
-      console.error('Failed to refresh user profile:', err);
-      setError('Failed to load user profile');
-      setUser(null);
-      throw err; // Re-throw so caller can handle
+    if (user) {
+      const token = `token_${user.id}_${Date.now()}`;
+      setAuthState({
+        user: { ...user, password: undefined },
+        token,
+        isAuthenticated: true,
+        loading: false,
+        error: null,
+      });
+      localStorage.setItem('auth_token', token);
+      localStorage.setItem('auth_user', JSON.stringify(user));
+    } else {
+      setAuthState((prev) => ({
+        ...prev,
+        loading: false,
+        error: 'Invalid email or password',
+      }));
+      throw new Error('Invalid credentials');
     }
   }, []);
 
   const logout = useCallback(() => {
-    clearTokens();
-    setUser(null);
-    internalSetTableId(null);
-    // Clear tableId from both cookie and localStorage
-    deleteCookie(TABLE_ID_COOKIE);
-    storage.remove(STORAGE_KEYS.TABLE_NUMBER);
-    console.log('Logout: tableId cleared from cookie and localStorage');
-    globalThis.location.href = '/login';
+    setAuthState({
+      user: null,
+      token: null,
+      isAuthenticated: false,
+      loading: false,
+      error: null,
+    });
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_user');
   }, []);
 
-  const setTableId = useCallback((id: TableId) => {
-    internalSetTableId(id);
-    if (id) {
-      // Save to cookie with 5-hour expiration
-      setCookie(TABLE_ID_COOKIE, id.toString(), TABLE_EXPIRY_HOURS);
-      // Also save to localStorage as backup
-      storage.set(STORAGE_KEYS.TABLE_NUMBER, id.toString());
-      console.log(`TableId ${id} set (expires in ${TABLE_EXPIRY_HOURS} hours)`);
-    } else {
-      // Clear both cookie and localStorage
-      deleteCookie(TABLE_ID_COOKIE);
-      storage.remove(STORAGE_KEYS.TABLE_NUMBER);
-      console.log('TableId cleared');
+  const register = useCallback(
+    async (name: string, email: string, password: string, role: UserRole) => {
+      setAuthState((prev) => ({ ...prev, loading: true, error: null }));
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      const newUser: User = {
+        id: `user_${Date.now()}`,
+        name,
+        email,
+        password,
+        role,
+        createdAt: new Date().toISOString(),
+      };
+
+      MOCK_USERS.push(newUser);
+
+      const token = `token_${newUser.id}_${Date.now()}`;
+      setAuthState({
+        user: { ...newUser, password: undefined },
+        token,
+        isAuthenticated: true,
+        loading: false,
+        error: null,
+      });
+      localStorage.setItem('auth_token', token);
+      localStorage.setItem('auth_user', JSON.stringify(newUser));
+    },
+    []
+  );
+
+  const updateProfile = useCallback(
+    async (name: string, phone: string, address: string) => {
+      if (!authState.user) return;
+
+      setAuthState((prev) => ({ ...prev, loading: true, error: null }));
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      // Update mock users database
+      const userIndex = MOCK_USERS.findIndex((u) => u.id === authState.user?.id);
+      if (userIndex !== -1) {
+        MOCK_USERS[userIndex] = {
+          ...MOCK_USERS[userIndex],
+          name,
+          phone,
+          address,
+        };
+      }
+
+      // Update auth state
+      const updatedUser = { ...authState.user, name, phone, address };
+      setAuthState({
+        ...authState,
+        user: { ...updatedUser, password: undefined },
+        loading: false,
+      });
+
+      localStorage.setItem('auth_user', JSON.stringify(updatedUser));
+    },
+    [authState]
+  );
+
+  const addStaff = useCallback(
+    async (name: string, email: string, password: string, role: UserRole, phone: string) => {
+      setAuthState((prev) => ({ ...prev, loading: true, error: null }));
+      
+      // Simulate API call delay
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      // Check if email already exists
+      const existingUser = MOCK_USERS.find((u) => u.email === email);
+      if (existingUser) {
+        setAuthState((prev) => ({
+          ...prev,
+          loading: false,
+          error: 'Email already exists',
+        }));
+        throw new Error('Email already exists');
+      }
+
+      // Create new staff member
+      const newStaff: User = {
+        id: `staff_${Date.now()}`,
+        name,
+        email,
+        password,
+        role,
+        phone,
+        createdAt: new Date().toISOString(),
+      };
+
+      // Add to mock database
+      MOCK_USERS.push(newStaff);
+
+      setAuthState((prev) => ({ ...prev, loading: false }));
+
+      // Persist to localStorage
+      localStorage.setItem('mock_users', JSON.stringify(MOCK_USERS));
+    },
+    []
+  );
+
+  const getJwtToken = useCallback((): string | null => {
+    // Return mock JWT token that includes role information
+    // Format: Bearer_ROLE_userId
+    if (!authState.user || !authState.token) {
+      return null;
     }
-  }, []);
+    
+    const roleString = Object.keys(UserRole).find(
+      key => UserRole[key as keyof typeof UserRole] === authState.user?.role
+    );
+    
+    return `Bearer_${roleString}_${authState.user.id}`;
+  }, [authState.user, authState.token]);
 
-  const value: AuthContextType = React.useMemo(() => ({
-    user,
-    tableId,
-    isLoading,
-    isAuthenticated: !!user,
-    error,
-    logout,
-    refreshUser,
-    setError,
-    setTableId,
-  }), [user, tableId, isLoading, error, logout, refreshUser, setError, setTableId]);
+  const value = useMemo(
+    () => ({ ...authState, login, logout, register, updateProfile, addStaff, getJwtToken }),
+    [authState, login, logout, register, updateProfile, addStaff, getJwtToken]
+  );
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within AuthProvider');
+  }
+  return context;
 };

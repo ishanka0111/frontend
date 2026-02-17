@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Table Ordering - Scan QR</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Work Sans", sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-white font-display overflow-hidden h-screen">
+<!-- Background Content (Dimmed/Blurred) -->
+<div class="relative flex h-full w-full flex-col bg-background-dark overflow-hidden blur-sm brightness-50">
+<!-- Header -->
+<div class="flex items-center p-4 justify-between border-b border-primary/10">
+<div class="text-white flex size-10 items-center justify-center">
+<span class="material-symbols-outlined">menu</span>
+</div>
+<h2 class="text-white text-lg font-bold flex-1 text-center">Bistro Orange</h2>
+<div class="size-10"></div>
+</div>
+<!-- Categories Scroll -->
+<div class="flex w-full overflow-hidden px-4 py-4">
+<div class="flex flex-row items-start justify-start gap-6">
+<div class="flex flex-col items-center gap-2 w-16">
+<div class="w-14 h-14 bg-primary/20 rounded-full flex items-center justify-center border border-primary/30">
+<span class="material-symbols-outlined text-primary">breakfast_dining</span>
+</div>
+<p class="text-white text-[11px] font-medium">Breakfast</p>
+</div>
+<div class="flex flex-col items-center gap-2 w-16">
+<div class="w-14 h-14 bg-white/5 rounded-full flex items-center justify-center border border-white/10">
+<span class="material-symbols-outlined text-white/60">dinner_dining</span>
+</div>
+<p class="text-white/60 text-[11px] font-medium">Pasta</p>
+</div>
+<div class="flex flex-col items-center gap-2 w-16">
+<div class="w-14 h-14 bg-white/5 rounded-full flex items-center justify-center border border-white/10">
+<span class="material-symbols-outlined text-white/60">eco</span>
+</div>
+<p class="text-white/60 text-[11px] font-medium">Vegan</p>
+</div>
+<div class="flex flex-col items-center gap-2 w-16">
+<div class="w-14 h-14 bg-white/5 rounded-full flex items-center justify-center border border-white/10">
+<span class="material-symbols-outlined text-white/60">cake</span>
+</div>
+<p class="text-white/60 text-[11px] font-medium">Desserts</p>
+</div>
+</div>
+</div>
+<!-- Recommendation Section -->
+<h2 class="text-white text-xl font-bold px-4 pb-4 pt-4">Chef's Specials</h2>
+<div class="px-4 space-y-4">
+<div class="flex items-stretch justify-between gap-4 rounded-xl bg-white/5 p-4 border border-white/10">
+<div class="flex flex-1 flex-col justify-between py-1">
+<div>
+<p class="text-white text-base font-bold">Truffle Mushroom Pizza</p>
+<p class="text-white/50 text-xs mt-1">Wild mushrooms, truffle oil, and creamy mozzarella.</p>
+</div>
+<div class="bg-primary/20 text-primary font-bold text-xs px-3 py-1 rounded w-fit mt-3">$18.50</div>
+</div>
+<div class="w-24 h-24 bg-center bg-no-repeat bg-cover rounded-lg" data-alt="Close up of a delicious truffle pizza" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCKUElNCs8pbZGqB1wXOVfpW4GDXahQfVPP4XMLp1vWN0mn3rMDZ_n3c0bDAEu-iuKclFjCiIS7DAVkBYq7DcgRH-i3hWpC2zjuYvsnlnqSwAkM6s1MYqlJ9SfoPNWKMXF68heYNpRG1cpW0XcPtG4fXmcSqQdsLyMLwaAQSd19D74eiaOf5eanIan2mumtu7M_YUzBzwuCzsiivJyETs3XjwehZKu80Z9x3FvyI2ZyG76VUJbB1HkNN_9_eIC_33sHkEfsAmiPGfHk');"></div>
+</div>
+<div class="flex items-stretch justify-between gap-4 rounded-xl bg-white/5 p-4 border border-white/10">
+<div class="flex flex-1 flex-col justify-between py-1">
+<div>
+<p class="text-white text-base font-bold">Signature Burger</p>
+<p class="text-white/50 text-xs mt-1">Angus beef, cheddar, caramelized onions, and brioche.</p>
+</div>
+<div class="bg-primary/20 text-primary font-bold text-xs px-3 py-1 rounded w-fit mt-3">$16.00</div>
+</div>
+<div class="w-24 h-24 bg-center bg-no-repeat bg-cover rounded-lg" data-alt="Juicy gourmet burger on a plate" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAjDuCrYNk0S6ZD1j7b4QlMkeoPOZZ3X6kGDcjV0aNX-fvmUUG9k3elmMkB-DOi8KOyEidK9qQ5tyxC9P659h68fqho-fZ_hzrqeSI9jx9hsHEc9iByW5XkgUVkqR5JD6GjQ3WjJ65x-ZhU_QXC6rKViT_ZkuR72wcI2tErjSalBOXi1y-7KjPWwscCLpjZRjpMb3rZ8d6QWJhCftGsHzGr5L-EVKvFVpKhIwCaPAGAFgEdluF9Wp7asxl3js5_fyVW7DL2JgTnNRHV');"></div>
+</div>
+</div>
+<!-- Bottom Nav (Hidden/Blurry) -->
+<div class="mt-auto flex border-t border-white/10 bg-white/5 px-4 pb-6 pt-3 gap-2">
+<div class="flex flex-1 flex-col items-center gap-1 opacity-50">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px]">Home</p>
+</div>
+<div class="flex flex-1 flex-col items-center gap-1 opacity-50">
+<span class="material-symbols-outlined">search</span>
+<p class="text-[10px]">Search</p>
+</div>
+<div class="flex flex-1 flex-col items-center gap-1 opacity-50">
+<span class="material-symbols-outlined">receipt_long</span>
+<p class="text-[10px]">Orders</p>
+</div>
+<div class="flex flex-1 flex-col items-center gap-1 opacity-50">
+<span class="material-symbols-outlined">person</span>
+<p class="text-[10px]">Profile</p>
+</div>
+</div>
+</div>
+<!-- Modal Overlay -->
+<div class="absolute inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm">
+<div class="w-full max-w-sm bg-background-dark rounded-xl border border-white/10 shadow-2xl p-8 flex flex-col items-center text-center">
+<!-- Scanner Icon -->
+<div class="relative mb-8">
+<div class="absolute -inset-4 border-2 border-primary/40 rounded-xl animate-pulse"></div>
+<div class="relative w-24 h-24 bg-primary/10 rounded-xl flex items-center justify-center border-2 border-primary">
+<span class="material-symbols-outlined text-primary text-5xl">qr_code_scanner</span>
+</div>
+<!-- Corner Decorations -->
+<div class="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-primary"></div>
+<div class="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-primary"></div>
+<div class="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 border-primary"></div>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-primary"></div>
+</div>
+<h3 class="text-2xl font-bold text-white mb-3">Table Required</h3>
+<p class="text-white/60 text-sm leading-relaxed mb-8">
+                To ensure your food arrives at the right spot, please scan the QR code located on your table.
+            </p>
+<!-- Action Buttons -->
+<div class="w-full space-y-3">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">photo_camera</span>
+                    Scan QR Code
+                </button>
+<button class="w-full bg-white/5 hover:bg-white/10 text-white/80 font-medium py-3 rounded-xl border border-white/10 text-sm">
+                    Enter Table Number Manually
+                </button>
+</div>
+<!-- Optional Dismiss -->
+<button class="mt-6 text-white/40 text-xs flex items-center gap-1 hover:text-white/60">
+<span class="material-symbols-outlined text-sm">close</span>
+                Dismiss for now
+            </button>
+</div>
+</div>
+</body></html>

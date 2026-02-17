@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Luxe Bistro | Staff Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(34, 23, 16, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(244, 123, 37, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display text-white">
+<!-- Background Pattern/Overlay -->
+<div class="fixed inset-0 z-0 opacity-20 pointer-events-none">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-black"></div>
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')]"></div>
+</div>
+<!-- Top Navigation (Simplified for Login) -->
+<header class="relative z-10 flex items-center justify-between px-6 py-4 lg:px-12 border-b border-white/5 bg-background-dark/50">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-primary rounded-lg flex items-center justify-center text-background-dark">
+<span class="material-symbols-outlined font-bold">restaurant</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">Luxe Bistro</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-sm font-medium text-white/70 hover:text-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">help</span>
+                Help
+            </button>
+</div>
+</header>
+<!-- Main Content: Centered Login Card -->
+<main class="relative z-10 flex-1 flex items-center justify-center p-6">
+<div class="w-full max-w-[480px] glass-panel p-8 md:p-12 rounded-xl shadow-2xl border border-white/10">
+<!-- Brand & Header -->
+<div class="text-center mb-10">
+<h1 class="text-3xl font-bold mb-2">Staff Portal</h1>
+<p class="text-white/60 text-base">Please sign in to access your workspace</p>
+</div>
+<!-- Role Quick Icons (Visual Cue) -->
+<div class="flex justify-center gap-8 mb-10 text-white/40">
+<div class="flex flex-col items-center gap-2 group cursor-default">
+<div class="size-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-primary group-hover:text-primary transition-all">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+</div>
+<span class="text-[10px] uppercase tracking-widest font-semibold">Admin</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-default">
+<div class="size-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-primary group-hover:text-primary transition-all">
+<span class="material-symbols-outlined">skillet</span>
+</div>
+<span class="text-[10px] uppercase tracking-widest font-semibold">Kitchen</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-default">
+<div class="size-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-primary group-hover:text-primary transition-all">
+<span class="material-symbols-outlined">flatware</span>
+</div>
+<span class="text-[10px] uppercase tracking-widest font-semibold">Service</span>
+</div>
+</div>
+<!-- Login Form -->
+<form class="space-y-6" onsubmit="return false;">
+<!-- Staff ID Field -->
+<div class="space-y-2">
+<label class="text-sm font-medium text-white/80 ml-1">Staff ID or Email</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/30">badge</span>
+<input autofocus="" class="w-full bg-white/5 border border-white/10 rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="e.g. waiter_01 or name@luxebistro.com" type="text"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center ml-1">
+<label class="text-sm font-medium text-white/80">Password</label>
+<a class="text-xs text-primary hover:underline font-medium" href="#">Forgot Password?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/30">lock</span>
+<input class="w-full bg-white/5 border border-white/10 rounded-lg py-4 pl-12 pr-12 text-white placeholder:text-white/20 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember Me Toggle -->
+<div class="flex items-center gap-2 ml-1">
+<input class="size-4 rounded border-white/20 bg-white/5 text-primary focus:ring-primary focus:ring-offset-background-dark" id="remember" type="checkbox"/>
+<label class="text-sm text-white/60 cursor-pointer" for="remember">Remember this device</label>
+</div>
+<!-- Sign In Button -->
+<button class="w-full bg-primary hover:bg-primary/90 text-background-dark font-bold py-4 rounded-lg transition-all transform active:scale-[0.98] shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+                    Sign In
+                    <span class="material-symbols-outlined">login</span>
+</button>
+</form>
+<!-- Footer -->
+<div class="mt-10 pt-8 border-t border-white/5 text-center">
+<p class="text-sm text-white/40">
+                    Trouble logging in? <a class="text-white/60 hover:text-primary transition-colors underline decoration-primary/30" href="#">Contact Administrator</a>
+</p>
+</div>
+</div>
+</main>
+<!-- Page Footer -->
+<footer class="relative z-10 py-6 text-center text-[10px] text-white/20 uppercase tracking-[0.2em]">
+        © 2024 Luxe Bistro Group • System Version 4.2.0
+    </footer>
+</body></html>

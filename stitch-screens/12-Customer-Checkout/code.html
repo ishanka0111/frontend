@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout - Dine In</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#f47b25",
+                "background-light": "#f8f7f5",
+                "background-dark": "#221710",
+              },
+              fontFamily: {
+                "display": ["Work Sans"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden pb-32">
+<!-- Top Navigation Bar -->
+<div class="sticky top-0 z-10 flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between border-b border-primary/10">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center cursor-pointer hover:bg-primary/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Checkout</h2>
+</div>
+<!-- Table Confirmation Section -->
+<div class="m-4 rounded-xl bg-primary/5 border border-primary/20 p-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="text-white flex items-center justify-center rounded-lg bg-primary shrink-0 size-12 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-slate-900 dark:text-white text-lg font-bold leading-none mb-1">Table 12</p>
+<p class="text-slate-500 dark:text-primary/70 text-sm font-normal leading-tight">Main Dining Room</p>
+</div>
+</div>
+<div class="shrink-0">
+<button class="flex min-w-[70px] cursor-pointer items-center justify-center rounded-lg h-9 px-4 bg-primary/10 dark:bg-primary/20 text-primary text-sm font-bold hover:bg-primary/30 transition-colors">
+                        Edit
+                    </button>
+</div>
+</div>
+</div>
+<!-- Order Summary Section -->
+<div class="px-4 pt-4">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight mb-4">Order Summary</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-4 justify-between group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-slate-100 dark:bg-white/5 flex items-center justify-center text-primary font-bold">1</div>
+<p class="text-slate-800 dark:text-slate-200 text-base font-medium">Classic Burger</p>
+</div>
+<div class="shrink-0"><p class="text-slate-900 dark:text-white text-base font-semibold">$16.00</p></div>
+</div>
+<div class="flex items-center gap-4 justify-between group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-slate-100 dark:bg-white/5 flex items-center justify-center text-primary font-bold">1</div>
+<p class="text-slate-800 dark:text-slate-200 text-base font-medium">Truffle Fries</p>
+</div>
+<div class="shrink-0"><p class="text-slate-900 dark:text-white text-base font-semibold">$9.00</p></div>
+</div>
+<div class="flex items-center gap-4 justify-between group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-slate-100 dark:bg-white/5 flex items-center justify-center text-primary font-bold">2</div>
+<p class="text-slate-800 dark:text-slate-200 text-base font-medium">Draft Beer (IPA)</p>
+</div>
+<div class="shrink-0"><p class="text-slate-900 dark:text-white text-base font-semibold">$16.00</p></div>
+</div>
+</div>
+<!-- Totals Breakdown -->
+<div class="mt-6 pt-4 border-t border-slate-200 dark:border-white/10 space-y-2">
+<div class="flex justify-between text-slate-500 dark:text-slate-400 text-sm">
+<span>Subtotal</span>
+<span>$41.00</span>
+</div>
+<div class="flex justify-between text-slate-500 dark:text-slate-400 text-sm">
+<span>Tax (8.5%)</span>
+<span>$3.49</span>
+</div>
+</div>
+</div>
+<!-- Tip Selection Section -->
+<div class="px-4 mt-8">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight mb-4">Add a Tip</h3>
+<div class="grid grid-cols-4 gap-2">
+<button class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 dark:border-white/10 hover:border-primary/50 transition-all">
+<span class="text-sm font-bold">15%</span>
+<span class="text-[10px] opacity-60">$6.15</span>
+</button>
+<button class="flex flex-col items-center justify-center p-3 rounded-xl border-2 border-primary bg-primary/10 text-primary transition-all">
+<span class="text-sm font-bold">18%</span>
+<span class="text-[10px] opacity-60">$7.38</span>
+</button>
+<button class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 dark:border-white/10 hover:border-primary/50 transition-all">
+<span class="text-sm font-bold">20%</span>
+<span class="text-[10px] opacity-60">$8.20</span>
+</button>
+<button class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 dark:border-white/10 hover:border-primary/50 transition-all">
+<span class="material-symbols-outlined text-lg">edit</span>
+<span class="text-[10px] uppercase font-bold tracking-tighter">Custom</span>
+</button>
+</div>
+</div>
+<!-- Payment Method Section -->
+<div class="px-4 mt-8">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight mb-4">Payment Method</h3>
+<div class="flex flex-col gap-3">
+<!-- Apple Pay Option -->
+<div class="flex items-center justify-between p-4 rounded-xl bg-slate-900 border border-slate-700 cursor-pointer ring-2 ring-primary">
+<div class="flex items-center gap-3">
+<div class="bg-white p-1 rounded-md">
+<svg class="w-8 h-8" fill="none" viewbox="0 0 50 20" xmlns="http://www.w3.org/2000/svg">
+<path d="M11.6667 11.2333C11.6667 12.8333 11.2333 14.2333 10.3667 15.4333C9.5 16.6333 8.23333 17.5333 6.56667 18.1333C4.9 18.7333 3.03333 19.0333 0.966667 19.0333H0V0.966667H2.8C4.5 0.966667 5.9 1.2 7 1.66667C8.1 2.13333 8.93333 2.8 9.5 3.66667C10.0667 4.53333 10.3333 5.53333 10.3333 6.66667C10.3333 7.6 10.1333 8.43333 9.73333 9.16667C9.33333 9.9 8.76667 10.4667 8.03333 10.8667V11.0333C9.13333 11.4 10.0333 12 10.7333 12.8333C11.3667 13.7333 11.6667 14.8667 11.6667 16.2333V11.2333Z" fill="black"></path>
+<path d="M21.1 13.9H15.8667L14.7 18.2333H12.6333L17.4333 0.966667H19.5333L24.3333 18.2333H22.2667L21.1 13.9ZM16.3 12.1H20.6667L18.4667 3.86667H18.4L16.3 12.1Z" fill="black"></path>
+<path d="M30.6333 13.3H30.7L33.3 4.2H35.4667L31.3667 18.2333H29.3333L25.2333 4.2H27.4L30.1 13.3H30.6333Z" fill="black"></path>
+</svg>
+</div>
+<span class="text-white font-medium">Apple Pay</span>
+</div>
+<span class="material-symbols-outlined text-primary">check_circle</span>
+</div>
+<!-- Credit Card Option -->
+<div class="flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-white/10 cursor-pointer hover:bg-white/5 transition-all">
+<div class="flex items-center gap-3">
+<div class="bg-slate-100 dark:bg-white/10 p-2 rounded-md">
+<span class="material-symbols-outlined">credit_card</span>
+</div>
+<div class="flex flex-col">
+<span class="text-slate-800 dark:text-white font-medium">Visa •••• 4242</span>
+<span class="text-xs text-slate-500">Expires 12/26</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Bottom Place Order Section -->
+<div class="fixed bottom-0 left-0 right-0 p-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-t border-slate-200 dark:border-white/10">
+<div class="max-w-xl mx-auto">
+<div class="flex justify-between items-end mb-4">
+<div class="flex flex-col">
+<span class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-widest">Total to Pay</span>
+<span class="text-slate-900 dark:text-white text-3xl font-bold leading-none">$51.87</span>
+</div>
+<div class="text-right">
+<span class="text-primary text-xs font-bold bg-primary/10 px-2 py-1 rounded">Tip Incl.</span>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-xl shadow-primary/20 flex items-center justify-center gap-2 transition-transform active:scale-95">
+<span>Place Order</span>
+<span class="material-symbols-outlined">bolt</span>
+</button>
+<p class="text-center text-[10px] text-slate-400 mt-2 uppercase tracking-tighter">Secure Payment Powered by Stripe</p>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Profile - High-End Restaurant App</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-display">
+<!-- Header Navigation -->
+<div class="sticky top-0 z-10 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 justify-between border-b border-primary/10">
+<button class="flex size-10 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-white">arrow_back</span>
+</button>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center">Profile</h2>
+<button class="flex size-10 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-white">settings</span>
+</button>
+</div>
+<div class="max-w-md mx-auto pb-24">
+<!-- Profile Header -->
+<div class="flex flex-col items-center py-8 px-4">
+<div class="relative group">
+<div class="size-32 rounded-full p-1 bg-gradient-to-tr from-primary to-orange-300">
+<div class="size-full rounded-full bg-background-dark overflow-hidden border-4 border-background-dark">
+<img class="w-full h-full object-cover" data-alt="Professional portrait of a man smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIIJEjKRGGQQ-DGil0lQAtz6iKh1HPsLWKnBVAoqlh02GokY7FKOoMOGJ8vgohOYpbm9J0jlC4UvQVOML5MnKNsGe68aa8YR6tpjK_gn4SlBRb_Kww6X3Vz8yOVo5Kb6uVM6FdWYxOGM61x0W2X4scbRC1NgCYS1E8fUiRAO7jb6NlPqRqI15VQf8HhoATM7xnrb1af0i7RUcnOjkxp7yk_X4Lf3GRmCgySPyaGrhryfgyWfm7Lggu9zccYgZGx5W1TkPLq8kRwLFR"/>
+</div>
+</div>
+<button class="absolute bottom-1 right-1 bg-primary text-white p-2 rounded-full shadow-lg border-2 border-background-dark hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</div>
+<h1 class="mt-4 text-2xl font-bold text-slate-900 dark:text-white">Alex Thompson</h1>
+<p class="text-slate-500 dark:text-primary/80 font-medium mt-1 tracking-wide">ELITE MEMBER</p>
+<div class="flex flex-col items-center mt-3 space-y-1 text-slate-500 dark:text-slate-400 text-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">mail</span>
+<span>alex.t@email.com</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">call</span>
+<span>+1 (555) 012-3456</span>
+</div>
+</div>
+</div>
+<!-- Menu Sections -->
+<div class="px-4 space-y-6">
+<!-- Account Group -->
+<section>
+<h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-3 px-2">Account Settings</h3>
+<div class="bg-white dark:bg-primary/5 rounded-xl overflow-hidden border border-slate-200 dark:border-primary/10">
+<a class="flex items-center gap-4 p-4 hover:bg-slate-50 dark:hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">person</span>
+<span class="flex-1 text-base font-medium">Edit Profile</span>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</a>
+<div class="h-px bg-slate-200 dark:bg-primary/10 mx-4"></div>
+<a class="flex items-center gap-4 p-4 hover:bg-slate-50 dark:hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">lock</span>
+<span class="flex-1 text-base font-medium">Security &amp; Password</span>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</a>
+</div>
+</section>
+<!-- Activity Group -->
+<section>
+<h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-3 px-2">Dining History</h3>
+<div class="bg-white dark:bg-primary/5 rounded-xl overflow-hidden border border-slate-200 dark:border-primary/10">
+<a class="flex items-center gap-4 p-4 hover:bg-slate-50 dark:hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">history</span>
+<span class="flex-1 text-base font-medium">Order History</span>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</a>
+<div class="h-px bg-slate-200 dark:bg-primary/10 mx-4"></div>
+<a class="flex items-center gap-4 p-4 hover:bg-slate-50 dark:hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">event_available</span>
+<span class="flex-1 text-base font-medium">Past Reservations</span>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</a>
+<div class="h-px bg-slate-200 dark:bg-primary/10 mx-4"></div>
+<a class="flex items-center gap-4 p-4 hover:bg-slate-50 dark:hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">star</span>
+<span class="flex-1 text-base font-medium">My Reviews</span>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</a>
+</div>
+</section>
+<!-- Finance Group -->
+<section>
+<h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-3 px-2">Payments</h3>
+<div class="bg-white dark:bg-primary/5 rounded-xl overflow-hidden border border-slate-200 dark:border-primary/10">
+<a class="flex items-center gap-4 p-4 hover:bg-slate-50 dark:hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">payments</span>
+<div class="flex-1">
+<p class="text-base font-medium">Payment Methods</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Visa ending in 4242</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</a>
+</div>
+</section>
+<!-- Preferences Group -->
+<section>
+<h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-3 px-2">Preferences</h3>
+<div class="bg-white dark:bg-primary/5 rounded-xl overflow-hidden border border-slate-200 dark:border-primary/10">
+<div class="flex items-center gap-4 p-4">
+<span class="material-symbols-outlined text-primary">notifications</span>
+<span class="flex-1 text-base font-medium">Push Notifications</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="h-px bg-slate-200 dark:bg-primary/10 mx-4"></div>
+<div class="flex items-center gap-4 p-4">
+<span class="material-symbols-outlined text-primary">mail_outline</span>
+<span class="flex-1 text-base font-medium">Email Newsletters</span>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- Logout Button -->
+<div class="pt-8 pb-4">
+<button class="w-full flex items-center justify-center gap-2 py-4 px-6 bg-transparent border-2 border-primary/40 hover:border-primary text-primary font-bold rounded-xl transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined">logout</span>
+                    Log Out
+                </button>
+<p class="text-center text-xs text-slate-500 dark:text-slate-600 mt-6 font-medium">v4.2.0-restaurant-premium</p>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<div class="fixed bottom-0 left-0 right-0 z-20 border-t border-slate-200 dark:border-primary/10 bg-white/90 dark:bg-background-dark/90 backdrop-blur-lg px-4 pb-6 pt-3">
+<div class="max-w-md mx-auto flex gap-2">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-bold uppercase tracking-wider">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<p class="text-[10px] font-bold uppercase tracking-wider">Book</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<p class="text-[10px] font-bold uppercase tracking-wider">Orders</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">person</span>
+<p class="text-[10px] font-bold uppercase tracking-wider">Profile</p>
+</a>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ServeGrid - Waiter Floor Plan Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Work Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .status-pulse { position: relative; }
+        .status-pulse::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; width: 8px; height: 8px;
+            border-radius: 50%; background-color: #f47b25;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
+<div class="relative flex h-screen w-full flex-col overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-white/10 bg-background-light dark:bg-background-dark px-6 py-3 shrink-0">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-3xl">grid_view</span>
+<h2 class="text-xl font-bold leading-tight tracking-tight dark:text-white">ServeGrid</h2>
+</div>
+<div class="flex items-center gap-1 bg-primary/10 rounded-lg p-1">
+<button class="px-4 py-1.5 rounded-md bg-primary text-white text-sm font-medium">Main Room</button>
+<button class="px-4 py-1.5 rounded-md text-white/60 hover:text-white text-sm font-medium">Patio</button>
+<button class="px-4 py-1.5 rounded-md text-white/60 hover:text-white text-sm font-medium">Bar</button>
+<button class="px-4 py-1.5 rounded-md text-white/60 hover:text-white text-sm font-medium">Lounge</button>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center gap-4 bg-white/5 border border-white/10 rounded-lg px-3 py-1.5">
+<div class="flex flex-col items-center border-r border-white/10 pr-4">
+<span class="text-[10px] uppercase text-white/40 font-bold">Occupancy</span>
+<span class="text-sm font-bold text-primary">78%</span>
+</div>
+<div class="flex flex-col items-center border-r border-white/10 pr-4">
+<span class="text-[10px] uppercase text-white/40 font-bold">Avg Turn</span>
+<span class="text-sm font-bold text-white">45m</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="text-[10px] uppercase text-white/40 font-bold">Tables</span>
+<span class="text-sm font-bold text-white">32/42</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="relative p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 flex h-2 w-2 rounded-full bg-primary"></span>
+</button>
+<button class="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-px bg-white/10 mx-2"></div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="text-xs font-bold text-white">Alex Johnson</p>
+<p class="text-[10px] text-white/40">Floor Manager</p>
+</div>
+<div class="h-9 w-9 rounded-full bg-primary/20 flex items-center justify-center border border-primary/40 overflow-hidden">
+<img class="h-full w-full object-cover" data-alt="Manager profile photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2HAp2CAeysSuEbXs1113yoZi-Kg9qUYLZeEvYAmYbtAISn62LJBwaZtrnrBXYBO6NbWli8JgqB6skWvXOQhZqZgShk9T8t8oRmuqhIoeI6TxA-XmtfnVSFJ7ha6gx-w8KiIgonc-x6ppt-I2vf257ygThL-Do0NzCCm10PlARBG6aTIj7QHZ6c1mHLVWug6L3kx8VZL3G1Hp4BUY8-NtFocS6kpPfbQ_4bJY_xoNevE7CGYjK5sfIJuzr26dCFiFkexX__nMpknFb"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar: Quick Actions & Alerts -->
+<aside class="w-72 border-r border-white/10 bg-background-light dark:bg-background-dark/50 flex flex-col shrink-0">
+<!-- Action Buttons -->
+<div class="p-4 flex flex-col gap-3">
+<p class="text-[10px] uppercase font-bold text-white/30 tracking-widest px-2">Quick Actions</p>
+<button class="flex items-center gap-3 w-full bg-primary hover:bg-primary/90 text-white p-3 rounded-lg transition-colors shadow-lg shadow-primary/10">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-semibold text-sm">New Order</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<button class="flex flex-col items-center justify-center gap-1 bg-white/5 hover:bg-white/10 border border-white/10 text-white p-3 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-white/70">move_item</span>
+<span class="text-[11px] font-medium">Transfer</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 bg-white/5 hover:bg-white/10 border border-white/10 text-white p-3 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-white/70">call_split</span>
+<span class="text-[11px] font-medium">Split Bill</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 bg-white/5 hover:bg-white/10 border border-white/10 text-white p-3 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-white/70">merge</span>
+<span class="text-[11px] font-medium">Merge</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 bg-white/5 hover:bg-white/10 border border-white/10 text-white p-3 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-white/70">print</span>
+<span class="text-[11px] font-medium">Receipt</span>
+</button>
+</div>
+</div>
+<!-- Alerts List -->
+<div class="flex-1 overflow-y-auto px-4 pb-4">
+<p class="text-[10px] uppercase font-bold text-white/30 tracking-widest px-2 mb-3">Active Alerts</p>
+<div class="flex flex-col gap-2">
+<!-- Urgent Alert -->
+<div class="bg-primary/10 border-l-4 border-primary p-3 rounded-r-lg">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-bold text-primary uppercase">Bill Requested</span>
+<span class="text-[10px] text-white/40">2m ago</span>
+</div>
+<p class="text-xs text-white">Table 04 is ready for the check.</p>
+</div>
+<!-- Order Ready Alert -->
+<div class="bg-blue-500/10 border-l-4 border-blue-500 p-3 rounded-r-lg">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-bold text-blue-400 uppercase">Order Ready</span>
+<span class="text-[10px] text-white/40">5m ago</span>
+</div>
+<p class="text-xs text-white">Mains for Table 12 are up in window.</p>
+</div>
+<!-- Cleaning Alert -->
+<div class="bg-white/5 border-l-4 border-white/20 p-3 rounded-r-lg">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-bold text-white/60 uppercase">Needs Cleaning</span>
+<span class="text-[10px] text-white/40">12m ago</span>
+</div>
+<p class="text-xs text-white">Table 03 has been vacated.</p>
+</div>
+<!-- Long Duration Alert -->
+<div class="bg-amber-500/10 border-l-4 border-amber-500 p-3 rounded-r-lg">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-bold text-amber-400 uppercase">Attention</span>
+<span class="text-[10px] text-white/40">15m ago</span>
+</div>
+<p class="text-xs text-white">Table 22 has not been greeted yet.</p>
+</div>
+</div>
+</div>
+<div class="p-4 bg-black/20 border-t border-white/10">
+<button class="w-full py-2.5 bg-white/5 hover:bg-white/10 text-white text-xs font-bold uppercase tracking-widest rounded transition-colors">Shift Overview</button>
+</div>
+</aside>
+<!-- Main Floor Plan Content -->
+<main class="flex-1 bg-white/5 overflow-y-auto p-6">
+<div class="max-w-7xl mx-auto">
+<div class="flex items-center justify-between mb-6">
+<div>
+<h1 class="text-2xl font-bold dark:text-white">Main Dining Room</h1>
+<p class="text-sm text-white/40">Viewing current floor status</p>
+</div>
+<div class="flex gap-4">
+<div class="flex items-center gap-2">
+<span class="h-3 w-3 rounded-full bg-emerald-500"></span>
+<span class="text-xs text-white/60">Available</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="h-3 w-3 rounded-full bg-blue-500"></span>
+<span class="text-xs text-white/60">Occupied</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="h-3 w-3 rounded-full bg-primary"></span>
+<span class="text-xs text-white/60">Cleaning</span>
+</div>
+</div>
+</div>
+<!-- Table Grid -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+<!-- Table 01 - Occupied -->
+<div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-blue-500/50 transition-all cursor-pointer group">
+<div class="bg-blue-500 h-1.5 w-full"></div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-xl font-bold">T-01</h3>
+<p class="text-xs text-white/40">4 Seats</p>
+</div>
+<div class="bg-blue-500/20 text-blue-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Occupied</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-white/10 flex items-center justify-center">
+<span class="text-[10px] font-bold">AJ</span>
+</div>
+<span class="text-xs text-white/60">Alex J.</span>
+</div>
+<div class="flex items-center gap-1 text-white/40">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-xs">1h 12m</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Table 02 - Available -->
+<div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-emerald-500/50 transition-all cursor-pointer">
+<div class="bg-emerald-500 h-1.5 w-full"></div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-xl font-bold">T-02</h3>
+<p class="text-xs text-white/40">2 Seats</p>
+</div>
+<div class="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Available</div>
+</div>
+<div class="py-2 flex items-center justify-center text-white/10">
+<span class="material-symbols-outlined text-4xl">event_seat</span>
+</div>
+</div>
+</div>
+<!-- Table 03 - Cleaning -->
+<div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all cursor-pointer">
+<div class="bg-primary h-1.5 w-full"></div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-xl font-bold">T-03</h3>
+<p class="text-xs text-white/40">6 Seats</p>
+</div>
+<div class="bg-primary/20 text-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase">Cleaning</div>
+</div>
+<div class="flex items-center justify-between mt-6">
+<span class="text-xs text-white/60 italic">Buster assigned</span>
+<div class="flex items-center gap-1 text-white/40">
+<span class="material-symbols-outlined text-sm">mop</span>
+<span class="text-xs">4m ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Table 04 - Occupied (Alert) -->
+<div class="bg-white/5 border border-primary/50 rounded-xl overflow-hidden hover:border-primary transition-all cursor-pointer relative shadow-lg shadow-primary/5">
+<div class="bg-blue-500 h-1.5 w-full"></div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-xl font-bold">T-04</h3>
+<p class="text-xs text-white/40">4 Seats</p>
+</div>
+<div class="flex flex-col items-end gap-1">
+<div class="bg-blue-500/20 text-blue-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Occupied</div>
+<div class="bg-primary text-white text-[9px] font-bold px-1.5 py-0.5 rounded animate-pulse">CHECK REQ</div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
+<span class="text-[10px] font-bold text-primary">SL</span>
+</div>
+<span class="text-xs text-white/60">Sam L.</span>
+</div>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-sm">payments</span>
+<span class="text-xs font-bold">$142.50</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Table 05 - Occupied -->
+<div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-blue-500/50 transition-all cursor-pointer">
+<div class="bg-blue-500 h-1.5 w-full"></div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-xl font-bold">T-05</h3>
+<p class="text-xs text-white/40">2 Seats</p>
+</div>
+<div class="bg-blue-500/20 text-blue-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Occupied</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-white/10 flex items-center justify-center">
+<span class="text-[10px] font-bold">AJ</span>
+</div>
+<span class="text-xs text-white/60">Alex J.</span>
+</div>
+<div class="flex items-center gap-1 text-white/40">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-xs">48m</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Table 06 - Available -->
+<div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-emerald-500/50 transition-all cursor-pointer">
+<div class="bg-emerald-500 h-1.5 w-full"></div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-xl font-bold">T-06</h3>
+<p class="text-xs text-white/40">4 Seats</p>
+</div>
+<div class="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Available</div>
+</div>
+<div class="py-2 flex items-center justify-center text-white/10">
+<span class="material-symbols-outlined text-4xl">event_seat</span>
+</div>
+</div>
+</div>
+<!-- Table 07 - Occupied -->
+<div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-blue-500/50 transition-all cursor-pointer">
+<div class="bg-blue-500 h-1.5 w-full"></div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-xl font-bold">T-07</h3>
+<p class="text-xs text-white/40">8 Seats</p>
+</div>
+<div class="bg-blue-500/20 text-blue-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Occupied</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-white/10 flex items-center justify-center">
+<span class="text-[10px] font-bold">RM</span>
+</div>
+<span class="text-xs text-white/60">Riley M.</span>
+</div>
+<div class="flex items-center gap-1 text-white/40">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-xs">15m</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Table 08 - Available -->
+<div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-emerald-500/50 transition-all cursor-pointer">
+<div class="bg-emerald-500 h-1.5 w-full"></div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-xl font-bold">T-08</h3>
+<p class="text-xs text-white/40">4 Seats</p>
+</div>
+<div class="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Available</div>
+</div>
+<div class="py-2 flex items-center justify-center text-white/10">
+<span class="material-symbols-outlined text-4xl">event_seat</span>
+</div>
+</div>
+</div>
+<!-- Table 09 - Occupied -->
+<div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-blue-500/50 transition-all cursor-pointer">
+<div class="bg-blue-500 h-1.5 w-full"></div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-xl font-bold">T-09</h3>
+<p class="text-xs text-white/40">2 Seats</p>
+</div>
+<div class="bg-blue-500/20 text-blue-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Occupied</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="h-6 w-6 rounded-full bg-white/10 flex items-center justify-center">
+<span class="text-[10px] font-bold">SL</span>
+</div>
+<span class="text-xs text-white/60">Sam L.</span>
+</div>
+<div class="flex items-center gap-1 text-white/40">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-xs">32m</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Table 10 - Cleaning -->
+<div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all cursor-pointer">
+<div class="bg-primary h-1.5 w-full"></div>
+<div class="p-4">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-xl font-bold">T-10</h3>
+<p class="text-xs text-white/40">4 Seats</p>
+</div>
+<div class="bg-primary/20 text-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase">Cleaning</div>
+</div>
+<div class="flex items-center justify-between mt-6">
+<span class="text-xs text-white/60 italic">Buster assigned</span>
+<div class="flex items-center gap-1 text-white/40">
+<span class="material-symbols-outlined text-sm">mop</span>
+<span class="text-xs">1m ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Additional Tables -->
+<div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-emerald-500/50 transition-all cursor-pointer">
+<div class="bg-emerald-500 h-1.5 w-full"></div>
+<div class="p-4"><h3 class="text-xl font-bold mb-1">T-11</h3><p class="text-xs text-white/40">4 Seats</p></div>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-blue-500/50 transition-all cursor-pointer">
+<div class="bg-blue-500 h-1.5 w-full"></div>
+<div class="p-4"><h3 class="text-xl font-bold mb-1">T-12</h3><p class="text-xs text-white/40">6 Seats</p></div>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-emerald-500/50 transition-all cursor-pointer">
+<div class="bg-emerald-500 h-1.5 w-full"></div>
+<div class="p-4"><h3 class="text-xl font-bold mb-1">T-13</h3><p class="text-xs text-white/40">2 Seats</p></div>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-emerald-500/50 transition-all cursor-pointer">
+<div class="bg-emerald-500 h-1.5 w-full"></div>
+<div class="p-4"><h3 class="text-xl font-bold mb-1">T-14</h3><p class="text-xs text-white/40">4 Seats</p></div>
+</div>
+<div class="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-emerald-500/50 transition-all cursor-pointer">
+<div class="bg-emerald-500 h-1.5 w-full"></div>
+<div class="p-4"><h3 class="text-xl font-bold mb-1">T-15</h3><p class="text-xs text-white/40">4 Seats</p></div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Floating Order Summary / Active Tasks -->
+<div class="absolute bottom-6 right-6 w-96 bg-background-dark/95 border border-white/10 rounded-xl shadow-2xl backdrop-blur-md flex flex-col max-h-[400px]">
+<div class="p-4 border-b border-white/10 flex items-center justify-between bg-primary/10 rounded-t-xl">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">shopping_basket</span>
+<span class="font-bold text-sm">Active Orders Summary</span>
+</div>
+<span class="text-[10px] font-bold bg-primary text-white px-1.5 py-0.5 rounded">12 OPEN</span>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-3">
+<div class="flex items-center justify-between text-xs">
+<span class="text-white/60">Table 04 (Checking Out)</span>
+<span class="font-bold">$142.50</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<span class="text-white/60">Table 01 (Mains)</span>
+<span class="font-bold">$84.20</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<span class="text-white/60">Table 07 (Drinks Only)</span>
+<span class="font-bold">$32.00</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<span class="text-white/60">Table 05 (Desserts)</span>
+<span class="font-bold">$45.10</span>
+</div>
+</div>
+<div class="p-4 bg-white/5 rounded-b-xl">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] uppercase font-bold text-white/40">Projected Revenue</span>
+<span class="text-sm font-bold text-primary">$1,240.80</span>
+</div>
+<div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 65%;"></div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

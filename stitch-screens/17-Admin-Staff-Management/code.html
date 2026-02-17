@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Staff Management Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Work Sans", sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-white min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 border-r border-primary/10 bg-background-dark flex flex-col shrink-0">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-background-dark font-bold">restaurant_menu</span>
+</div>
+<div>
+<h1 class="text-white text-lg font-bold leading-tight tracking-tight">Hospitality Pro</h1>
+<p class="text-primary/60 text-xs font-medium uppercase tracking-wider">Admin Portal</p>
+</div>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 text-primary/70 hover:bg-primary/5 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 bg-primary/10 text-primary rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined fill-icon">group</span>
+<span class="text-sm font-medium">Staff Management</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-primary/70 hover:bg-primary/5 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-sm font-medium">Schedules</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-primary/70 hover:bg-primary/5 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-sm font-medium">Payroll</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-primary/70 hover:bg-primary/5 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="text-sm font-medium">Reports</span>
+</a>
+</nav>
+<div class="p-4 border-t border-primary/10">
+<div class="flex items-center gap-3 p-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden border border-primary/30">
+<img alt="Admin Profile" class="w-full h-full object-cover" data-alt="Profile photo of a professional head chef" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcx0hwGmZhGD1Q-9CuUkMZtFDj25Haftb3LAn6CNf5zJiMbbCMAhIgGXYtzgzoB1CjO2267lfc3ylHyGv4yOLmaYfmYOzxXJCQtVnWJgb97P5rKj-3oM7vIQNiZQiurIWT3pcfy17MLGkkM8yOOaASdFoa-oo0P4EJgtyZ1OtB7xG0OpYqA8PyhoqBW6H70gDNCyVACx5F7m0n3vOQnbAtsYLSNk7orHlb66NcwE-z9G0sdEH0VdX6g_6kHTjiQEqSsRLhKixQb5rF"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-white truncate">Chef Gordon</p>
+<p class="text-xs text-primary/60 truncate">Head Administrator</p>
+</div>
+<span class="material-symbols-outlined text-primary/40 cursor-pointer hover:text-primary transition-colors">settings</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-background-light/5 dark:bg-background-dark">
+<!-- Top Navbar -->
+<header class="h-16 border-b border-primary/10 flex items-center justify-between px-8 bg-background-dark/50 backdrop-blur-sm sticky top-0 z-10">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary/40 text-lg">search</span>
+<input class="w-full bg-primary/5 border-primary/10 rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-primary/30 text-white" placeholder="Search staff by name, role or ID..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-background-dark px-4 py-2 rounded-lg text-sm font-bold transition-all transform active:scale-95 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-lg">person_add</span>
+                        Add Staff Member
+                    </button>
+<div class="h-8 w-px bg-primary/10 mx-2"></div>
+<button class="relative p-2 text-primary/60 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-background-dark"></span>
+</button>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="flex-1 overflow-y-auto p-8 space-y-8">
+<!-- Stats Overview -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-primary/5 border border-primary/10 p-6 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">groups</span>
+<span class="text-green-400 text-xs font-bold bg-green-400/10 px-2 py-1 rounded">+2.4%</span>
+</div>
+<p class="text-primary/60 text-sm font-medium">Total Staff Members</p>
+<h3 class="text-3xl font-bold mt-1">48</h3>
+</div>
+<div class="bg-primary/5 border border-primary/10 p-6 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">timer</span>
+<span class="text-green-400 text-xs font-bold bg-green-400/10 px-2 py-1 rounded">Live</span>
+</div>
+<p class="text-primary/60 text-sm font-medium">Active on Shift</p>
+<h3 class="text-3xl font-bold mt-1">14</h3>
+</div>
+<div class="bg-primary/5 border border-primary/10 p-6 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">star</span>
+<span class="text-primary/60 text-xs font-bold bg-primary/10 px-2 py-1 rounded">Avg. Score</span>
+</div>
+<p class="text-primary/60 text-sm font-medium">Avg Performance</p>
+<h3 class="text-3xl font-bold mt-1">92.8%</h3>
+</div>
+<div class="bg-primary/5 border border-primary/10 p-6 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">pending_actions</span>
+<span class="text-red-400 text-xs font-bold bg-red-400/10 px-2 py-1 rounded">Urgent</span>
+</div>
+<p class="text-primary/60 text-sm font-medium">Schedule Requests</p>
+<h3 class="text-3xl font-bold mt-1">5</h3>
+</div>
+</section>
+<!-- Table Section -->
+<section class="bg-primary/5 border border-primary/10 rounded-xl overflow-hidden">
+<div class="px-6 py-5 border-b border-primary/10 flex flex-wrap items-center justify-between gap-4">
+<h2 class="text-lg font-bold">Staff Directory</h2>
+<div class="flex items-center gap-3">
+<select class="bg-background-dark border-primary/20 text-xs rounded-lg px-3 py-1.5 focus:ring-primary focus:border-primary">
+<option>All Roles</option>
+<option>Waiter</option>
+<option>Kitchen</option>
+<option>Admin</option>
+</select>
+<select class="bg-background-dark border-primary/20 text-xs rounded-lg px-3 py-1.5 focus:ring-primary focus:border-primary">
+<option>All Status</option>
+<option>Active</option>
+<option>Inactive</option>
+<option>On Break</option>
+</select>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-primary/5 text-primary/70 text-xs uppercase tracking-wider">
+<th class="px-6 py-4 font-semibold">Staff Member</th>
+<th class="px-6 py-4 font-semibold">Role</th>
+<th class="px-6 py-4 font-semibold">Shift Status</th>
+<th class="px-6 py-4 font-semibold">Performance</th>
+<th class="px-6 py-4 font-semibold">Last Shift</th>
+<th class="px-6 py-4 font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-primary/10">
+<!-- Row 1 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full overflow-hidden bg-primary/20 border border-primary/20">
+<img alt="Staff 1" class="w-full h-full object-cover" data-alt="Profile portrait of a staff member" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRb_dl7CZw4eNHLrvPzeUuf4VCir7aKX_rPoy-K1WWRf1MSJtn_1v8m4W0bmOEtoLq4ugI13EeCgOSKL6xpwWCTD9ev9lOOKKfFvANL24_m1GEhYcAuDAzLh7V7G56hR6DDY2UO3ZcADogux1RQjsiLm4_WuKn5pg6YP41ICnAS428sn-HL68EsVxpjEmYFCOeRiOqZX8SN43ZV554C1k4_BdsndB1ZXdoCwd71znROBMVn9PPr_6qySu6N1LN-SPvZ3NkFIZBSFnk"/>
+</div>
+<div>
+<p class="text-sm font-semibold">Marcus Chen</p>
+<p class="text-xs text-primary/40">ID: #ST-9021</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                                            Waiter
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-sm">On Clock</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="w-full max-w-[100px]">
+<div class="flex items-center justify-between mb-1">
+<span class="text-[10px] text-primary/60 font-bold">94%</span>
+</div>
+<div class="h-1.5 w-full bg-primary/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 94%"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-primary/60 italic">Today, 08:00 AM</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-primary/20 rounded text-primary/70 hover:text-primary"><span class="material-symbols-outlined text-sm">edit</span></button>
+<button class="p-1.5 hover:bg-primary/20 rounded text-primary/70 hover:text-primary"><span class="material-symbols-outlined text-sm">calendar_month</span></button>
+<button class="p-1.5 hover:bg-primary/20 rounded text-primary/70 hover:text-primary"><span class="material-symbols-outlined text-sm">more_vert</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full overflow-hidden bg-primary/20 border border-primary/20">
+<img alt="Staff 2" class="w-full h-full object-cover" data-alt="Profile portrait of a kitchen staff member" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9jXgM8W8Xo9EMHMwWuJ_MD5A54yrpGMRI1PJMRqZTlBoVvFhLP-J05nk7Z_BWk4p26ToIJ-zTsuN4LC_lk4mjzsCYzHOFDcrPEayzh49cZJlsiI1UwEUtBD2MLLmkmHzgWUQmDeIgG4gFNaFME3LCAvdBsIikSY3ddOZmgMCDk8_TFLyC4FJKzf2JwK_LuK0LaOjbcTAgtY6FhekXYhtVzWwLtVuPyLbd5zTnQzmNzpLYBXw2fQKNBKgLVe2oyLuLLleIwiOIuGyZ"/>
+</div>
+<div>
+<p class="text-sm font-semibold">Elena Rodriguez</p>
+<p class="text-xs text-primary/40">ID: #ST-8842</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                                            Kitchen
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-yellow-500"></span>
+<span class="text-sm">On Break</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="w-full max-w-[100px]">
+<div class="flex items-center justify-between mb-1">
+<span class="text-[10px] text-primary/60 font-bold">88%</span>
+</div>
+<div class="h-1.5 w-full bg-primary/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 88%"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-primary/60 italic">Today, 09:30 AM</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-primary/20 rounded text-primary/70 hover:text-primary"><span class="material-symbols-outlined text-sm">edit</span></button>
+<button class="p-1.5 hover:bg-primary/20 rounded text-primary/70 hover:text-primary"><span class="material-symbols-outlined text-sm">calendar_month</span></button>
+<button class="p-1.5 hover:bg-primary/20 rounded text-primary/70 hover:text-primary"><span class="material-symbols-outlined text-sm">more_vert</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full overflow-hidden bg-primary/20 border border-primary/20">
+<img alt="Staff 3" class="w-full h-full object-cover" data-alt="Profile portrait of an administrator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIxmP0s1qbZisVc2zzTtatYTWIOwgsUYptTK2Q1Vx-CeO0_Zf612QBQ-vFcdMSorkaSbMJX1pWXx21yJ6ieMvjx_CBu7y5RxCWaEhccQGX79YUePfAh2NsVmu4NLCVogDEK6rbFc_CrOsncYT090g2h3JDBjNP5QgcAW-YwPIalTsuxEC99qS6_9XGt_0u5ypNREPeghtfq7sFVQMdJ_BVoHIpPMrGToKq2UPircfOfnn_K9cPNwoEB80HZez46d7-7VH9xeuSezp8"/>
+</div>
+<div>
+<p class="text-sm font-semibold">Julian Foster</p>
+<p class="text-xs text-primary/40">ID: #ST-4410</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+                                            Admin
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-gray-600"></span>
+<span class="text-sm text-primary/40">Off Duty</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="w-full max-w-[100px]">
+<div class="flex items-center justify-between mb-1">
+<span class="text-[10px] text-primary/60 font-bold">96%</span>
+</div>
+<div class="h-1.5 w-full bg-primary/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 96%"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-primary/60 italic">Yesterday, 11:00 PM</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-primary/20 rounded text-primary/70 hover:text-primary"><span class="material-symbols-outlined text-sm">edit</span></button>
+<button class="p-1.5 hover:bg-primary/20 rounded text-primary/70 hover:text-primary"><span class="material-symbols-outlined text-sm">calendar_month</span></button>
+<button class="p-1.5 hover:bg-primary/20 rounded text-primary/70 hover:text-primary"><span class="material-symbols-outlined text-sm">more_vert</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full overflow-hidden bg-primary/20 border border-primary/20">
+<img alt="Staff 4" class="w-full h-full object-cover" data-alt="Profile portrait of a server" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3_OKs3IcivPhYgCT7fngtfvr9D_fpflP7L74czJj0OHEuID9kwPzB7ojdHe6TRs9ZEbOPj59ihxICD-u1U3SQnXEpnnofIX5xjqPa1GUxhGuE2_AizzQLtGRzMh1RejXUA0MS0c8pZznWzDDd-NkH9PuiStIJYdcUG5J_ElhuNN-ZNQMXW6bXdVohD5Ls-6gyXKRX46CxuQk_Vvi12IRNwTdJifvd6pS3K9kHwTjj7QJ8KtMpElsDMHyJssBQErgXHYnCvneY5b1J"/>
+</div>
+<div>
+<p class="text-sm font-semibold">Sarah Jenkins</p>
+<p class="text-xs text-primary/40">ID: #ST-2291</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                                            Waiter
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-sm">On Clock</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="w-full max-w-[100px]">
+<div class="flex items-center justify-between mb-1">
+<span class="text-[10px] text-primary/60 font-bold">72%</span>
+</div>
+<div class="h-1.5 w-full bg-primary/10 rounded-full overflow-hidden">
+<div class="h-full bg-red-400 rounded-full" style="width: 72%"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-primary/60 italic">Today, 11:30 AM</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-primary/20 rounded text-primary/70 hover:text-primary"><span class="material-symbols-outlined text-sm">edit</span></button>
+<button class="p-1.5 hover:bg-primary/20 rounded text-primary/70 hover:text-primary"><span class="material-symbols-outlined text-sm">calendar_month</span></button>
+<button class="p-1.5 hover:bg-primary/20 rounded text-primary/70 hover:text-primary"><span class="material-symbols-outlined text-sm">more_vert</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 bg-primary/5 border-t border-primary/10 flex items-center justify-between">
+<p class="text-xs text-primary/60">Showing 4 of 48 staff members</p>
+<div class="flex gap-2">
+<button class="p-2 rounded border border-primary/20 hover:bg-primary/10 transition-colors text-primary disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="p-2 rounded border border-primary/20 hover:bg-primary/10 transition-colors text-primary">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

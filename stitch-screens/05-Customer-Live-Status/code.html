@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Live Order Status</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .status-pulse {
+            box-shadow: 0 0 0 0 rgba(244, 123, 37, 0.4);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(244, 123, 37, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(244, 123, 37, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(244, 123, 37, 0); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white min-h-screen flex flex-col">
+<!-- Header Section -->
+<header class="flex items-center justify-between p-4 bg-background-light dark:bg-background-dark border-b border-primary/10">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-white">arrow_back</span>
+</button>
+<h1 class="text-lg font-bold tracking-tight">Order #1234</h1>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-white">info</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto p-4 space-y-6">
+<!-- Estimated Time Card -->
+<div class="bg-primary/10 border border-primary/20 rounded-xl p-6 flex flex-col items-center text-center relative overflow-hidden">
+<div class="absolute top-0 right-0 p-3">
+<span class="bg-primary text-background-dark text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Live</span>
+</div>
+<p class="text-primary/80 text-sm font-medium uppercase tracking-widest mb-1">Estimated Time Remaining</p>
+<h2 class="text-6xl font-bold text-white mb-2">12 <span class="text-2xl">MINS</span></h2>
+<div class="flex items-center gap-2 text-primary/70">
+<span class="material-symbols-outlined text-sm">restaurant</span>
+<p class="text-sm font-medium">Table 14 • Dining In</p>
+</div>
+</div>
+<!-- Vertical Progress Tracker -->
+<div class="bg-white/5 rounded-xl p-6 border border-white/10">
+<h3 class="text-lg font-bold mb-6">Order Journey</h3>
+<div class="relative space-y-0">
+<!-- Step 1: Completed -->
+<div class="flex gap-4 group">
+<div class="flex flex-col items-center">
+<div class="z-10 flex size-8 items-center justify-center rounded-full bg-primary text-background-dark">
+<span class="material-symbols-outlined text-xl font-bold">check</span>
+</div>
+<div class="w-1 bg-primary h-12"></div>
+</div>
+<div class="pt-1 pb-8">
+<p class="text-white font-bold leading-none mb-1">Order Received</p>
+<p class="text-white/50 text-sm">Confirmed at 12:45 PM</p>
+</div>
+</div>
+<!-- Step 2: Active -->
+<div class="flex gap-4 group">
+<div class="flex flex-col items-center">
+<div class="z-10 flex size-8 items-center justify-center rounded-full bg-primary text-background-dark status-pulse">
+<span class="material-symbols-outlined text-xl">skillet</span>
+</div>
+<div class="w-1 bg-white/10 h-12"></div>
+</div>
+<div class="pt-1 pb-8">
+<p class="text-primary font-bold leading-none mb-1">Preparing Your Meal</p>
+<p class="text-white/70 text-sm italic">In the kitchen • Chef is working</p>
+</div>
+</div>
+<!-- Step 3: Pending -->
+<div class="flex gap-4 group">
+<div class="flex flex-col items-center">
+<div class="z-10 flex size-8 items-center justify-center rounded-full bg-white/10 text-white/30">
+<span class="material-symbols-outlined text-xl">restaurant_menu</span>
+</div>
+</div>
+<div class="pt-1">
+<p class="text-white/30 font-bold leading-none mb-1">Ready for Table</p>
+<p class="text-white/20 text-sm">Final touches coming soon</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Summary Snippet -->
+<div class="bg-white/5 rounded-xl p-4 border border-white/10">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-bold">Order Summary</h3>
+<span class="text-primary text-xs font-bold uppercase cursor-pointer">Edit Order</span>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between text-sm">
+<div class="flex gap-3">
+<span class="text-primary font-bold">1x</span>
+<span class="text-white/80">Signature Wagyu Burger</span>
+</div>
+<span class="text-white/50">$18.00</span>
+</div>
+<div class="flex justify-between text-sm">
+<div class="flex gap-3">
+<span class="text-primary font-bold">1x</span>
+<span class="text-white/80">Truffle Parmesan Fries</span>
+</div>
+<span class="text-white/50">$8.50</span>
+</div>
+<div class="flex justify-between text-sm">
+<div class="flex gap-3">
+<span class="text-primary font-bold">2x</span>
+<span class="text-white/80">Iced Hibiscus Tea</span>
+</div>
+<span class="text-white/50">$12.00</span>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-white/10 flex justify-between font-bold">
+<span>Total</span>
+<span class="text-primary">$38.50</span>
+</div>
+</div>
+</main>
+<!-- Bottom Actions Section -->
+<div class="p-4 bg-background-light dark:bg-background-dark border-t border-white/5">
+<div class="grid grid-cols-2 gap-3 mb-4">
+<button class="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white py-3 rounded-xl font-bold transition-all">
+<span class="material-symbols-outlined">menu_book</span>
+<span>View Menu</span>
+</button>
+<button class="flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-background-dark py-3 rounded-xl font-bold transition-all">
+<span class="material-symbols-outlined">person_raised_hand</span>
+<span>Call Server</span>
+</button>
+</div>
+<!-- Bottom Navigation Bar Component -->
+<nav class="flex justify-between items-center px-2 py-2 border-t border-white/5">
+<a class="flex flex-col items-center gap-1 p-2 text-primary" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-white/50" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="text-[10px] font-medium">Menu</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-white/50" href="#">
+<div class="relative">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="absolute -top-1 -right-1 size-2 bg-primary rounded-full"></span>
+</div>
+<span class="text-[10px] font-medium">Orders</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-white/50" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-[10px] font-medium">Profile</span>
+</a>
+</nav>
+</div>
+</body></html>

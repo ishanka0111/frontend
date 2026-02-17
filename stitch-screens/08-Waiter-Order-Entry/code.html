@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Waiter Order Entry - Table 12</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(244, 123, 37, 0.2);
+            border-radius: 10px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-primary/20 bg-background-light dark:bg-background-dark/50 px-6 py-3 h-16 shrink-0">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="size-9 bg-primary flex items-center justify-center rounded-lg text-white">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<div>
+<h2 class="text-lg font-bold leading-none">Table 12</h2>
+<p class="text-xs text-primary font-medium">Server: Marco Rossi</p>
+</div>
+</div>
+<div class="h-8 w-[1px] bg-primary/20"></div>
+<nav class="flex items-center gap-4">
+<a class="px-3 py-1.5 text-sm font-semibold text-primary border-b-2 border-primary" href="#">Menu</a>
+<a class="px-3 py-1.5 text-sm font-medium hover:text-primary transition-colors" href="#">Tables</a>
+<a class="px-3 py-1.5 text-sm font-medium hover:text-primary transition-colors" href="#">Reservations</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<label class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-slate-400">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-100 dark:bg-white/5 border-none rounded-lg focus:ring-2 focus:ring-primary w-64 text-sm" placeholder="Search menu items..." type="text"/>
+</label>
+<button class="flex items-center justify-center size-10 rounded-full bg-slate-100 dark:bg-white/5">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="size-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="Waiter profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLbq-V9SABN5m_nVS8PMQZs9_lTmQx8SoVBN8L__RN69qGiBltJNuqDpA2Z4HTXdiNI1PBG2i2nq2f0qj3HdVNdtiD7YlJmfVTnpZq3tT0p9E2hhmz70qVGm7fbeT7z0BaQfoKGArYM9HTQ1KZsYFr_SCVlbb86o6oJMkYw8iFVzqM5dobxZ8XX9tCZ8eaE3Ora9U2G7r4SmUene3O_GDAiYip3cmsaCN9w-kZWNhQtnHa9nITuxyZ_KE2Y3x6Kz5mO9NbB_UgMB35"/>
+</div>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden">
+<!-- Left Side: Menu Selection -->
+<section class="flex-1 flex flex-col min-w-0 border-r border-primary/10">
+<!-- Categories Bar -->
+<div class="flex items-center gap-2 p-4 overflow-x-auto no-scrollbar bg-slate-50 dark:bg-white/5 shrink-0">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white font-semibold whitespace-nowrap">
+<span class="material-symbols-outlined text-sm">grid_view</span> All Items
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-background-dark border border-primary/20 text-sm font-medium whitespace-nowrap hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-sm">flatware</span> Starters
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-background-dark border border-primary/20 text-sm font-medium whitespace-nowrap hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-sm">lunch_dining</span> Mains
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-background-dark border border-primary/20 text-sm font-medium whitespace-nowrap hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-sm">icecream</span> Desserts
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-background-dark border border-primary/20 text-sm font-medium whitespace-nowrap hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-sm">local_bar</span> Drinks
+                </button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-background-dark border border-primary/20 text-sm font-medium whitespace-nowrap hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-sm">wine_bar</span> Spirits
+                </button>
+</div>
+<!-- Menu Grid -->
+<div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+<!-- Item Card -->
+<div class="group flex flex-col bg-white dark:bg-white/5 rounded-xl border border-primary/10 overflow-hidden cursor-pointer hover:border-primary transition-all hover:shadow-lg">
+<div class="aspect-square relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" data-alt="Classic wagyu burger with melted cheese" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBHRgKmFn4yD3P5kH2-b7qJyb1B_YVmYElGOMaqDcZvD7DHcMgzRZ6eStINNIS_Ea1rlZUz2UKJVrdrGjk-Ce-tvpCThKB2IcmRRIfBnW4z32I5BU8f7tl7mRE2jKJ6mr8ArWgUA_DIg2O91BGhBcb2DF3gLEdsg-ra4QO4bVoI3piioW6KQ889AS3b_LZ4gZhYsHYOM9EmS5qXSrPRa4ATPhxzxo-OlRnisWIXPfBDkyV8wXfm6YerU53NVw4plZ9ywOp8NWEem224')"></div>
+<div class="absolute top-2 right-2 px-2 py-1 bg-primary text-white text-[10px] font-bold rounded uppercase">Best Seller</div>
+</div>
+<div class="p-4 flex flex-col gap-1">
+<h3 class="font-bold text-sm line-clamp-1">Classic Wagyu Burger</h3>
+<p class="text-primary font-bold">$18.00</p>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-white/5 rounded-xl border border-primary/10 overflow-hidden cursor-pointer hover:border-primary transition-all">
+<div class="aspect-square relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" data-alt="Crispy truffle fries bowl" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD5TltC2HTPx8YvhvFcDR2xtjAk4iQEPg1P1TgStaA6L_-R-Q-FxEuOYVTPLBkem2Qj3lXHoVRxmJZrwKebFVSyTMVp4SCuG-xJBNJrE3KUbimKaTgKwrn7mEOvmBhGK-jqqs7Q3o6vXkEa-KKyqQjk8k05rA445tA4GXhXZKufusc2SKR-qXiB0QJSEM_zkAhBhYA8N6TM8K7lWja9FPNHhrNXI2J2Gj1iigqFnTTVKJ4hRiy5EOq8Ijg8ryOqal3qLGm-Y29_t10X')"></div>
+</div>
+<div class="p-4 flex flex-col gap-1">
+<h3 class="font-bold text-sm line-clamp-1">Truffle Fries</h3>
+<p class="text-primary font-bold">$9.00</p>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-white/5 rounded-xl border border-primary/10 overflow-hidden cursor-pointer hover:border-primary transition-all">
+<div class="aspect-square relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" data-alt="Cold craft IPA beer in glass" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAnO5JYqzBLbn--zSHic81-NkY5z07ottFsADzo9LEGM8PUYjBg8rc1ADnI00lPcI34I6zAXiUPprbIkOkia-1HgksqWrJpMvulsf7J-O_DhK5X2klBB4Nl9XwcDdM0JbcTx5aqQy_Uy14yYQiNYgBa7wCvIZVqiMB0Wmi2Ccl-dcqUkZ1-Eut7VxhLZVGOyTbZyojv9M7sd0rBQq6UBZpJ7d_8XdAncX_uOmis11-pmfuUTfXymHqemNIxvMFEvre8idC4qnam3sdg')"></div>
+</div>
+<div class="p-4 flex flex-col gap-1">
+<h3 class="font-bold text-sm line-clamp-1">Craft IPA</h3>
+<p class="text-primary font-bold">$7.50</p>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-white/5 rounded-xl border border-primary/10 overflow-hidden cursor-pointer hover:border-primary transition-all">
+<div class="aspect-square relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" data-alt="Classic caesar salad with croutons" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB5g1xUrXaCoyFjPXSOi67ZsLFioY9lhcUy_t8gLFk9ECv4oAjw7sz7hPp7mEq0whmZfD_A4kV1Y096Gzd-KfzS8BNxiiF4Iqo0wqphBiYIs1mBEIoGxLLgGyKnRY-t61-4nz-Sy4neFSO_kT9lPzcuBJJYLKjdOd5VEjz4AjUXXdncbaXXVX6t_RB3CaLjo59oUk78xI2G_zCaZV7G33SE-6kQhFdvC5VMRKpccfhkbUkjWJFBEAVNm_pFGlN6q4b2kf_5GL1FseAk')"></div>
+</div>
+<div class="p-4 flex flex-col gap-1">
+<h3 class="font-bold text-sm line-clamp-1">Caesar Salad</h3>
+<p class="text-primary font-bold">$12.00</p>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-white/5 rounded-xl border border-primary/10 overflow-hidden cursor-pointer hover:border-primary transition-all">
+<div class="aspect-square relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" data-alt="Margherita pizza with basil leaf" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAiJbaMqH3GxcOZi-ykqtlZjuHIKiA2c_VCyOsr1ktohGRWC61glDtSq6Bgi7BBotU-YClsn4ontNJ5CpI5DjMq5dOh4EiEkW9He9GTGtbm_VfCXBePWqxcIXOWjlfyCfCYUWhEn6zyvIbzYoN3fxoy12wCtZlD2VazeKB6B8lsROeZOyZghRB4KyIZYRc49R0_wvu1bBjrnpKXtcCJJoif4pxFp27NrSRMP8tzssLWCuI7-gou9p5yb1Y3ipL1l_FxUcSsdXWL_HQp')"></div>
+</div>
+<div class="p-4 flex flex-col gap-1">
+<h3 class="font-bold text-sm line-clamp-1">Margherita Pizza</h3>
+<p class="text-primary font-bold">$15.00</p>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-white/5 rounded-xl border border-primary/10 overflow-hidden cursor-pointer hover:border-primary transition-all">
+<div class="aspect-square relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" data-alt="Grilled salmon fillet with lemon" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDPucaZ-F_lbq4TEHPYskRFfoy90tuQ5VTixIXO3qmJbCa0YghZAkxcveGz-NRvXOxKl95DxBK2Mgl-DB07Lq4vJlq1OZl5ZwNg4IeD5dE6QnOcQHtq83xzGrBubU0Yv6WOSyscd3lDycA19RjtqKEz4gUTW-lfO6aoiygvMtjCNdCiCJIAKQGYyTZlyiElyq8r9YfKXimU_kaR0__pudoj3iK7kd7Km_7X_4APjAQLiDFhcQBQm7F0zfKTfLwJlhNNQ4hiLEmA8FyS')"></div>
+</div>
+<div class="p-4 flex flex-col gap-1">
+<h3 class="font-bold text-sm line-clamp-1">Grilled Salmon</h3>
+<p class="text-primary font-bold">$24.00</p>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-white/5 rounded-xl border border-primary/10 overflow-hidden cursor-pointer hover:border-primary transition-all">
+<div class="aspect-square relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" data-alt="Warm chocolate fondant cake" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAMBmCGrsZ5FKfjZhx9Ijj81BkNehr63jrMGwvffxrS3w_5pnPCENDQl8ThlosfiQGeITpWPefZYFhpl1C_aDZtdealzQXyUV-KFjjwfl_yEruf-Ke5ra_cEqLkPPnEr4igVM8ABaxpNT1uDZATBXENGpY2n8PD3k1PqlWIeI7y-RxE0cVAMgO7lLmZ3EKwmNL1HeYsBfysZhCbR3ScHXL5Y2MfmCYM9unjIc2iCwt3VlOJfS18Ijp7xQG7K9thJMn_jkEEyK-ggI1a')"></div>
+</div>
+<div class="p-4 flex flex-col gap-1">
+<h3 class="font-bold text-sm line-clamp-1">Chocolate Fondant</h3>
+<p class="text-primary font-bold">$10.00</p>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-white/5 rounded-xl border border-primary/10 overflow-hidden cursor-pointer hover:border-primary transition-all">
+<div class="aspect-square relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-300" data-alt="Iced coffee latte with milk swirls" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBCsRVkAbIZWBOGU3yYE6MgJL9h-O5IsML-5-4uSTgi9xgcIecKLcsUAsr42WfzSd-8AgzOJml4sZZaqqxAK8lse_CsBCZnI5BTr1J9HvrossuvkRz9K12uk7X0_HgZO-_EUgyOl_q3xnpbQKvek2YmMwixBOBh3cwK_IpOC9NoiwzGB3UfxvyikfNTPuhJSM2Z5Jt2YEIYqViKuTgAxs0dJMt2He1FpogQusNANkwln6mBFQkfvm_-WIukMlWVjj3LRzpzM72g5dw3')"></div>
+</div>
+<div class="p-4 flex flex-col gap-1">
+<h3 class="font-bold text-sm line-clamp-1">Iced Latte</h3>
+<p class="text-primary font-bold">$4.50</p>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-white/5 rounded-xl border border-primary/10 border-dashed justify-center items-center min-h-[200px] cursor-pointer hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-4xl text-primary/40">add_circle</span>
+<p class="text-xs font-medium text-primary/60 mt-2">Custom Item</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Side: Current Ticket -->
+<aside class="w-96 flex flex-col bg-white dark:bg-background-dark/80 relative">
+<div class="p-4 border-b border-primary/10 flex justify-between items-center bg-primary/5">
+<h2 class="font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">receipt_long</span>
+                    Current Ticket
+                </h2>
+<div class="flex gap-2">
+<button class="size-8 flex items-center justify-center rounded bg-white dark:bg-white/5 text-primary border border-primary/20">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded bg-white dark:bg-white/5 text-red-500 border border-red-500/20">
+<span class="material-symbols-outlined text-sm">delete</span>
+</button>
+</div>
+</div>
+<!-- Ticket Items Scroll Area -->
+<div class="flex-1 overflow-y-auto p-4 custom-scrollbar">
+<div class="flex flex-col gap-4">
+<!-- Ticket Item -->
+<div class="flex flex-col gap-1 pb-4 border-b border-primary/5">
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<div class="font-bold text-primary">1x</div>
+<div>
+<p class="font-bold text-sm">Classic Wagyu Burger</p>
+<p class="text-xs text-slate-400">Medium Rare, No Onions</p>
+</div>
+</div>
+<div class="font-bold text-sm">$18.00</div>
+</div>
+<div class="flex justify-end mt-2 gap-4 items-center">
+<div class="flex items-center gap-3 bg-slate-100 dark:bg-white/5 rounded px-2 py-1 scale-90">
+<button class="size-5 flex items-center justify-center text-primary"><span class="material-symbols-outlined text-base">remove</span></button>
+<span class="text-xs font-bold">1</span>
+<button class="size-5 flex items-center justify-center text-primary"><span class="material-symbols-outlined text-base">add</span></button>
+</div>
+</div>
+</div>
+<!-- Ticket Item -->
+<div class="flex flex-col gap-1 pb-4 border-b border-primary/5">
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<div class="font-bold text-primary">2x</div>
+<div>
+<p class="font-bold text-sm">Truffle Fries</p>
+<p class="text-xs text-slate-400 italic">Extra dipping sauce</p>
+</div>
+</div>
+<div class="font-bold text-sm">$18.00</div>
+</div>
+<div class="flex justify-end mt-2 gap-4 items-center">
+<div class="flex items-center gap-3 bg-slate-100 dark:bg-white/5 rounded px-2 py-1 scale-90">
+<button class="size-5 flex items-center justify-center text-primary"><span class="material-symbols-outlined text-base">remove</span></button>
+<span class="text-xs font-bold">2</span>
+<button class="size-5 flex items-center justify-center text-primary"><span class="material-symbols-outlined text-base">add</span></button>
+</div>
+</div>
+</div>
+<!-- Ticket Item -->
+<div class="flex flex-col gap-1 pb-4 border-b border-primary/5">
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<div class="font-bold text-primary">1x</div>
+<div>
+<p class="font-bold text-sm">Craft IPA</p>
+</div>
+</div>
+<div class="font-bold text-sm">$7.50</div>
+</div>
+<div class="flex justify-end mt-2 gap-4 items-center">
+<div class="flex items-center gap-3 bg-slate-100 dark:bg-white/5 rounded px-2 py-1 scale-90">
+<button class="size-5 flex items-center justify-center text-primary"><span class="material-symbols-outlined text-base">remove</span></button>
+<span class="text-xs font-bold">1</span>
+<button class="size-5 flex items-center justify-center text-primary"><span class="material-symbols-outlined text-base">add</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Ticket Footer -->
+<div class="p-6 bg-slate-50 dark:bg-white/5 border-t border-primary/10">
+<!-- Action Buttons -->
+<div class="grid grid-cols-2 gap-3 mb-6">
+<button class="flex items-center justify-center gap-2 py-2.5 rounded-lg border border-primary/30 font-medium text-sm hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined text-lg">call_split</span>
+                        Split Bill
+                    </button>
+<button class="flex items-center justify-center gap-2 py-2.5 rounded-lg border border-primary/30 font-medium text-sm hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined text-lg">sticky_note_2</span>
+                        Add Note
+                    </button>
+</div>
+<!-- Totals -->
+<div class="space-y-2 mb-6">
+<div class="flex justify-between text-sm text-slate-500">
+<span>Subtotal</span>
+<span>$43.50</span>
+</div>
+<div class="flex justify-between text-sm text-slate-500">
+<span>Tax (8%)</span>
+<span>$3.48</span>
+</div>
+<div class="flex justify-between text-xl font-bold mt-2">
+<span>Total</span>
+<span class="text-primary">$46.98</span>
+</div>
+</div>
+<!-- Primary Action -->
+<button class="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 flex items-center justify-center gap-3 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined">send</span>
+                    Send to Kitchen
+                </button>
+</div>
+</aside>
+</main>
+<!-- Table Selection Indicator Overlay (Optional/Static for context) -->
+<div class="fixed bottom-6 left-6 flex gap-2">
+<div class="px-4 py-2 bg-slate-900 text-white rounded-full flex items-center gap-2 shadow-xl border border-white/10">
+<span class="size-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-xs font-bold uppercase tracking-wider">Kitchen Connected</span>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin: Reports &amp; Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Work Sans', sans-serif; }
+        .heatmap-cell { aspect-ratio: 1/1; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-primary/20 bg-background-light dark:bg-background-dark px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4">
+<div class="text-primary">
+<span class="material-symbols-outlined text-4xl">dashboard_customize</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">Admin Dashboard</h2>
+</div>
+<label class="flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full overflow-hidden">
+<div class="text-primary/60 flex items-center justify-center pl-4 bg-primary/10 border-r-0">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-primary/10 focus:ring-0 focus:outline-none placeholder:text-primary/40 px-4 text-base font-normal" placeholder="Global Search" value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<nav class="flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Inventory</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Orders</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary py-1" href="#">Reports</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Settings</a>
+</nav>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-primary hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-primary hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined">download</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/30" data-alt="Professional admin user profile portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA672GSm8KdIXqFCyfFxQz91Ye5JsZjDFh93mkrMu83_EcoKRpOlnQG-GD0dg7LTdeoHK9eKV4cNv0XkRmGelCMTj_ohL7x7zf_DlCR3TslASXZr8p91CtLZnB6XHhviYJzH-4Vm3w-w9pflcKIdS6vvynbxI1RI8w8U-h2EdD2cOflvIiAclyXfPGAv9FELirTfCKxlrKq8MoheY0VdwyyZo4yRqEO49orwXCTnLT1XTAhTMBtiTGTXlTTnIoOI7YUco47AIcrujyI");'></div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto p-8 space-y-8">
+<!-- Header & Action Row -->
+<div class="flex flex-wrap justify-between items-end gap-4">
+<div class="space-y-1">
+<h1 class="text-4xl font-black tracking-tight uppercase">Reports &amp; Analytics</h1>
+<p class="text-primary/60 text-lg">Real-time business performance &amp; deep-dive trends</p>
+</div>
+<div class="flex gap-3">
+<div class="flex bg-primary/10 rounded-lg p-1">
+<button class="px-4 py-2 text-sm font-bold bg-primary text-white rounded-md">Last 30 Days</button>
+<button class="px-4 py-2 text-sm font-medium text-primary hover:bg-primary/5 rounded-md">Quarterly</button>
+<button class="px-4 py-2 text-sm font-medium text-primary hover:bg-primary/5 rounded-md">Yearly</button>
+</div>
+<button class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded-lg font-bold hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-lg">file_download</span>
+<span>Export PDF</span>
+</button>
+</div>
+</div>
+<!-- KPI Scorecards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-primary/5 border border-primary/20 rounded-xl p-6 flex flex-col gap-2 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-8xl text-primary">payments</span>
+</div>
+<p class="text-primary/70 text-sm font-bold uppercase tracking-wider">Total Revenue</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-black">$124,500.00</span>
+<span class="text-emerald-500 text-sm font-bold flex items-center"><span class="material-symbols-outlined text-sm">arrow_upward</span>8.2%</span>
+</div>
+<p class="text-xs text-primary/40 mt-2">vs. $115,064 last month</p>
+</div>
+<div class="bg-primary/5 border border-primary/20 rounded-xl p-6 flex flex-col gap-2 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-8xl text-primary">shopping_bag</span>
+</div>
+<p class="text-primary/70 text-sm font-bold uppercase tracking-wider">Total Orders</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-black">1,840</span>
+<span class="text-emerald-500 text-sm font-bold flex items-center"><span class="material-symbols-outlined text-sm">arrow_upward</span>5.4%</span>
+</div>
+<p class="text-xs text-primary/40 mt-2">Daily average: 61 orders</p>
+</div>
+<div class="bg-primary/5 border border-primary/20 rounded-xl p-6 flex flex-col gap-2 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-8xl text-primary">analytics</span>
+</div>
+<p class="text-primary/70 text-sm font-bold uppercase tracking-wider">Avg. Order Value</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-black">$67.66</span>
+<span class="text-rose-500 text-sm font-bold flex items-center"><span class="material-symbols-outlined text-sm">arrow_downward</span>2.1%</span>
+</div>
+<p class="text-xs text-primary/40 mt-2">Down $1.45 from Q3</p>
+</div>
+<div class="bg-primary/5 border border-primary/20 rounded-xl p-6 flex flex-col gap-2 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-8xl text-primary">trending_up</span>
+</div>
+<p class="text-primary/70 text-sm font-bold uppercase tracking-wider">Conversion Rate</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-black">12.5%</span>
+<span class="text-emerald-500 text-sm font-bold flex items-center"><span class="material-symbols-outlined text-sm">arrow_upward</span>1.5%</span>
+</div>
+<p class="text-xs text-primary/40 mt-2">Store-wide benchmark: 11%</p>
+</div>
+</div>
+<!-- Main Analytics Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Revenue Line Chart -->
+<div class="lg:col-span-2 bg-primary/5 border border-primary/10 rounded-xl p-6 flex flex-col gap-6">
+<div class="flex justify-between items-center">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">monitoring</span>
+                        Revenue Trends
+                    </h3>
+<div class="flex gap-2">
+<button class="p-1 rounded hover:bg-primary/10 text-primary">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<div class="relative h-[400px] w-full mt-4 border-l border-b border-primary/20 flex items-end px-4 gap-4">
+<!-- Faux Line Chart Visualization with Tailwind -->
+<div class="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
+<div class="w-full h-px bg-primary/20 absolute top-1/4"></div>
+<div class="w-full h-px bg-primary/20 absolute top-2/4"></div>
+<div class="w-full h-px bg-primary/20 absolute top-3/4"></div>
+</div>
+<!-- Chart Bars/Lines mock -->
+<div class="flex-1 flex items-end gap-1 h-full pt-10">
+<div class="flex-1 bg-primary/20 rounded-t-sm h-[40%] hover:bg-primary/60 transition-all cursor-pointer"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm h-[55%] hover:bg-primary/60 transition-all cursor-pointer"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm h-[48%] hover:bg-primary/60 transition-all cursor-pointer"></div>
+<div class="flex-1 bg-primary/30 rounded-t-sm h-[70%] hover:bg-primary/60 transition-all cursor-pointer"></div>
+<div class="flex-1 bg-primary/30 rounded-t-sm h-[65%] hover:bg-primary/60 transition-all cursor-pointer"></div>
+<div class="flex-1 bg-primary/40 rounded-t-sm h-[85%] hover:bg-primary/60 transition-all cursor-pointer relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-primary text-white text-xs px-2 py-1 rounded shadow-lg whitespace-nowrap">Peak: $8.4k</div>
+</div>
+<div class="flex-1 bg-primary/30 rounded-t-sm h-[60%] hover:bg-primary/60 transition-all cursor-pointer"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm h-[45%] hover:bg-primary/60 transition-all cursor-pointer"></div>
+<div class="flex-1 bg-primary/30 rounded-t-sm h-[50%] hover:bg-primary/60 transition-all cursor-pointer"></div>
+<div class="flex-1 bg-primary/50 rounded-t-sm h-[75%] hover:bg-primary/60 transition-all cursor-pointer"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm h-[30%] hover:bg-primary/60 transition-all cursor-pointer"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-[20%] hover:bg-primary/60 transition-all cursor-pointer"></div>
+</div>
+</div>
+<div class="flex justify-between px-10 text-xs font-bold text-primary/40">
+<span>Oct 01</span>
+<span>Oct 08</span>
+<span>Oct 15</span>
+<span>Oct 22</span>
+<span>Oct 31</span>
+</div>
+</div>
+<!-- Top Selling Items -->
+<div class="bg-primary/5 border border-primary/10 rounded-xl p-6 flex flex-col gap-6">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">star</span>
+                    Top Selling Items
+                </h3>
+<div class="space-y-4">
+<div class="flex items-center gap-4 bg-background-dark/20 p-3 rounded-lg border border-primary/10 hover:border-primary/40 transition-all cursor-pointer">
+<div class="size-12 rounded-lg bg-center bg-cover border border-primary/20" data-alt="Healthy organic poke bowl with salmon" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBKldTyLFDxijc4dWHvNTxRMAernLJ1P1QbvFuK0nlsEX9WRqdOg7C6jOv-91xk0mFkbPHFX9K9rU4NiAMlGoVc3ROTXV80eZ6Fq3c4N_9lQeifLfMQh6_2ONlYomew01PSQsiBzzJ2msZoJ4T8J4czJukuVsqmzGGX1D-JqqfvbI3g-BhjRqqBZnJXQQ69qqCLi77Xyfr3Ea5TMQqdrXpeWxHr1nM3jtkM3E1Zr01DnoA1xq-KZC96QcjcZgQbuax72qKj_KYsz72P')"></div>
+<div class="flex-1">
+<h4 class="font-bold text-sm">Arctic Salmon Bowl</h4>
+<p class="text-xs text-primary/60">412 Units sold</p>
+</div>
+<div class="text-right">
+<p class="font-black text-sm">$7,828</p>
+<p class="text-[10px] text-emerald-500 font-bold">+12%</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-background-dark/20 p-3 rounded-lg border border-primary/10 hover:border-primary/40 transition-all cursor-pointer">
+<div class="size-12 rounded-lg bg-center bg-cover border border-primary/20" data-alt="Gourmet wood-fired pepperoni pizza" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCj9B0KJILQQ2Bf8IGWs4J013dgoxLzXC5hKjMKHDrhvZh_zGbW_Rk3qvzbTlkVaebah4uz_thfmlWBqhQPHetXbFBq4AyIR8in3Ux0cpdBz7FToM40PCV1c-erPpOAUVIio-m_zIqyNS3jXWKdF-IbJnQ3yuMzVC4Aoy2_BW59IaUia6Vu4940UqN4PiggbwVMT3s2FXqjl_rPv3XeCzeR0QIGuyOQBnVU8_5I-_CHx7przEp3HAZzmbaOkBrYhdPaUCqoIirgOolD')"></div>
+<div class="flex-1">
+<h4 class="font-bold text-sm">Truffle Pepperoni</h4>
+<p class="text-xs text-primary/60">388 Units sold</p>
+</div>
+<div class="text-right">
+<p class="font-black text-sm">$6,984</p>
+<p class="text-[10px] text-emerald-500 font-bold">+5%</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-background-dark/20 p-3 rounded-lg border border-primary/10 hover:border-primary/40 transition-all cursor-pointer">
+<div class="size-12 rounded-lg bg-center bg-cover border border-primary/20" data-alt="Stack of fluffy buttermilk pancakes" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBattmcGpqKWCwJGxfnAajZJUIzhH8yTrzPWNBDXcZ5N58DovwtcEvAsb9OCSRzqijk_sMYKrjdu0KNXn8Bo2UrK8_ULAcoqx1OEgwx4VEi0cVmrDiXFWUv7BK5Xu_ga6KjOOpf9MMS3j_C16Y5RxBoT0TVDA561AfJq5B3aNC99As_lj5yn1ozwPW09omFynSz7PylXx8RaSL6YXBJW_m7TgVyioVFlXIrJbGfjbZigQhL9rwM3ASAQsGs8HbocbUZxRp-9pibPH37')"></div>
+<div class="flex-1">
+<h4 class="font-bold text-sm">Morning Stack</h4>
+<p class="text-xs text-primary/60">294 Units sold</p>
+</div>
+<div class="text-right">
+<p class="font-black text-sm">$4,410</p>
+<p class="text-[10px] text-rose-500 font-bold">-2%</p>
+</div>
+</div>
+<div class="flex items-center gap-4 bg-background-dark/20 p-3 rounded-lg border border-primary/10 hover:border-primary/40 transition-all cursor-pointer">
+<div class="size-12 rounded-lg bg-center bg-cover border border-primary/20" data-alt="Fresh mediterranean salad with feta" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAFPQS69Wev9NO7fZ3LodnETkBa1laQZp1lb38Rq_5afXJFnOxuWsNZhe_5TiplimhU4-AJ1RKmcRFQim5gTizDDDo6jeRg0wITmKBJOdrZw4QITFRmd62UfMVqBwEWPcnM-2D9DbZsvU2vsZP6kWIh7Hho1Jh1NUkijO6HZv-CC0SdCqyqG7GOHc_pQHXkxABjX3lUonBSz8axmOy1PYiWveIQnmY70im4COZ3C83DEnJIIMgjtwa-f3oO9GkIWvKwVdpYNMsFh8Hx')"></div>
+<div class="flex-1">
+<h4 class="font-bold text-sm">Garden Feta Salad</h4>
+<p class="text-xs text-primary/60">215 Units sold</p>
+</div>
+<div class="text-right">
+<p class="font-black text-sm">$3,225</p>
+<p class="text-[10px] text-emerald-500 font-bold">+18%</p>
+</div>
+</div>
+</div>
+<button class="w-full py-3 border border-dashed border-primary/30 rounded-lg text-primary text-sm font-bold hover:bg-primary/5 transition-all">View Full Inventory Report</button>
+</div>
+</div>
+<!-- Heatmap Section -->
+<div class="bg-primary/5 border border-primary/10 rounded-xl p-8 space-y-8">
+<div class="flex justify-between items-center">
+<div class="space-y-1">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">grid_view</span>
+                        Busy Hour Heatmap
+                    </h3>
+<p class="text-primary/60 text-sm">Visualize customer traffic flow throughout the week to optimize staffing.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-xs font-bold text-primary/40">
+<span>Low Activity</span>
+<div class="flex gap-1">
+<div class="size-4 bg-background-dark rounded-sm"></div>
+<div class="size-4 bg-primary/20 rounded-sm"></div>
+<div class="size-4 bg-primary/40 rounded-sm"></div>
+<div class="size-4 bg-primary/70 rounded-sm"></div>
+<div class="size-4 bg-primary rounded-sm"></div>
+</div>
+<span>Peak Activity</span>
+</div>
+</div>
+</div>
+<!-- 24/7 Grid -->
+<div class="overflow-x-auto">
+<div class="min-w-[800px]">
+<div class="grid grid-cols-25 gap-1">
+<!-- Hour Labels -->
+<div class="col-span-1"></div>
+<div class="text-[10px] text-primary/40 font-bold text-center">12a</div>
+<div class="text-[10px] text-primary/40 font-bold text-center">2a</div>
+<div class="text-[10px] text-primary/40 font-bold text-center">4a</div>
+<div class="text-[10px] text-primary/40 font-bold text-center">6a</div>
+<div class="text-[10px] text-primary/40 font-bold text-center">8a</div>
+<div class="text-[10px] text-primary/40 font-bold text-center">10a</div>
+<div class="text-[10px] text-primary/40 font-bold text-center">12p</div>
+<div class="text-[10px] text-primary/40 font-bold text-center">2p</div>
+<div class="text-[10px] text-primary/40 font-bold text-center">4p</div>
+<div class="text-[10px] text-primary/40 font-bold text-center">6p</div>
+<div class="text-[10px] text-primary/40 font-bold text-center">8p</div>
+<div class="text-[10px] text-primary/40 font-bold text-center">10p</div>
+<div class="col-span-11"></div> <!-- Padding for 24 grid + labels -->
+</div>
+<div class="flex flex-col gap-1 mt-2">
+<!-- Monday -->
+<div class="flex gap-1 items-center">
+<div class="w-10 text-[11px] font-bold text-primary/60">MON</div>
+<div class="flex-1 grid grid-cols-24 gap-1">
+<!-- Mock data blocks -->
+<div class="heatmap-cell bg-background-dark rounded-sm"></div>
+<div class="heatmap-cell bg-background-dark rounded-sm"></div>
+<div class="heatmap-cell bg-background-dark rounded-sm"></div>
+<div class="heatmap-cell bg-primary/10 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/20 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/40 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/60 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/30 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/20 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/30 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/50 rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary/80 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/40 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/30 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/50 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/80 rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary/70 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/40 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/20 rounded-sm"></div>
+<div class="heatmap-cell bg-background-dark rounded-sm"></div>
+<div class="heatmap-cell bg-background-dark rounded-sm"></div>
+</div>
+</div>
+<!-- Friday (Highlighting as busy) -->
+<div class="flex gap-1 items-center">
+<div class="w-10 text-[11px] font-bold text-primary/60">FRI</div>
+<div class="flex-1 grid grid-cols-24 gap-1">
+<div class="heatmap-cell bg-background-dark rounded-sm"></div>
+<div class="heatmap-cell bg-background-dark rounded-sm"></div>
+<div class="heatmap-cell bg-primary/10 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/30 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/50 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/60 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/80 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/70 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/60 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/50 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/80 rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary/80 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/40 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/20 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/10 rounded-sm"></div>
+</div>
+</div>
+<!-- Sunday -->
+<div class="flex gap-1 items-center">
+<div class="w-10 text-[11px] font-bold text-primary/60">SUN</div>
+<div class="flex-1 grid grid-cols-24 gap-1">
+<div class="heatmap-cell bg-background-dark rounded-sm"></div>
+<div class="heatmap-cell bg-background-dark rounded-sm"></div>
+<div class="heatmap-cell bg-background-dark rounded-sm"></div>
+<div class="heatmap-cell bg-background-dark rounded-sm"></div>
+<div class="heatmap-cell bg-primary/10 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/30 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/80 rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary/50 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/30 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/20 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/10 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/10 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/20 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/40 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/60 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/40 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/20 rounded-sm"></div>
+<div class="heatmap-cell bg-primary/10 rounded-sm"></div>
+<div class="heatmap-cell bg-background-dark rounded-sm"></div>
+<div class="heatmap-cell bg-background-dark rounded-sm"></div>
+<div class="heatmap-cell bg-background-dark rounded-sm"></div>
+<div class="heatmap-cell bg-background-dark rounded-sm"></div>
+</div>
+</div>
+<p class="text-[11px] text-primary/40 text-center mt-2 font-bold tracking-widest italic uppercase">... Remaining 4 days hidden for preview ...</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Comparison Summary Footer -->
+<div class="bg-primary border border-primary/20 rounded-xl p-8 text-white flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="space-y-2">
+<h4 class="text-2xl font-black">Performance Summary</h4>
+<p class="opacity-80 max-w-md">The store is currently performing <span class="font-bold underline">14% better</span> than the average industry standard for Q4. Suggested action: Increase staffing for Friday PM peak.</p>
+</div>
+<div class="flex gap-4">
+<button class="px-8 py-3 bg-white text-primary rounded-lg font-black hover:bg-background-light transition-all shadow-xl">Detailed Insights</button>
+<button class="px-8 py-3 bg-background-dark text-white rounded-lg font-black hover:brightness-125 transition-all">Setup Alerts</button>
+</div>
+</div>
+</main>
+<footer class="border-t border-primary/10 p-10 mt-10 text-center opacity-40 text-sm">
+<p>© 2023 Admin Dashboard. All analytics are encrypted and secured.</p>
+</footer>
+<style>
+        .grid-cols-24 { grid-template-columns: repeat(24, minmax(0, 1fr)); }
+        .grid-cols-25 { grid-template-columns: 40px repeat(24, minmax(0, 1fr)); }
+    </style>
+</body></html>

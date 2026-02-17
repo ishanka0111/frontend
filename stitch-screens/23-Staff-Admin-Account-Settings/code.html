@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Restaurant Admin Dashboard - Account Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#121212",
+                        "card-dark": "#1e1e1e",
+                        "border-dark": "#2d2d2d",
+                        "muted-dark": "#a3a3a3"
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-nav {
+            background-color: rgba(244, 123, 37, 0.1);
+            border-left: 4px solid #f47b25;
+            color: #f47b25;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-72 bg-white dark:bg-[#181818] border-r border-slate-200 dark:border-border-dark flex flex-col shrink-0">
+<!-- Sidebar Header / Profile -->
+<div class="p-6 border-b border-slate-200 dark:border-border-dark">
+<div class="flex items-center gap-4">
+<div class="relative group">
+<div class="size-12 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden border-2 border-primary">
+<img class="w-full h-full object-cover" data-alt="Professional headshot of a male general manager" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjIEWC3svD-n7VNbXUc3xgcSJN_myNYBqBIMXUJk0rOuhXPSM4_N0LENUNgjAkJcllQhq1NxQiB4RAIYK8_yxy537ZnegtthfYDKAbjyLyFmaDrIh-OOW8WP9bRGHoG9pGtBiqnaUoygZ2nF8CANx9pyYoBqo20AGVkWPK4hOgbEMxq8RToJLQnD7m6Hi7Q3oSQOiM8iqbCf5GxliOFuVlLW5hB1oO4id1u3MTvgMfGHUn13a1z3cmH3s4MvE7sCXiLZ2l1UGLjvEa"/>
+</div>
+<div class="absolute -bottom-1 -right-1 bg-primary text-white size-5 rounded-full flex items-center justify-center border-2 border-[#181818]">
+<span class="material-symbols-outlined text-[12px]">edit</span>
+</div>
+</div>
+<div class="flex flex-col">
+<h2 class="font-bold text-sm truncate">Alex Thompson</h2>
+<span class="text-xs text-primary font-semibold uppercase tracking-wider">General Manager</span>
+</div>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 px-3 py-6 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-muted-dark hover:bg-slate-100 dark:hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg active-nav" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-sm font-medium">Profile Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-muted-dark hover:bg-slate-100 dark:hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">shield_person</span>
+<span class="text-sm font-medium">Security</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-muted-dark hover:bg-slate-100 dark:hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">settings_suggest</span>
+<span class="text-sm font-medium">Preferences</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-muted-dark hover:bg-slate-100 dark:hover:bg-primary/10 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-sm font-medium">Audit Logs</span>
+</a>
+</nav>
+<!-- Sidebar Footer -->
+<div class="p-6 mt-auto border-t border-slate-200 dark:border-border-dark space-y-4">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-muted-dark hover:text-slate-900 dark:hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="text-sm font-medium">Support Center</span>
+</a>
+<button class="w-full flex items-center justify-center gap-2 bg-slate-100 dark:bg-primary/10 text-slate-900 dark:text-primary hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white font-bold py-2.5 rounded-lg transition-all duration-200">
+<span class="material-symbols-outlined text-sm">logout</span>
+<span class="text-sm">Log Out</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-8 md:p-12">
+<div class="max-w-4xl mx-auto">
+<!-- Header -->
+<header class="mb-10">
+<h1 class="text-3xl font-black tracking-tight text-slate-900 dark:text-white mb-2">Account Settings</h1>
+<p class="text-slate-500 dark:text-muted-dark">Update your personal information, security preferences, and workspace configuration.</p>
+</header>
+<div class="space-y-8">
+<!-- Profile Overview Card -->
+<section class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark overflow-hidden shadow-sm">
+<div class="p-6 md:p-8 flex flex-col md:flex-row items-center gap-8">
+<div class="relative">
+<div class="size-32 rounded-full bg-primary/10 border-4 border-primary/20 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Large profile picture of Alex Thompson" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcJleQoVgvZRs8bSWxK-M8-JDapOErkNnQnRSYHpKY_hSTAcTlXfksg7TwT8a5h1GhL_ak5RP_0_LoNQlSkRRjYIqJwNIf3n2iVo6L5VRhP_7USH-HzQBpz--ggTN5Gvz_8kVEcSw_VAJCUL2T1Eh3Z4W8bZ4p_JXzbF0-kjJ6lVIBPfjZRiIRzErToQxWsdoMxRqnSpcIYIX-rrKnaK1bbMYAisKdkH33RsrQtnMPKVHViCkFP_I63RNM9bW4KYYNhokqzFcnVVqJ"/>
+</div>
+<button class="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full shadow-lg hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-lg">photo_camera</span>
+</button>
+</div>
+<div class="text-center md:text-left flex-1">
+<h3 class="text-2xl font-bold mb-1">Alex Thompson</h3>
+<p class="text-slate-500 dark:text-muted-dark mb-4">Member since Oct 2023 • Staff ID: <span class="text-primary font-mono font-medium">RM-8829</span></p>
+<div class="flex flex-wrap justify-center md:justify-start gap-2">
+<span class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full border border-primary/20 uppercase">Admin Access</span>
+<span class="px-3 py-1 bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 text-xs font-bold rounded-full uppercase">Full Permissions</span>
+</div>
+</div>
+<button class="bg-primary text-white font-bold px-6 py-2.5 rounded-lg shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                                Save All Changes
+                            </button>
+</div>
+</section>
+<!-- Form Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Personal Information -->
+<section class="space-y-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary">person</span>
+<h2 class="text-lg font-bold">Personal Information</h2>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-6 space-y-4 shadow-sm">
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-slate-500 dark:text-muted-dark uppercase tracking-wider">Full Name</label>
+<input class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-border-dark rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" type="text" value="Alex Thompson"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-slate-500 dark:text-muted-dark uppercase tracking-wider">Email Address</label>
+<input class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-border-dark rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" type="email" value="alex.thompson@primegrill.com"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-slate-500 dark:text-muted-dark uppercase tracking-wider">Phone Number</label>
+<input class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-border-dark rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" type="tel" value="+1 (555) 234-5678"/>
+</div>
+</div>
+</section>
+<!-- Security Settings -->
+<section class="space-y-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary">lock</span>
+<h2 class="text-lg font-bold">Security &amp; Login</h2>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-6 space-y-4 shadow-sm">
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-slate-500 dark:text-muted-dark uppercase tracking-wider">Current Password</label>
+<input class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-border-dark rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="••••••••" type="password"/>
+</div>
+<div class="space-y-1.5">
+<div class="flex justify-between items-center">
+<label class="text-xs font-bold text-slate-500 dark:text-muted-dark uppercase tracking-wider">New Password</label>
+<span class="text-[10px] text-green-500 font-bold uppercase">Strong</span>
+</div>
+<input class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-border-dark rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Enter new password" type="password"/>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-sm font-semibold">Two-Factor Authentication</span>
+<span class="text-[11px] text-slate-500 dark:text-muted-dark">Secure your account with 2FA</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 dark:bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+</div>
+<!-- Workspace Preferences -->
+<section class="space-y-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary">tune</span>
+<h2 class="text-lg font-bold">Workspace Preferences</h2>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-border-dark p-6 shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-4">
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-slate-500 dark:text-muted-dark uppercase tracking-wider">Language Selection</label>
+<select class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-border-dark rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all text-sm">
+<option>English (US)</option>
+<option>Spanish</option>
+<option>French</option>
+</select>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-slate-500 dark:text-muted-dark uppercase tracking-wider">Default View</label>
+<select class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-border-dark rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all text-sm">
+<option>Live Floor Plan</option>
+<option>Inventory Overview</option>
+<option>Staff Schedule</option>
+<option>Sales Analytics</option>
+</select>
+</div>
+</div>
+<div class="space-y-4">
+<label class="text-xs font-bold text-slate-500 dark:text-muted-dark uppercase tracking-wider block">Notification Toggles</label>
+<div class="space-y-3">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-slate-300 dark:border-border-dark text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors">Email alerts for low inventory</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded border-slate-300 dark:border-border-dark text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors">SMS notifications for shift changes</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="rounded border-slate-300 dark:border-border-dark text-primary focus:ring-primary bg-transparent" type="checkbox"/>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors">Push notifications for reservation updates</span>
+</label>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer Actions -->
+<div class="pt-6 border-t border-slate-200 dark:border-border-dark flex justify-end gap-4">
+<button class="px-6 py-2.5 text-slate-600 dark:text-muted-dark font-bold hover:text-slate-900 dark:hover:text-white transition-colors">
+                            Discard Changes
+                        </button>
+<button class="bg-primary text-white font-bold px-8 py-2.5 rounded-lg shadow-lg shadow-primary/20 hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                            Save Configuration
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

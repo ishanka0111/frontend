@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Restaurant Cart - Mobile UI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#121212",
+                        "neutral-dark": "#1e1e1e",
+                        "accent-dark": "#2a1d15",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen">
+<!-- Main Content (Blurred Menu Background) -->
+<div class="relative min-h-screen w-full overflow-hidden blur-sm pointer-events-none">
+<header class="p-4 flex justify-between items-center">
+<span class="material-symbols-outlined text-primary text-3xl">restaurant_menu</span>
+<div class="flex gap-4">
+<span class="material-symbols-outlined">search</span>
+<span class="material-symbols-outlined">person</span>
+</div>
+</header>
+<div class="px-4 py-2">
+<h1 class="text-2xl font-bold mb-4">Gourmet Haven</h1>
+<div class="flex gap-3 mb-6 overflow-x-auto pb-2">
+<span class="px-4 py-1 bg-primary text-white rounded-full text-sm">Burgers</span>
+<span class="px-4 py-1 bg-neutral-200 dark:bg-neutral-800 rounded-full text-sm">Sides</span>
+<span class="px-4 py-1 bg-neutral-200 dark:bg-neutral-800 rounded-full text-sm">Drinks</span>
+<span class="px-4 py-1 bg-neutral-200 dark:bg-neutral-800 rounded-full text-sm">Desserts</span>
+</div>
+<!-- Mock Menu Items -->
+<div class="space-y-4">
+<div class="flex gap-4 p-3 bg-white dark:bg-neutral-dark rounded-xl">
+<div class="w-24 h-24 rounded-lg bg-cover bg-center" data-alt="Juicy gourmet wagyu beef burger with cheese" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCUYskWcmfZDxBAlIJoC1Rpf1Z936GG9zwwhXfuDd9uzQA5HqldsdElrtHYefvPZVa-_6PtcSMZIQaqJLALhWusNqGH1UlA7Ftz8oCfOlRH7KmZEbEGa6x8rJgda-vbk1W8r7jJPjtfHtFbVOOAtozfYmBcBbUU6tqw4b4_JIv3f8gM7TloPihm9j-hZMNJiwQEX9BFvmxbXakvHQHoyrIPL6S3yj7JoJs5wVvi_JKckJUtoZ1Y1nZBu551ApXqnYJy8hHPhyBJ17ed')"></div>
+<div class="flex-1">
+<h3 class="font-bold">Wagyu Burger</h3>
+<p class="text-xs text-slate-500 line-clamp-2">Premium wagyu beef, caramelized onions, pepper jack cheese.</p>
+<p class="mt-2 text-primary font-bold">$24.00</p>
+</div>
+</div>
+<div class="flex gap-4 p-3 bg-white dark:bg-neutral-dark rounded-xl">
+<div class="w-24 h-24 rounded-lg bg-cover bg-center" data-alt="Golden crispy truffle fries with herbs" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCqvewGf-t4W8i531UqzmAZHD94qb6hFcEzS34MCEt_xNu-LHI_XW4yM7iZ9MFdKKaassCNow2gZO7CuoSC31JqDUWOPBbqSIDnu11qBBRZT4Q1NJjNm50NybWL-NPE30HRr1eEMHw-ONHKAduWvF5pZ5avuqE9q-1G_omaXhAgLJMZddA1AMJi4kgBlKxBkMaCbICvvJf95MlgwCae81NkXkP2XNKpFdti95bJc5AunHenTDBFjMbllWkg27YibfYrl4EJwHBLXch3')"></div>
+<div class="flex-1">
+<h3 class="font-bold">Truffle Fries</h3>
+<p class="text-xs text-slate-500 line-clamp-2">Hand-cut potatoes, white truffle oil, grated parmesan.</p>
+<p class="mt-2 text-primary font-bold">$12.00</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Cart Overlay Backdrop -->
+<div class="fixed inset-0 bg-black/60 z-40 backdrop-blur-[2px]"></div>
+<!-- Slide-in Cart Panel -->
+<div class="fixed top-0 right-0 h-full w-[85%] max-w-[400px] bg-background-dark z-50 shadow-2xl flex flex-col border-l border-white/5">
+<!-- BottomSheetHandle Style Header -->
+<div class="flex flex-col items-stretch">
+<div class="flex items-center p-6 pb-2 justify-between">
+<button class="text-white flex size-10 shrink-0 items-center justify-center hover:bg-white/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+<h2 class="text-white text-xl font-bold leading-tight tracking-tight flex-1 text-center">Your Order</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="text-primary text-sm font-semibold hover:underline">Clear</button>
+</div>
+</div>
+</div>
+<!-- Scrollable Items Area -->
+<div class="flex-1 overflow-y-auto custom-scrollbar px-6 py-4 space-y-6">
+<!-- Item 1 -->
+<div class="flex flex-col gap-3 group relative">
+<div class="flex gap-4 items-start">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl size-20 shadow-lg border border-white/10" data-alt="Wagyu Burger close up" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB71a3TDqTvL4K8BeCX9C8Q9khl3BXrMr5IZBcRJNl7I4TjNju-Mxa1gZYs6rturQFoetXBznmIz_P7tbsry8bIDZ-bEhkW2OtogbBeKJ4DfhQoGPHss8mNhdjVvd7eVjkP9NjzWDHTQNQvn0Bboc1b9veWfseD-ZZzfS5Wq6yj5DbJDGSv16mmnvTMlibrOEiE86kcu94j7R5ZkUxciABtxy_q5-GwAomSSfNyzW0uHXTvNx7c6LB4fLeqfsj5QzG0vMvs50-j5ROX");'></div>
+<div class="flex flex-1 flex-col">
+<div class="flex justify-between items-start">
+<p class="text-white text-lg font-semibold">Wagyu Burger</p>
+<p class="text-white text-lg font-bold">$24.00</p>
+</div>
+<p class="text-slate-400 text-xs font-normal mt-1 italic">Medium Rare, Caramelized Onions, Pepper Jack</p>
+<div class="mt-4 flex items-center justify-between">
+<div class="flex items-center gap-4 bg-accent-dark/40 rounded-full px-3 py-1 border border-primary/20">
+<button class="text-primary text-xl font-bold flex h-6 w-6 items-center justify-center hover:bg-primary/20 rounded-full transition-all">-</button>
+<span class="text-white font-semibold text-sm">1</span>
+<button class="text-primary text-xl font-bold flex h-6 w-6 items-center justify-center hover:bg-primary/20 rounded-full transition-all">+</button>
+</div>
+<button class="text-slate-500 hover:text-red-400 transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex flex-col gap-3 group relative">
+<div class="flex gap-4 items-start">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl size-20 shadow-lg border border-white/10" data-alt="Truffle Fries close up" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAmuHGcp4MnYf8Nyhi1JITL25OuJgsAJGzPsqWrUIp6AZ5iSRu6vJdt-Imzx-aRl-AR2U9jHb5cEw7TnKBvj4eSireD4PEx1wBIO47oYhUfIPEZ8E-VxgrKr5Z0QqcgnIoiSpchb7tkkIQi2Xxv74SvLUCa6esoBz_EZWngm5L1T_HNR1qEwRq0Gtj8lIRWOE2PZ1oJ82TX2tgX6Z1nkHaoAUuan0kQoJX8XBMIKLPfd6qA-3tIZ-CKRs3BdjSVlxg5XaTJYL8yiO1g");'></div>
+<div class="flex flex-1 flex-col">
+<div class="flex justify-between items-start">
+<p class="text-white text-lg font-semibold">Truffle Fries</p>
+<p class="text-white text-lg font-bold">$12.00</p>
+</div>
+<p class="text-slate-400 text-xs font-normal mt-1 italic">Extra Parmesan, No Truffle Oil</p>
+<div class="mt-4 flex items-center justify-between">
+<div class="flex items-center gap-4 bg-accent-dark/40 rounded-full px-3 py-1 border border-primary/20">
+<button class="text-primary text-xl font-bold flex h-6 w-6 items-center justify-center hover:bg-primary/20 rounded-full transition-all">-</button>
+<span class="text-white font-semibold text-sm">2</span>
+<button class="text-primary text-xl font-bold flex h-6 w-6 items-center justify-center hover:bg-primary/20 rounded-full transition-all">+</button>
+</div>
+<button class="text-slate-500 hover:text-red-400 transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Upsell Hint -->
+<div class="mt-8 p-4 bg-primary/10 rounded-xl border border-primary/20 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">local_offer</span>
+<p class="text-xs text-white">Add a <span class="font-bold">Chocolate Lava Cake</span> for just $5.00 more!</p>
+</div>
+</div>
+<!-- Sticky Footer -->
+<div class="p-6 bg-accent-dark/30 border-t border-white/5 space-y-4">
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<p class="text-slate-400 text-sm">Subtotal</p>
+<p class="text-white font-medium">$48.00</p>
+</div>
+<div class="flex justify-between items-center">
+<p class="text-slate-400 text-sm">Tax &amp; Fees</p>
+<p class="text-white font-medium">$4.50</p>
+</div>
+<div class="flex justify-between items-center pt-2 border-t border-white/5">
+<p class="text-white text-lg font-bold">Total</p>
+<p class="text-primary text-2xl font-bold">$52.50</p>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                Proceed to Checkout
+                <span class="material-symbols-outlined text-xl">arrow_forward</span>
+</button>
+<p class="text-center text-[10px] text-slate-500 uppercase tracking-widest">Secure checkout by Stripe</p>
+</div>
+</div>
+</body></html>

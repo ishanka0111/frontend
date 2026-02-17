@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kitchen Inventory Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Work Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/20 bg-background-light dark:bg-background-dark px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">restaurant_menu</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Kitchen Central</h2>
+</div>
+<label class="flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full overflow-hidden border border-primary/20">
+<div class="text-primary/60 flex items-center justify-center pl-4 bg-white dark:bg-primary/10">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-white dark:bg-primary/10 text-slate-900 dark:text-white focus:ring-0 placeholder:text-primary/40 px-4 text-base font-normal" placeholder="Search ingredients..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<nav class="flex items-center gap-9">
+<a class="text-primary font-semibold text-sm leading-normal border-b-2 border-primary pb-1" href="#">Dashboard</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Inventory</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Suppliers</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Reports</a>
+</nav>
+<button class="flex min-w-[120px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+<span class="material-symbols-outlined mr-2 text-lg">add_circle</span>
+<span>Add Item</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/30" data-alt="Professional chef profile picture portrait" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBAa-nndcBrI35ypc5IvVjYR2IvQq9oLHVDIh8HYh6kGc6g4BPkk8pehNf6jUNvMc6cSXdtLGL3YX8jB4kK_u4HJ4S-fDFEssG6nTfS4wHmJMwfkpRkkyp96A9_mYRQghqarjtxzXAUI6nkXbQUJefdwlZ9QDMu0Tk99PN6_eVpFFNgomS2O06Xdurx2mps87IgBKCtOTOfj3DbLGA6LkU8azWH-AYogz-yYEE2n-MA8EeDFdcWfTfAdBVDmj9BMNgTzkr09nFWMjX6");'></div>
+</div>
+</header>
+<main class="flex-1 px-4 sm:px-10 py-8 max-w-[1440px] mx-auto w-full">
+<!-- Dashboard Stats -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-primary/5 border border-primary/10 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Total Value</p>
+<span class="material-symbols-outlined text-primary">payments</span>
+</div>
+<p class="text-slate-900 dark:text-white text-3xl font-bold">$12,450.80</p>
+<p class="text-emerald-500 text-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> +2.5% vs last month
+                </p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-primary/5 border border-primary/10 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Low Stock</p>
+<span class="material-symbols-outlined text-amber-500">warning</span>
+</div>
+<p class="text-slate-900 dark:text-white text-3xl font-bold">12 Items</p>
+<p class="text-rose-500 text-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">priority_high</span> 4 Critical alerts
+                </p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-primary/5 border border-primary/10 shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Expiring Soon</p>
+<span class="material-symbols-outlined text-rose-500">event_busy</span>
+</div>
+<p class="text-slate-900 dark:text-white text-3xl font-bold">5 Items</p>
+<p class="text-primary text-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">schedule</span> Check within 48h
+                </p>
+</div>
+</div>
+<!-- Low Stock Alerts -->
+<section class="mb-10">
+<div class="flex items-center justify-between mb-5">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">notifications_active</span>
+                    Critical Low Stock Alerts
+                </h2>
+<a class="text-primary text-sm font-bold hover:underline" href="#">View all alerts</a>
+</div>
+<div class="flex gap-4 overflow-x-auto pb-4 snap-x">
+<!-- Alert Card 1 -->
+<div class="flex-none w-72 snap-start rounded-xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 p-4">
+<div class="flex items-start gap-4">
+<div class="size-16 rounded-lg bg-center bg-cover flex-shrink-0" data-alt="Fresh red roma tomatoes on table" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCIfyNX7ddiisKYobvvDkFgQdo-V8WmtJW3UsaujrFywdBIhkWBXohvLtSlvpo1-jrw7GOGO8JTZcoFGSdS_yyKQt4qMIjI80a5erqLtszeQrGv1zm_b5S0-YOStF298P7pNZryKub7T6ZxrevcdBUF_HmEVDABta-k3GC6js2ZfwXCP0FaB17ya1GLaGsYfh-er5KMhnJG32EhMDdjsquG7g8nnxpe4t-D42uV6lzcgB2J8jZNqW8BldNT1skgRzPUHwCE-FuMPLCA')"></div>
+<div class="flex-1">
+<h4 class="text-slate-900 dark:text-white font-bold text-base">Roma Tomatoes</h4>
+<p class="text-rose-600 dark:text-rose-400 text-xs font-bold uppercase mt-1">2kg / 15kg Goal</p>
+<button class="mt-3 w-full py-1.5 bg-rose-500 text-white rounded-lg text-xs font-bold hover:bg-rose-600 transition-colors">Quick Reorder</button>
+</div>
+</div>
+</div>
+<!-- Alert Card 2 -->
+<div class="flex-none w-72 snap-start rounded-xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 p-4">
+<div class="flex items-start gap-4">
+<div class="size-16 rounded-lg bg-center bg-cover flex-shrink-0" data-alt="Bottle of fresh heavy cooking cream" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDZOpgrtcIrl3saP0mg-3NR-D6_VG7J58UpRVueafiCwK1OT9tE3d5WbJm5f6RKb48TJ4Uz1reGtbV7-aVplPn1XNbVKWYUFvCNl8zKJXzL1sOKAhJMNlk4vLm8iADkXxuOSqLxoT9pzGD4L2NJ9wSqMcIEX-BpXKNowvUZ1HKqRIgdHxKwuJNf9HLEmW9nftn8pMgqu9Bnm6ZXxcn9mceQ25a97qs6Mroyh-PD0adIFQb_0Hyu4lOkSsp7tdBxyB_GRBCMwTWhW038')"></div>
+<div class="flex-1">
+<h4 class="text-slate-900 dark:text-white font-bold text-base">Heavy Cream</h4>
+<p class="text-rose-600 dark:text-rose-400 text-xs font-bold uppercase mt-1">1L / 12L Goal</p>
+<button class="mt-3 w-full py-1.5 bg-rose-500 text-white rounded-lg text-xs font-bold hover:bg-rose-600 transition-colors">Quick Reorder</button>
+</div>
+</div>
+</div>
+<!-- Alert Card 3 -->
+<div class="flex-none w-72 snap-start rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 p-4">
+<div class="flex items-start gap-4">
+<div class="size-16 rounded-lg bg-center bg-cover flex-shrink-0" data-alt="Group of vibrant bell peppers" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC6qcWqvm5lEDzjY2ydcAtqKKR1VoM-qzxmF29e6qdIFIw2CW3tIgz1LDNG0KzHiQmobW2XIByk8zWCIhf-smq1aSsuiQN2xSaDGjNu8wQQJcMDOVYgUG1y2hqPEzYW_tCX-P0KO0MMmiFKmOlEbuPJc6zPfq5I_nCM0L2PvnBHaRuYRNtng3x5dYzFg-8q2gn6ejXu3JDX2SIBdEKiYvq7X55X_KFdc2vZskEaSW8fC8WVvpZc7K2Q98PTt3OW0etqNVCSuR4AixNX')"></div>
+<div class="flex-1">
+<h4 class="text-slate-900 dark:text-white font-bold text-base">Bell Peppers</h4>
+<p class="text-amber-600 dark:text-amber-400 text-xs font-bold uppercase mt-1">5 Units / 40 Goal</p>
+<button class="mt-3 w-full py-1.5 bg-amber-500 text-white rounded-lg text-xs font-bold hover:bg-amber-600 transition-colors">Quick Reorder</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Inventory Table -->
+<section class="bg-white dark:bg-primary/5 rounded-xl border border-primary/10 overflow-hidden shadow-sm">
+<div class="p-6 border-b border-primary/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Inventory List</h3>
+<div class="flex items-center gap-3">
+<button class="p-2 rounded-lg border border-primary/20 hover:bg-primary/10 transition-colors flex items-center gap-2 text-sm font-medium">
+<span class="material-symbols-outlined text-lg">filter_list</span> Filter
+                    </button>
+<button class="p-2 rounded-lg border border-primary/20 hover:bg-primary/10 transition-colors flex items-center gap-2 text-sm font-medium">
+<span class="material-symbols-outlined text-lg">sort</span> Sort
+                    </button>
+<button class="p-2 rounded-lg border border-primary/20 hover:bg-primary/10 transition-colors flex items-center gap-2 text-sm font-medium">
+<span class="material-symbols-outlined text-lg">file_download</span> Export
+                    </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-primary/5 dark:bg-primary/10 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">
+<th class="px-6 py-4">Item Name</th>
+<th class="px-6 py-4">Category</th>
+<th class="px-6 py-4">Stock Level</th>
+<th class="px-6 py-4">Quantity</th>
+<th class="px-6 py-4">Unit</th>
+<th class="px-6 py-4">Last Restocked</th>
+<th class="px-6 py-4 text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-primary/10">
+<!-- Table Row 1 -->
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-center bg-cover" data-alt="Small thumbnail of tomatoes" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBq0DBRJIptTzAp7tiQuXprAemQLjNgbvjHk0HDbbW0uXPJENkmy4NGYof2XCINJ6u1MdlGmHUCu-Qel5EXZp4tAGQvsAbobMQvFT68kXJxOrRDZQxh51Ym-uN_IOKX4gfOK5SJyiCTwbpSMhUe32ftgjywLB7LSJuKJdMd47wBK3negxKI0bVf1qnd2Fq6BZotkSM4J8mR90T0lcbdn4qEhgqYxMTF3etGO3WYLf-sEzhmuIbetAe0uBRSJuXcHjMs8wtp827yRBCn')"></div>
+<span class="font-semibold text-slate-900 dark:text-white">Roma Tomatoes</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold uppercase">Produce</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap min-w-[140px]">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
+<div class="bg-rose-500 h-2 rounded-full" style="width: 15%"></div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap font-bold text-rose-500">2.0</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">kg</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">Oct 24, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1.5 rounded bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<button class="p-1.5 rounded bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+<button class="p-1.5 rounded text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Table Row 2 -->
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-center bg-cover" data-alt="Small thumbnail of basmati rice" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCImrGtoEe-9T2s0Bq0Lt0FyPjnlJJ9qJPSiGKBNKEQKVIFGEW1hSLhJbB6ugGH9K0LOL1Nks2nDskPLYwS3cD6EKQlXspdFpw8EI4FGvhFieAl1SO01ZlnzkrxGVdyp2heX5Fw7uhx2LyMRLp5LodyHL14oNTtmWWBrOha83zVnD4j0JNfejX-XLZYrvXV87JVlaD0ktv_KRCrahsRjhvH_2jau_lM-Rr4N9hsPYHF8BSJF_Fm1yKtP-lrRDevcXx7BTANCD8oT7GE')"></div>
+<span class="font-semibold text-slate-900 dark:text-white">Basmati Rice</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 text-[10px] font-bold uppercase">Dry Goods</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap min-w-[140px]">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
+<div class="bg-amber-500 h-2 rounded-full" style="width: 45%"></div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap font-bold text-amber-500">22.5</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">kg</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">Oct 20, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1.5 rounded bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<button class="p-1.5 rounded bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+<button class="p-1.5 rounded text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Table Row 3 -->
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-center bg-cover" data-alt="Small thumbnail of heavy cream" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDl2Ad0cNsCYpKL29zM6pr9ARe_Nvz50geJTh3-oXCA-Y5BPBx9Tt_VMdBajynl84CkM6itFqapKz8qj-XCdH1BxgN32UkQFzplWV8pxHPdlS3ketkEFex30JirMPrwUpHCQOilaAti_AAq3Xpg--Ad0T0Cg1-ILe_Td91Io-Al4zwskgM3xEM8BszLWpZIJmqjpATrZkmtuRJgLjbICY3gLmDGC8W1XMvqO3RyERBVpZv5ZmIVGPtxmHrHiPKyE8UQEvQgpqMm2qVx')"></div>
+<span class="font-semibold text-slate-900 dark:text-white">Whole Milk</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 rounded-full bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-400 text-[10px] font-bold uppercase">Dairy</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap min-w-[140px]">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
+<div class="bg-emerald-500 h-2 rounded-full" style="width: 85%"></div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap font-bold text-emerald-500">48.0</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">Liters</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">Oct 26, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1.5 rounded bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<button class="p-1.5 rounded bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+<button class="p-1.5 rounded text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Table Row 4 -->
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors group">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-center bg-cover" data-alt="Small thumbnail of chicken breast" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuClbz0vH7IGdWtTbZkAHoCDkXJ77DzfcGJRhn6IcWD2aeamm4RfP7YG7kVWhytsXGAkA7LJFmNvqsBqFVz3ifb500C7QwhWUZl0iE6doVHAb3QA0udeGk3X_QXaCtMSHXfzoOiL6jjRovp0P2EXYxbHhOhWpqVokahA3Ltiq_DaHhZ4P46u5-u_nFOBWXD5HIo6ThDIDq2VtCqQWGXjedse1I6T9wV1y7i6n1b4r25cXYH_5K29C8IWLo-h8jrZ0JWx5kn8CLvIFNsh')"></div>
+<span class="font-semibold text-slate-900 dark:text-white">Chicken Breast</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="px-2.5 py-1 rounded-full bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-400 text-[10px] font-bold uppercase">Meat</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap min-w-[140px]">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
+<div class="bg-amber-500 h-2 rounded-full" style="width: 40%"></div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap font-bold text-amber-500">15.2</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">kg</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">Oct 25, 2023</td>
+<td class="px-6 py-4 whitespace-nowrap text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="p-1.5 rounded bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<button class="p-1.5 rounded bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+<button class="p-1.5 rounded text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 bg-primary/5 dark:bg-primary/10 border-t border-primary/10 flex items-center justify-between">
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium tracking-wide">Showing 1 to 4 of 124 items</p>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded border border-primary/20 hover:bg-primary/10 disabled:opacity-50 disabled:cursor-not-allowed">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="p-2 px-3 rounded bg-primary text-white text-xs font-bold">1</button>
+<button class="p-2 px-3 rounded border border-primary/20 hover:bg-primary/10 text-xs font-bold">2</button>
+<button class="p-2 px-3 rounded border border-primary/20 hover:bg-primary/10 text-xs font-bold">3</button>
+<button class="p-2 rounded border border-primary/20 hover:bg-primary/10">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<footer class="border-t border-primary/10 bg-white dark:bg-background-dark py-6 px-10">
+<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-lg">restaurant_menu</span>
+<span class="font-bold text-sm">Kitchen Inventory Management System v2.4</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">© 2023 Gourmet Operations Group. All rights reserved.</p>
+<div class="flex items-center gap-6">
+<a class="text-xs font-medium text-slate-500 hover:text-primary" href="#">Support</a>
+<a class="text-xs font-medium text-slate-500 hover:text-primary" href="#">Documentation</a>
+<a class="text-xs font-medium text-slate-500 hover:text-primary" href="#">System Status</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

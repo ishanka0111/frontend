@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kitchen Order History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f47b25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221710",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Work Sans", sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #2d1f15;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #493222;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-[#493222] px-6 lg:px-10 py-3 bg-white dark:bg-background-dark sticky top-0 z-50">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="text-primary">
+<span class="material-symbols-outlined text-3xl">restaurant</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Kitchen Dashboard</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-end gap-8">
+<nav class="flex items-center gap-9">
+<a class="text-slate-600 dark:text-[#cba990] hover:text-primary dark:hover:text-white text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-slate-600 dark:text-[#cba990] hover:text-primary dark:hover:text-white text-sm font-medium transition-colors" href="#">Live Orders</a>
+<a class="text-primary dark:text-white text-sm font-bold border-b-2 border-primary pb-1" href="#">Order History</a>
+<a class="text-slate-600 dark:text-[#cba990] hover:text-primary dark:hover:text-white text-sm font-medium transition-colors" href="#">Settings</a>
+</nav>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-[#493222] text-slate-700 dark:text-white hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined">print</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-[#493222] text-slate-700 dark:text-white hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+<!-- Mobile Menu Button -->
+<button class="md:hidden text-slate-900 dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<main class="flex flex-col flex-1 max-w-[1280px] w-full mx-auto px-4 lg:px-10 py-8 gap-8">
+<!-- Page Title & Stats -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+<div class="flex flex-col gap-2">
+<h1 class="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-tight">Order History</h1>
+<p class="text-slate-500 dark:text-[#cba990] text-base font-normal">Review and manage completed kitchen tickets and kitchen performance metrics.</p>
+</div>
+<div class="flex flex-wrap gap-4">
+<div class="flex min-w-[180px] flex-1 flex-col gap-1 rounded-xl p-5 border border-slate-200 dark:border-[#684831] bg-white dark:bg-[#2d1f15]">
+<p class="text-slate-500 dark:text-[#cba990] text-xs font-semibold uppercase tracking-wider">Avg. Prep Time Today</p>
+<div class="flex items-baseline gap-2">
+<p class="text-slate-900 dark:text-white text-2xl font-bold">12m 45s</p>
+<span class="text-emerald-500 text-sm font-bold flex items-center">
+<span class="material-symbols-outlined text-sm">arrow_downward</span>2%
+                                </span>
+</div>
+</div>
+<div class="flex min-w-[180px] flex-1 flex-col gap-1 rounded-xl p-5 border border-slate-200 dark:border-[#684831] bg-white dark:bg-[#2d1f15]">
+<p class="text-slate-500 dark:text-[#cba990] text-xs font-semibold uppercase tracking-wider">Completed Orders</p>
+<div class="flex items-baseline gap-2">
+<p class="text-slate-900 dark:text-white text-2xl font-bold">148</p>
+<span class="text-primary text-sm font-bold flex items-center">
+<span class="material-symbols-outlined text-sm">trending_up</span>12%
+                                </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Filters Section -->
+<div class="flex flex-col gap-4 bg-white dark:bg-[#2d1f15] p-4 rounded-xl border border-slate-200 dark:border-[#684831]">
+<div class="flex flex-col lg:flex-row gap-4">
+<!-- Search Bar -->
+<div class="flex-1">
+<label class="flex items-center w-full h-12 rounded-lg bg-slate-100 dark:bg-[#493222] border border-transparent focus-within:border-primary px-4 transition-all">
+<span class="material-symbols-outlined text-slate-400 dark:text-[#cba990] mr-3">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-slate-900 dark:text-white w-full text-base placeholder:text-slate-400 dark:placeholder:text-[#cba990]/60" placeholder="Search by Order ID, Table #, or Server..." type="text"/>
+</label>
+</div>
+<!-- Date Filter -->
+<div class="flex flex-col sm:flex-row gap-4 min-w-[400px]">
+<div class="flex-1">
+<label class="flex items-center w-full h-12 rounded-lg bg-slate-100 dark:bg-[#493222] border border-transparent px-4">
+<span class="material-symbols-outlined text-slate-400 dark:text-[#cba990] mr-3 text-xl">calendar_today</span>
+<input class="bg-transparent border-none focus:ring-0 text-slate-900 dark:text-white w-full text-sm" type="text" value="Oct 24, 2023 - Oct 25, 2023"/>
+</label>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white font-bold px-6 py-2 rounded-lg transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">filter_list</span>
+                                Apply Filters
+                            </button>
+</div>
+</div>
+<!-- Tabs -->
+<div class="flex border-b border-slate-200 dark:border-[#684831] gap-8">
+<button class="flex items-center justify-center border-b-2 border-primary text-primary pb-3 pt-2 px-2 font-bold text-sm tracking-wide">
+                            COMPLETED
+                        </button>
+<button class="flex items-center justify-center border-b-2 border-transparent text-slate-500 dark:text-[#cba990] pb-3 pt-2 px-2 font-bold text-sm tracking-wide hover:text-slate-700 dark:hover:text-white transition-colors">
+                            CANCELED
+                        </button>
+<button class="flex items-center justify-center border-b-2 border-transparent text-slate-500 dark:text-[#cba990] pb-3 pt-2 px-2 font-bold text-sm tracking-wide hover:text-slate-700 dark:hover:text-white transition-colors">
+                            VOIDED
+                        </button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-white dark:bg-[#2d1f15] rounded-xl border border-slate-200 dark:border-[#684831] overflow-hidden">
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-[#3d2a1d] border-b border-slate-200 dark:border-[#684831]">
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-[#cba990]">Order ID</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-[#cba990]">Table #</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-[#cba990]">Timestamp</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-[#cba990]">Server</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-[#cba990]">Total Prep Time</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-[#cba990] text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-[#684831]">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-primary/10 transition-colors">
+<td class="px-6 py-4">
+<span class="text-slate-900 dark:text-white font-mono font-medium">#ORD-9421</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">table_restaurant</span>
+<span class="text-slate-900 dark:text-white font-bold text-lg">T-14</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white text-sm font-medium">Oct 25, 2023</span>
+<span class="text-slate-500 dark:text-[#cba990] text-xs">Bumped at 19:42:10</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-700 dark:text-[#cba990] text-sm font-medium">Marcus J.</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-emerald-500"></div>
+<span class="text-slate-900 dark:text-white font-bold">08m 12s</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-[#493222] text-slate-500 dark:text-white transition-colors" title="Print Ticket">
+<span class="material-symbols-outlined">print</span>
+</button>
+<button class="px-4 py-2 bg-slate-100 dark:bg-[#493222] text-slate-700 dark:text-white rounded-lg text-sm font-bold hover:bg-primary/20 transition-colors">Details</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 (Delayed) -->
+<tr class="hover:bg-slate-50 dark:hover:bg-primary/10 transition-colors">
+<td class="px-6 py-4">
+<span class="text-slate-900 dark:text-white font-mono font-medium">#ORD-9418</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">table_restaurant</span>
+<span class="text-slate-900 dark:text-white font-bold text-lg">T-08</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white text-sm font-medium">Oct 25, 2023</span>
+<span class="text-slate-500 dark:text-[#cba990] text-xs">Bumped at 19:35:15</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-700 dark:text-[#cba990] text-sm font-medium">Sarah W.</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-red-500"></div>
+<span class="text-red-500 font-bold">18m 45s</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-[#493222] text-slate-500 dark:text-white transition-colors">
+<span class="material-symbols-outlined">print</span>
+</button>
+<button class="px-4 py-2 bg-slate-100 dark:bg-[#493222] text-slate-700 dark:text-white rounded-lg text-sm font-bold hover:bg-primary/20 transition-colors">Details</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-primary/10 transition-colors">
+<td class="px-6 py-4">
+<span class="text-slate-900 dark:text-white font-mono font-medium">#ORD-9415</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">table_restaurant</span>
+<span class="text-slate-900 dark:text-white font-bold text-lg">T-22</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white text-sm font-medium">Oct 25, 2023</span>
+<span class="text-slate-500 dark:text-[#cba990] text-xs">Bumped at 19:20:02</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-700 dark:text-[#cba990] text-sm font-medium">Marcus J.</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-orange-500"></div>
+<span class="text-slate-900 dark:text-white font-bold">14m 20s</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-[#493222] text-slate-500 dark:text-white transition-colors">
+<span class="material-symbols-outlined">print</span>
+</button>
+<button class="px-4 py-2 bg-slate-100 dark:bg-[#493222] text-slate-700 dark:text-white rounded-lg text-sm font-bold hover:bg-primary/20 transition-colors">Details</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-primary/10 transition-colors">
+<td class="px-6 py-4">
+<span class="text-slate-900 dark:text-white font-mono font-medium">#ORD-9412</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">table_restaurant</span>
+<span class="text-slate-900 dark:text-white font-bold text-lg">Bar-02</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white text-sm font-medium">Oct 25, 2023</span>
+<span class="text-slate-500 dark:text-[#cba990] text-xs">Bumped at 19:15:33</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-700 dark:text-[#cba990] text-sm font-medium">Elena R.</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="h-2 w-2 rounded-full bg-emerald-500"></div>
+<span class="text-slate-900 dark:text-white font-bold">06m 55s</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-[#493222] text-slate-500 dark:text-white transition-colors">
+<span class="material-symbols-outlined">print</span>
+</button>
+<button class="px-4 py-2 bg-slate-100 dark:bg-[#493222] text-slate-700 dark:text-white rounded-lg text-sm font-bold hover:bg-primary/20 transition-colors">Details</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between px-6 py-4 bg-slate-50 dark:bg-[#3d2a1d] border-t border-slate-200 dark:border-[#684831]">
+<p class="text-sm text-slate-500 dark:text-[#cba990]">Showing 1 to 4 of 148 orders</p>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-9 w-9 bg-white dark:bg-[#493222] border border-slate-200 dark:border-[#684831] text-slate-400 dark:text-[#cba990] cursor-not-allowed">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-9 w-9 bg-primary text-white border border-primary font-bold text-sm">1</button>
+<button class="flex items-center justify-center rounded-lg h-9 w-9 bg-white dark:bg-[#493222] border border-slate-200 dark:border-[#684831] text-slate-700 dark:text-white font-bold text-sm hover:bg-primary/10 transition-colors">2</button>
+<button class="flex items-center justify-center rounded-lg h-9 w-9 bg-white dark:bg-[#493222] border border-slate-200 dark:border-[#684831] text-slate-700 dark:text-white font-bold text-sm hover:bg-primary/10 transition-colors">3</button>
+<button class="flex items-center justify-center rounded-lg h-9 w-9 bg-white dark:bg-[#493222] border border-slate-200 dark:border-[#684831] text-slate-700 dark:text-white transition-colors hover:bg-primary/10">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Action Footer (Mobile only) -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-white dark:bg-background-dark border-t border-slate-200 dark:border-[#493222] flex justify-between gap-4 z-50">
+<button class="flex-1 bg-slate-100 dark:bg-[#493222] text-slate-700 dark:text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">download</span>
+                    Export CSV
+                </button>
+<button class="flex-1 bg-primary text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">refresh</span>
+                    Refresh
+                </button>
+</div>
+</div>
+</div>
+</body></html>
