@@ -48,8 +48,9 @@ export const getMyProfile = async (accessToken?: string): Promise<UserProfile> =
     console.log('[profileService] Fetched profile');
     return response;
   } catch (error: unknown) {
-    console.error('[profileService] Failed to fetch profile:', error.message);
-    throw new Error(error.message || 'Failed to fetch profile');
+    const message = error instanceof Error ? error.message : 'Failed to fetch profile';
+    console.error('[profileService] Failed to fetch profile:', message);
+    throw new Error(message);
   }
 };
 
@@ -83,8 +84,9 @@ export const updateMyProfile = async (
     console.log('[profileService] Profile updated');
     return response;
   } catch (error: unknown) {
-    console.error('[profileService] Failed to update profile:', error.message);
-    throw new Error(error.message || 'Failed to update profile');
+    const message = error instanceof Error ? error.message : 'Failed to update profile';
+    console.error('[profileService] Failed to update profile:', message);
+    throw new Error(message);
   }
 };
 

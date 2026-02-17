@@ -86,8 +86,9 @@ const getReceivedOrders = async (accessToken?: string): Promise<WaiterOrder[]> =
     console.log('[waiterService] Retrieved', transformedOrders.length, 'ready orders');
     return transformedOrders;
   } catch (error: unknown) {
-    console.error('[waiterService] Failed to fetch received orders:', error.message);
-    throw new Error(error.message || 'Failed to fetch received orders');
+    const message = error instanceof Error ? error.message : 'Failed to fetch received orders';
+    console.error('[waiterService] Failed to fetch received orders:', message);
+    throw new Error(message);
   }
 };
 
@@ -129,8 +130,9 @@ const updateOrderStatus = async (
       timestamp: new Date().toISOString(),
     };
   } catch (error: unknown) {
-    console.error('[waiterService] Failed to update order status:', error.message);
-    throw new Error(error.message || 'Failed to update order status');
+    const message = error instanceof Error ? error.message : 'Failed to update order status';
+    console.error('[waiterService] Failed to update order status:', message);
+    throw new Error(message);
   }
 };
 
@@ -178,8 +180,9 @@ const getOrdersByTable = async (
     console.log('[waiterService] Retrieved', transformedOrders.length, 'orders for table', tableNumber);
     return transformedOrders;
   } catch (error: unknown) {
-    console.error('[waiterService] Failed to fetch table orders:', error.message);
-    throw new Error(error.message || 'Failed to fetch table orders');
+    const message = error instanceof Error ? error.message : 'Failed to fetch table orders';
+    console.error('[waiterService] Failed to fetch table orders:', message);
+    throw new Error(message);
   }
 };
 
@@ -198,7 +201,8 @@ const getWaiterHealth = async (): Promise<HealthCheckResponse> => {
     console.log('[waiterService] Health check:', response.status);
     return response;
   } catch (error: unknown) {
-    console.error('[waiterService] Health check failed:', error.message);
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('[waiterService] Health check failed:', message);
     // Return degraded status instead of throwing
     return {
       status: 'DOWN',

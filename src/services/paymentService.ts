@@ -80,8 +80,9 @@ const createPayment = async (
     console.log('[paymentService] Payment created:', response.paymentId, 'for order:', orderId);
     return response;
   } catch (error: unknown) {
-    console.error('[paymentService] Failed to create payment:', error.message);
-    throw new Error(error.message || 'Failed to create payment');
+    const message = error instanceof Error ? error.message : 'Failed to create payment';
+    console.error('[paymentService] Failed to create payment:', message);
+    throw new Error(message);
   }
 };
 
@@ -113,8 +114,9 @@ const getPaymentDetails = async (
     console.log('[paymentService] Retrieved payment details:', paymentId);
     return response;
   } catch (error: unknown) {
-    console.error('[paymentService] Failed to fetch payment details:', error.message);
-    throw new Error(error.message || 'Failed to fetch payment details');
+    const message = error instanceof Error ? error.message : 'Failed to fetch payment details';
+    console.error('[paymentService] Failed to fetch payment details:', message);
+    throw new Error(message);
   }
 };
 
@@ -150,8 +152,9 @@ const updatePaymentStatus = async (
     console.log('[paymentService] Payment status updated:', paymentId, '→', status);
     return response;
   } catch (error: unknown) {
-    console.error('[paymentService] Failed to update payment status:', error.message);
-    throw new Error(error.message || 'Failed to update payment status');
+    const message = error instanceof Error ? error.message : 'Failed to update payment status';
+    console.error('[paymentService] Failed to update payment status:', message);
+    throw new Error(message);
   }
 };
 

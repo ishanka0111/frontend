@@ -68,8 +68,9 @@ export const createOrder = async (
     console.log('[orderService] Order created:', response.id);
     return response;
   } catch (error: unknown) {
-    console.error('[orderService] Failed to create order:', error.message);
-    throw new Error(error.message || 'Failed to create order');
+    const message = error instanceof Error ? error.message : 'Failed to create order';
+    console.error('[orderService] Failed to create order:', message);
+    throw new Error(message);
   }
 };
 
@@ -105,8 +106,9 @@ export const updateOrderStatus = async (
     console.log('[orderService] Order status updated:', orderId, '→', statusData.status);
     return response;
   } catch (error: unknown) {
-    console.error('[orderService] Failed to update order status:', error.message);
-    throw new Error(error.message || 'Failed to update order');
+    const message = error instanceof Error ? error.message : 'Failed to update order';
+    console.error('[orderService] Failed to update order status:', message);
+    throw new Error(message);
   }
 };
 
@@ -125,8 +127,9 @@ export const getActiveOrders = async (): Promise<Order[]> => {
     console.log('[orderService] Retrieved', response.length, 'active orders');
     return response;
   } catch (error: unknown) {
-    console.error('[orderService] Failed to fetch active orders:', error.message);
-    throw new Error(error.message || 'Failed to fetch active orders');
+    const message = error instanceof Error ? error.message : 'Failed to fetch active orders';
+    console.error('[orderService] Failed to fetch active orders:', message);
+    throw new Error(message);
   }
 };
 
@@ -156,8 +159,9 @@ export const getUserOrders = async (
     console.log('[orderService] Retrieved', response.length, 'user orders');
     return response;
   } catch (error: unknown) {
-    console.error('[orderService] Failed to fetch user orders:', error.message);
-    throw new Error(error.message || 'Failed to fetch user orders');
+    const message = error instanceof Error ? error.message : 'Failed to fetch user orders';
+    console.error('[orderService] Failed to fetch user orders:', message);
+    throw new Error(message);
   }
 };
 
@@ -189,8 +193,9 @@ export const getTableOrders = async (
     console.log('[orderService] Retrieved', response.totalOrders, 'orders for table:', tableNumber);
     return response;
   } catch (error: unknown) {
-    console.error('[orderService] Failed to fetch table orders:', error.message);
-    throw new Error(error.message || 'Failed to fetch table orders');
+    const message = error instanceof Error ? error.message : 'Failed to fetch table orders';
+    console.error('[orderService] Failed to fetch table orders:', message);
+    throw new Error(message);
   }
 };
 

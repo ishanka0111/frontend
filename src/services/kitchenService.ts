@@ -200,8 +200,9 @@ const markOrderPreparing = async (
       timestamp: new Date().toISOString(),
     };
   } catch (error: unknown) {
-    console.error('[kitchenService] Failed to mark order preparing:', error.message);
-    throw new Error(error.message || 'Failed to update order');
+    const message = error instanceof Error ? error.message : 'Failed to update order';
+    console.error('[kitchenService] Failed to mark order preparing:', message);
+    throw new Error(message);
   }
 };
 
@@ -240,8 +241,9 @@ const markOrderReady = async (
       timestamp: new Date().toISOString(),
     };
   } catch (error: unknown) {
-    console.error('[kitchenService] Failed to mark order ready:', error.message);
-    throw new Error(error.message || 'Failed to update order');
+    const message = error instanceof Error ? error.message : 'Failed to update order';
+    console.error('[kitchenService] Failed to mark order ready:', message);
+    throw new Error(message);
   }
 };
 
@@ -260,7 +262,8 @@ const getKitchenHealth = async (): Promise<HealthCheckResponse> => {
     console.log('[kitchenService] Health check:', response.status);
     return response;
   } catch (error: unknown) {
-    console.error('[kitchenService] Health check failed:', error.message);
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('[kitchenService] Health check failed:', message);
     // Return degraded status instead of throwing
     return {
       status: 'DOWN',
