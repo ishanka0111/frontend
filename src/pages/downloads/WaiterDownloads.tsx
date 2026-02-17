@@ -11,3 +11,4 @@ export const WaiterDownloads: React.FC = () => {
 };
 
 export default WaiterDownloads;
+

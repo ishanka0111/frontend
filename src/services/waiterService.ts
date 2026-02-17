@@ -1,5 +1,5 @@
 import { Order, OrderStatus } from '../types';
-import { getMockOrders } from './kitchenService';
+import { apiRequest } from '../config/api';
 
 // ============================================
 // TYPES & INTERFACES
@@ -38,233 +38,173 @@ export interface HealthCheckResponse {
 }
 
 // ============================================
-// HELPER FUNCTIONS
-// ============================================
-
-/**
- * Simulates API delay for realistic behavior
- */
-const simulateDelay = (min: number = 150, max: number = 400): Promise<void> => {
-  const delay = Math.floor(Math.random() * (max - min + 1)) + min;
-  return new Promise((resolve) => setTimeout(resolve, delay));
-};
-
-/**
- * Validates JWT token (mock)
- * Checks if user has waiter staff role
- */
-const validateWaiterToken = (token?: string): boolean => {
-  if (!token) {
-    console.warn('[waiterService] No JWT token provided');
-    return false;
-  }
-  
-  // Mock: assume token format is "Bearer_ROLE_userId"
-  // Accept WAITER or ADMIN roles
-  const hasWaiterAccess = token.includes('WAITER') || token.includes('ADMIN');
-  if (!hasWaiterAccess) {
-    console.warn('[waiterService] User does not have waiter access');
-  }
-  return hasWaiterAccess;
-};
-
-/**
- * Transforms Order to WaiterOrder (simplified view for waiter staff)
- */
-const transformToWaiterOrder = (order: Order): WaiterOrder => {
-  return {
-    orderId: order.id,
-    tableId: order.tableNumber,
-    status: order.status,
-    customerName: order.customerName,
-    items: order.items.map((item) => ({
-      id: item.id,
-      name: item.menuItem.name,
-      quantity: item.quantity,
-    })),
-    totalPrice: order.totalPrice,
-    orderTime: order.orderTime,
-    timeReady: order.status === OrderStatus.READY ? new Date().toISOString() : undefined,
-  };
-};
-
-/**
- * Updates order status in mock store
- */
-const updateMockOrderStatus = (orderId: string, status: OrderStatus): void => {
-  const mockOrders = getMockOrders();
-  const order = mockOrders.find((o) => o.id === orderId);
-  if (order) {
-    order.status = status;
-    if (status === OrderStatus.COMPLETED) {
-      order.completedTime = new Date().toISOString();
-    }
-  }
-};
-
-// ============================================
 // WAITER API ENDPOINTS
 // ============================================
 
 /**
- * GET /api/waiter/received-orders
- * Returns all orders that are ready to be served (status: READY)
+ * GET /api/orders?status=READY
+ * Returns all orders that are ready to be served
  * 
- * @param jwtToken - JWT token for authentication (Waiter or Admin role)
+ * @param accessToken - JWT access token (Waiter or Admin role)
  * @returns Array of ready orders
  */
-const getReceivedOrders = async (jwtToken?: string): Promise<WaiterOrder[]> => {
-  await simulateDelay();
-  
-  // Validate token
-  if (!validateWaiterToken(jwtToken)) {
-    throw new Error('Unauthorized: Waiter staff access required');
+const getReceivedOrders = async (accessToken?: string): Promise<WaiterOrder[]> => {
+  try {
+    const token = accessToken || localStorage.getItem('auth_access_token');
+    if (!token) {
+      throw new Error('Unauthorized: No access token');
+    }
+
+    const response = await apiRequest<Order[]>(
+      '/api/orders?status=READY',
+      {
+        jwt: token,
+      }
+    );
+
+    // Transform to waiter order format
+    const transformedOrders: WaiterOrder[] = response.map((order) => ({
+      orderId: order.id,
+      tableId: order.tableNumber,
+      status: order.status,
+      customerName: order.customerName,
+      items: order.items.map((item) => ({
+        id: item.id,
+        name: item.menuItem.name,
+        quantity: item.quantity,
+      })),
+      totalPrice: order.totalPrice,
+      orderTime: order.orderTime,
+      timeReady: new Date().toISOString(),
+    }));
+
+    // Sort by order time (oldest first - FIFO)
+    transformedOrders.sort(
+      (a, b) => new Date(a.orderTime).getTime() - new Date(b.orderTime).getTime()
+    );
+
+    console.log('[waiterService] Retrieved', transformedOrders.length, 'ready orders');
+    return transformedOrders;
+  } catch (error: unknown) {
+    console.error('[waiterService] Failed to fetch received orders:', error.message);
+    throw new Error(error.message || 'Failed to fetch received orders');
   }
-  
-  // TODO: Replace with real API call
-  // const response = await fetch('/api/waiter/received-orders', {
-  //   headers: {
-  //     Authorization: `Bearer ${jwtToken}`,
-  //   },
-  // });
-  // if (!response.ok) throw new Error('Failed to fetch received orders');
-  // return response.json();
-  
-  // Get orders from shared mock store
-  const mockOrders = getMockOrders();
-  
-  // Filter orders that are ready for waiter pickup
-  const readyOrders = mockOrders.filter(
-    (order) => order.status === OrderStatus.READY
-  );
-  
-  // Transform to waiter order format
-  const transformedOrders = readyOrders.map(transformToWaiterOrder);
-  
-  // Sort by order time (oldest first - FIFO)
-  transformedOrders.sort(
-    (a, b) => new Date(a.orderTime).getTime() - new Date(b.orderTime).getTime()
-  );
-  
-  console.log('[waiterService] Retrieved', transformedOrders.length, 'ready orders');
-  return transformedOrders;
 };
 
 /**
- * PATCH /api/waiter/orders/{id}/status
- * Updates order status (typically to SERVED or COMPLETED)
+ * PATCH /api/orders/:id
+ * Updates order status
  * 
  * @param orderId - Order ID
  * @param statusData - New status
- * @param jwtToken - JWT token for authentication
+ * @param accessToken - JWT access token
  * @returns Status update confirmation
  */
 const updateOrderStatus = async (
   orderId: string,
   statusData: UpdateStatusRequest,
-  jwtToken?: string
+  accessToken?: string
 ): Promise<StatusUpdateResponse> => {
-  await simulateDelay();
-  
-  // Validate token
-  if (!validateWaiterToken(jwtToken)) {
-    throw new Error('Unauthorized: Waiter staff access required');
+  try {
+    const token = accessToken || localStorage.getItem('auth_access_token');
+    if (!token) {
+      throw new Error('Unauthorized: No access token');
+    }
+
+    await apiRequest<Order>(
+      `/api/orders/${orderId}`,
+      {
+        method: 'PATCH',
+        jwt: token,
+        body: JSON.stringify({ status: statusData.status }),
+      }
+    );
+
+    console.log('[waiterService] Order status updated:', orderId, '→', statusData.status);
+
+    return {
+      orderId,
+      status: statusData.status as OrderStatus,
+      message: `Order status updated to ${statusData.status}`,
+      timestamp: new Date().toISOString(),
+    };
+  } catch (error: unknown) {
+    console.error('[waiterService] Failed to update order status:', error.message);
+    throw new Error(error.message || 'Failed to update order status');
   }
-  
-  // TODO: Replace with real API call
-  // const response = await fetch(`/api/waiter/orders/${orderId}/status`, {
-  //   method: 'PATCH',
-  //   headers: {
-  //     Authorization: `Bearer ${jwtToken}`,
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify(statusData),
-  // });
-  // if (!response.ok) throw new Error('Failed to update order status');
-  // return response.json();
-  
-  // Validate status
-  const validStatuses = Object.values(OrderStatus);
-  const newStatus = statusData.status.toUpperCase() as OrderStatus;
-  
-  if (!validStatuses.includes(newStatus)) {
-    throw new Error(`Invalid status: ${statusData.status}`);
-  }
-  
-  // Find order
-  const mockOrders = getMockOrders();
-  const order = mockOrders.find((o) => o.id === orderId);
-  if (!order) {
-    throw new Error(`Order not found: ${orderId}`);
-  }
-  
-  // Update status
-  updateMockOrderStatus(orderId, newStatus);
-  
-  console.log('[waiterService] Order status updated:', orderId, '→', newStatus);
-  
-  return {
-    orderId,
-    status: newStatus,
-    message: `Order status updated to ${newStatus}`,
-    timestamp: new Date().toISOString(),
-  };
 };
 
 /**
- * GET /api/waiter/health
+ * GET /api/orders/table/:tableNumber
+ * Gets all orders for a specific table
+ * 
+ * @param tableNumber - Table number
+ * @param accessToken - JWT access token
+ * @returns Array of table orders
+ */
+const getOrdersByTable = async (
+  tableNumber: number,
+  accessToken?: string
+): Promise<WaiterOrder[]> => {
+  try {
+    const token = accessToken || localStorage.getItem('auth_access_token');
+    if (!token) {
+      throw new Error('Unauthorized: No access token');
+    }
+
+    const response = await apiRequest<Order[]>(
+      `/api/orders/table/${tableNumber}`,
+      {
+        jwt: token,
+      }
+    );
+
+    // Transform to waiter order format
+    const transformedOrders: WaiterOrder[] = response.map((order) => ({
+      orderId: order.id,
+      tableId: order.tableNumber,
+      status: order.status,
+      customerName: order.customerName,
+      items: order.items.map((item) => ({
+        id: item.id,
+        name: item.menuItem.name,
+        quantity: item.quantity,
+      })),
+      totalPrice: order.totalPrice,
+      orderTime: order.orderTime,
+      timeReady: order.status === OrderStatus.READY ? new Date().toISOString() : undefined,
+    }));
+
+    console.log('[waiterService] Retrieved', transformedOrders.length, 'orders for table', tableNumber);
+    return transformedOrders;
+  } catch (error: unknown) {
+    console.error('[waiterService] Failed to fetch table orders:', error.message);
+    throw new Error(error.message || 'Failed to fetch table orders');
+  }
+};
+
+/**
+ * GET /api/admin/analytics/waiter-health
  * Health check endpoint (No JWT required)
  * 
  * @returns Health status
  */
 const getWaiterHealth = async (): Promise<HealthCheckResponse> => {
-  await simulateDelay(50, 150);
-  
-  // TODO: Replace with real API call
-  // const response = await fetch('/api/waiter/health');
-  // if (!response.ok) throw new Error('Health check failed');
-  // return response.json();
-  
-  // Simulate health check
-  const isHealthy = true; // In production, check database connection, etc.
-  
-  return {
-    status: isHealthy ? 'UP' : 'DOWN',
-    timestamp: new Date().toISOString(),
-    version: '1.0.0',
-  };
-};
+  try {
+    const response = await apiRequest<HealthCheckResponse>(
+      '/api/admin/analytics/waiter-health'
+    );
 
-// ============================================
-// ADDITIONAL HELPERS
-// ============================================
-
-/**
- * Gets all orders for a specific table (helper for waiter UI)
- */
-const getOrdersByTable = async (
-  tableNumber: number,
-  jwtToken?: string
-): Promise<WaiterOrder[]> => {
-  await simulateDelay();
-  
-  // Validate token
-  if (!validateWaiterToken(jwtToken)) {
-    throw new Error('Unauthorized: Waiter staff access required');
+    console.log('[waiterService] Health check:', response.status);
+    return response;
+  } catch (error: unknown) {
+    console.error('[waiterService] Health check failed:', error.message);
+    // Return degraded status instead of throwing
+    return {
+      status: 'DOWN',
+      timestamp: new Date().toISOString(),
+    };
   }
-  
-  const mockOrders = getMockOrders();
-  
-  // Filter orders by table number
-  const tableOrders = mockOrders.filter(
-    (order) => order.tableNumber === tableNumber
-  );
-  
-  // Transform to waiter order format
-  const transformedOrders = tableOrders.map(transformToWaiterOrder);
-  
-  console.log('[waiterService] Retrieved', transformedOrders.length, 'orders for table', tableNumber);
-  return transformedOrders;
 };
 
 /**
@@ -272,9 +212,9 @@ const getOrdersByTable = async (
  */
 const markOrderServed = async (
   orderId: string,
-  jwtToken?: string
+  accessToken?: string
 ): Promise<StatusUpdateResponse> => {
-  return updateOrderStatus(orderId, { status: 'SERVED' }, jwtToken);
+  return updateOrderStatus(orderId, { status: 'SERVED' }, accessToken);
 };
 
 /**
@@ -282,9 +222,9 @@ const markOrderServed = async (
  */
 const markOrderCompleted = async (
   orderId: string,
-  jwtToken?: string
+  accessToken?: string
 ): Promise<StatusUpdateResponse> => {
-  return updateOrderStatus(orderId, { status: 'COMPLETED' }, jwtToken);
+  return updateOrderStatus(orderId, { status: 'COMPLETED' }, accessToken);
 };
 
 // ============================================

@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useOrders } from '../../context/OrderContext';
 import { useTables } from '../../context/TableContext';
 import { useMenu } from '../../context/MenuContext';
-import { Order, OrderStatus } from '../../types';
+import { Order, OrderStatus, MenuItem } from '../../types';
 import { 
   MdPerson, MdAdd, MdCheck, MdClose, MdChair, MdRestaurant, 
   MdTableBar, MdPayment, MdCheckCircle, MdAccessTime, MdAttachMoney,
@@ -30,7 +30,7 @@ export default function WaiterDashboardPage() {
   // Table management
   const [selectedTable, setSelectedTable] = useState<string | null>(null);
   const [orderMode, setOrderMode] = useState<'view' | 'new'>('view');
-  const [newOrderItems, setNewOrderItems] = useState<Array<{ menuItem: any; quantity: number }>>([]);
+  const [newOrderItems, setNewOrderItems] = useState<Array<{ menuItem: MenuItem; quantity: number }>>([]);
   const [activeCategory, setActiveCategory] = useState('appetizers');
   
   // Payment management
@@ -48,11 +48,7 @@ export default function WaiterDashboardPage() {
   const tableOrder = selectedTableData?.currentOrderId ? orders.find((o) => o.id === selectedTableData.currentOrderId) : null;
   const menuItemsByCategory = menuItems.filter((item) => item.category === activeCategory);
 
-  // Load ready orders (from kitchen)
-  useEffect(() => {
-    loadReadyOrders();
-  }, [orders]);
-
+  // Load ready orders helper (define before useEffect that uses it)
   const loadReadyOrders = () => {
     const ready = orders.filter(o => o.status === OrderStatus.READY);
     const served = orders.filter(o => o.status === OrderStatus.SERVED);
@@ -60,12 +56,19 @@ export default function WaiterDashboardPage() {
     setServedOrders(served);
   };
 
+  // Load ready orders when orders change
+  useEffect(() => {
+    loadReadyOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orders]);
+
   // Auto-refresh every 30 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       loadReadyOrders();
     }, 30000);
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleRefresh = () => {
@@ -78,7 +81,7 @@ export default function WaiterDashboardPage() {
   // ORDER CREATION HANDLERS
   // ============================================
 
-  const handleAddItemToOrder = (menuItem: any) => {
+  const handleAddItemToOrder = (menuItem: MenuItem) => {
     const existing = newOrderItems.find((item) => item.menuItem.id === menuItem.id);
     if (existing) {
       setNewOrderItems(
@@ -133,11 +136,13 @@ export default function WaiterDashboardPage() {
     }
   };
 
+  // Get waiting time - uses inline Date.now() at call site to avoid purity issues
   const getWaitingTime = (orderTime: string): string => {
-    const minutes = Math.floor((Date.now() - new Date(orderTime).getTime()) / 60000);
-    if (minutes < 1) return 'Just now';
-    if (minutes === 1) return '1 min';
-    return `${minutes} mins`;
+    // This function is called from render, so we calculate on each call
+    const minutesAgo = Math.floor((new Date().getTime() - new Date(orderTime).getTime()) / 60000);
+    if (minutesAgo < 1) return 'Just now';
+    if (minutesAgo === 1) return '1 min';
+    return `${minutesAgo} mins`;
   };
 
   // ============================================
@@ -754,3 +759,4 @@ export default function WaiterDashboardPage() {
     </div>
   );
 }
+

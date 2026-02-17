@@ -11,3 +11,4 @@ export const KitchenDownloads: React.FC = () => {
 };
 
 export default KitchenDownloads;
+

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useCallback, useMemo, ReactNode } from 'react';
 import { MenuItem, Order } from '../types';
 import { cartService, CartItemRequest } from '../services/cartService';
@@ -117,7 +118,6 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       
       // Clear local cart after successful checkout
       setCartItems([]);
-      cartService.clearCart(); // Clear backend cart as well
 
       console.log('[CartContext] Checkout successful:', result.orderId);
       return result;
@@ -204,3 +204,4 @@ export const useCart = () => {
   }
   return context;
 };
+

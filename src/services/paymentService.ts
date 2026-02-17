@@ -1,3 +1,5 @@
+import { apiRequest } from '../config/api';
+
 // ============================================
 // TYPES & INTERFACES
 // ============================================
@@ -35,158 +37,150 @@ export interface PaymentDetails {
 }
 
 // ============================================
-// MOCK DATA PERSISTENCE
-// ============================================
-
-// In-memory storage for payments
-let mockPayments: Map<string, PaymentDetails> = new Map();
-let nextPaymentId = 1;
-
-// ============================================
-// HELPER FUNCTIONS
-// ============================================
-
-/**
- * Simulates API delay for realistic behavior
- */
-const simulateDelay = (min: number = 200, max: number = 500): Promise<void> => {
-  const delay = Math.floor(Math.random() * (max - min + 1)) + min;
-  return new Promise((resolve) => setTimeout(resolve, delay));
-};
-
-/**
- * Generates a mock PayPal approval link
- */
-const generateApprovalLink = (paymentId: string): string => {
-  // In production, this will be a real PayPal approval URL
-  return `https://www.sandbox.paypal.com/checkoutnow?token=EC-${paymentId}`;
-};
-
-// ============================================
 // PAYMENT API ENDPOINTS
 // ============================================
 
 /**
- * POST /payments/create
- * Creates a new payment session (No JWT required - PayPal handles its own auth)
+ * POST /api/payments
+ * Creates a new payment session for an order
  * 
  * @param orderId - Order ID to create payment for
- * @param amount - Payment amount (optional, for validation)
+ * @param amount - Payment amount (validated by order)
+ * @param accessToken - JWT access token
  * @returns Payment ID and approval link for PayPal redirect
  */
 const createPayment = async (
   orderId: string,
-  amount?: number
+  amount?: number,
+  accessToken?: string
 ): Promise<CreatePaymentResponse> => {
-  await simulateDelay();
-  
-  // TODO: Replace with real API call
-  // const response = await fetch('/payments/create', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({ orderId, amount }),
-  // });
-  // if (!response.ok) throw new Error('Failed to create payment');
-  // return response.json();
-  
-  // Validate order ID
-  if (!orderId || orderId.trim() === '') {
-    throw new Error('Order ID is required');
+  try {
+    const token = accessToken || localStorage.getItem('auth_access_token');
+    if (!token) {
+      throw new Error('Unauthorized: No access token');
+    }
+
+    // Validate order ID
+    if (!orderId || orderId.trim() === '') {
+      throw new Error('Order ID is required');
+    }
+
+    const response = await apiRequest<CreatePaymentResponse>(
+      '/api/payments',
+      {
+        method: 'POST',
+        jwt: token,
+        body: JSON.stringify({
+          orderId,
+          amount,
+        }),
+      }
+    );
+
+    console.log('[paymentService] Payment created:', response.paymentId, 'for order:', orderId);
+    return response;
+  } catch (error: unknown) {
+    console.error('[paymentService] Failed to create payment:', error.message);
+    throw new Error(error.message || 'Failed to create payment');
   }
-  
-  // Generate payment ID (mock PayPal transaction ID)
-  const paymentId = `PAYPAL-${String(nextPaymentId++).padStart(8, '0')}`;
-  
-  // Create payment details
-  const payment: PaymentDetails = {
-    paymentId,
-    orderId,
-    amount: amount || 0,
-    currency: 'USD',
-    status: PaymentStatus.PENDING,
-    approvalLink: generateApprovalLink(paymentId),
-    createdAt: new Date().toISOString(),
-  };
-  
-  // Store payment
-  mockPayments.set(paymentId, payment);
-  
-  console.log('[paymentService] Payment created:', paymentId, 'for order:', orderId);
-  
-  // Return approval link for redirect
-  return {
-    orderId: paymentId, // PayPal transaction ID (not order ID)
-    approvalLink: payment.approvalLink,
-    paymentId,
-    expiresAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(), // 30 minutes
-  };
 };
 
 /**
- * Simulates payment approval (for testing)
- * In production, PayPal will redirect back to success/cancel URLs
- */
-const approvePayment = async (paymentId: string): Promise<PaymentDetails> => {
-  await simulateDelay(500, 1000);
-  
-  const payment = mockPayments.get(paymentId);
-  if (!payment) {
-    throw new Error(`Payment not found: ${paymentId}`);
-  }
-  
-  payment.status = PaymentStatus.APPROVED;
-  payment.completedAt = new Date().toISOString();
-  mockPayments.set(paymentId, payment);
-  
-  console.log('[paymentService] Payment approved:', paymentId);
-  return payment;
-};
-
-/**
- * Cancels a payment (for testing)
- */
-const cancelPayment = async (paymentId: string): Promise<PaymentDetails> => {
-  await simulateDelay();
-  
-  const payment = mockPayments.get(paymentId);
-  if (!payment) {
-    throw new Error(`Payment not found: ${paymentId}`);
-  }
-  
-  payment.status = PaymentStatus.CANCELLED;
-  mockPayments.set(paymentId, payment);
-  
-  console.log('[paymentService] Payment cancelled:', paymentId);
-  return payment;
-};
-
-/**
+ * GET /api/payments/:id
  * Gets payment details
+ * 
+ * @param paymentId - Payment ID
+ * @param accessToken - JWT access token
+ * @returns Payment details
  */
-const getPaymentDetails = async (paymentId: string): Promise<PaymentDetails> => {
-  await simulateDelay();
-  
-  const payment = mockPayments.get(paymentId);
-  if (!payment) {
-    throw new Error(`Payment not found: ${paymentId}`);
+const getPaymentDetails = async (
+  paymentId: string,
+  accessToken?: string
+): Promise<PaymentDetails> => {
+  try {
+    const token = accessToken || localStorage.getItem('auth_access_token');
+    if (!token) {
+      throw new Error('Unauthorized: No access token');
+    }
+
+    const response = await apiRequest<PaymentDetails>(
+      `/api/payments/${paymentId}`,
+      {
+        jwt: token,
+      }
+    );
+
+    console.log('[paymentService] Retrieved payment details:', paymentId);
+    return response;
+  } catch (error: unknown) {
+    console.error('[paymentService] Failed to fetch payment details:', error.message);
+    throw new Error(error.message || 'Failed to fetch payment details');
   }
-  
-  return payment;
 };
 
-// ============================================
-// ADDITIONAL HELPERS
-// ============================================
+/**
+ * PATCH /api/payments/:id
+ * Updates payment status (approve/cancel/complete)
+ * 
+ * @param paymentId - Payment ID
+ * @param status - New payment status
+ * @param accessToken - JWT access token
+ * @returns Updated payment details
+ */
+const updatePaymentStatus = async (
+  paymentId: string,
+  status: PaymentStatus,
+  accessToken?: string
+): Promise<PaymentDetails> => {
+  try {
+    const token = accessToken || localStorage.getItem('auth_access_token');
+    if (!token) {
+      throw new Error('Unauthorized: No access token');
+    }
+
+    const response = await apiRequest<PaymentDetails>(
+      `/api/payments/${paymentId}`,
+      {
+        method: 'PATCH',
+        jwt: token,
+        body: JSON.stringify({ status }),
+      }
+    );
+
+    console.log('[paymentService] Payment status updated:', paymentId, '→', status);
+    return response;
+  } catch (error: unknown) {
+    console.error('[paymentService] Failed to update payment status:', error.message);
+    throw new Error(error.message || 'Failed to update payment status');
+  }
+};
 
 /**
- * Resets all mock data (for testing)
+ * Approves a payment (shortcut method)
+ * 
+ * @param paymentId - Payment ID
+ * @param accessToken - JWT access token
+ * @returns Updated payment details
  */
-const resetMockData = (): void => {
-  mockPayments.clear();
-  nextPaymentId = 1;
-  console.log('[paymentService] Mock data reset to initial state');
+const approvePayment = async (
+  paymentId: string,
+  accessToken?: string
+): Promise<PaymentDetails> => {
+  return updatePaymentStatus(paymentId, PaymentStatus.APPROVED, accessToken);
+};
+
+/**
+ * Cancels a payment (shortcut method)
+ * 
+ * @param paymentId - Payment ID
+ * @param accessToken - JWT access token
+ * @returns Updated payment details
+ */
+const cancelPayment = async (
+  paymentId: string,
+  accessToken?: string
+): Promise<PaymentDetails> => {
+  return updatePaymentStatus(paymentId, PaymentStatus.CANCELLED, accessToken);
 };
 
 // ============================================
@@ -196,10 +190,10 @@ const resetMockData = (): void => {
 export const paymentService = {
   // API endpoints
   createPayment,
+  getPaymentDetails,
+  updatePaymentStatus,
   
-  // Testing helpers (not part of production API)
+  // Shortcut methods
   approvePayment,
   cancelPayment,
-  getPaymentDetails,
-  resetMockData,
 };

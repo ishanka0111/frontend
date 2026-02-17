@@ -58,7 +58,7 @@ export default function StaffProfilePage() {
     try {
       await updateProfile(formData.name, formData.phone, formData.address);
       setIsEditing(false);
-    } catch (err) {
+    } catch {
       setError('Failed to update profile');
     } finally {
       setLoading(false);
@@ -238,3 +238,4 @@ export default function StaffProfilePage() {
     </div>
   );
 }
+

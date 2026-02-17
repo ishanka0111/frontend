@@ -1,52 +1,20 @@
-import { createContext, useContext, useState, useCallback, useMemo, ReactNode } from 'react';
-import { User, AuthState, UserRole } from '../types';
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useContext, useState, useCallback, useMemo, ReactNode, useEffect } from 'react';
+import { AuthState, UserRole } from '../types';
+import { authService, LoginRequest, RegisterRequest } from '../services/authService';
+import { profileService, UpdateProfileRequest } from '../services/profileService';
 
 interface AuthContextType extends AuthState {
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
-  register: (name: string, email: string, password: string, role: UserRole) => Promise<void>;
+  login: (email: string, password: string, tableId?: number) => Promise<void>;
+  logout: () => Promise<void>;
+  register: (name: string, email: string, password: string, role: UserRole, phone?: string, address?: string) => Promise<void>;
   updateProfile: (name: string, phone: string, address: string) => Promise<void>;
   addStaff: (name: string, email: string, password: string, role: UserRole, phone: string) => Promise<void>;
   getJwtToken: () => string | null;
+  refreshToken: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-// Mock users database
-const MOCK_USERS: User[] = [
-  {
-    id: 'cust1',
-    name: 'John Customer',
-    email: 'customer@restaurant.com',
-    password: 'password123',
-    role: UserRole.CUSTOMER,
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: 'admin1',
-    name: 'Admin User',
-    email: 'admin@restaurant.com',
-    password: 'admin123',
-    role: UserRole.ADMIN,
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: 'kitchen1',
-    name: 'Chef John',
-    email: 'kitchen@restaurant.com',
-    password: 'kitchen123',
-    role: UserRole.KITCHEN,
-    createdAt: new Date().toISOString(),
-  },
-  {
-    id: 'waiter1',
-    name: 'Waiter Mike',
-    email: 'waiter@restaurant.com',
-    password: 'waiter123',
-    role: UserRole.WAITER,
-    createdAt: new Date().toISOString(),
-  },
-];
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [authState, setAuthState] = useState<AuthState>({
@@ -57,104 +25,155 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     error: null,
   });
 
-  const login = useCallback(async (email: string, password: string) => {
+  // Restore session from localStorage on mount
+  useEffect(() => {
+    const restoreSession = async () => {
+      const storedToken = localStorage.getItem('auth_access_token');
+      const storedUser = localStorage.getItem('auth_user');
+
+      if (storedToken && storedUser) {
+        try {
+          const user = JSON.parse(storedUser);
+          setAuthState({
+            user,
+            token: storedToken,
+            isAuthenticated: true,
+            loading: false,
+            error: null,
+          });
+        } catch (error) {
+          console.error('Failed to restore session:', error);
+          // Clear invalid session data
+          localStorage.removeItem('auth_access_token');
+          localStorage.removeItem('auth_refresh_token');
+          localStorage.removeItem('auth_user');
+        }
+      }
+    };
+
+    restoreSession();
+  }, []);
+
+  const login = useCallback(async (email: string, password: string, tableId?: number) => {
     setAuthState((prev) => ({ ...prev, loading: true, error: null }));
 
-    // Simulate API call delay
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    try {
+      const loginData: LoginRequest = { email, password, tableId };
+      const response = await authService.login(loginData);
 
-    const user = MOCK_USERS.find((u) => u.email === email && u.password === password);
+      // Store tokens and user
+      localStorage.setItem('auth_access_token', response.accessToken);
+      localStorage.setItem('auth_refresh_token', response.refreshToken);
+      localStorage.setItem('auth_user', JSON.stringify(response.user));
 
-    if (user) {
-      const token = `token_${user.id}_${Date.now()}`;
       setAuthState({
-        user: { ...user, password: undefined },
-        token,
+        user: response.user,
+        token: response.accessToken,
         isAuthenticated: true,
         loading: false,
         error: null,
       });
-      localStorage.setItem('auth_token', token);
-      localStorage.setItem('auth_user', JSON.stringify(user));
-    } else {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Login failed';
       setAuthState((prev) => ({
         ...prev,
         loading: false,
-        error: 'Invalid email or password',
+        error: errorMessage,
       }));
-      throw new Error('Invalid credentials');
+      throw error;
     }
   }, []);
 
-  const logout = useCallback(() => {
-    setAuthState({
-      user: null,
-      token: null,
-      isAuthenticated: false,
-      loading: false,
-      error: null,
-    });
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('auth_user');
-  }, []);
-
-  const register = useCallback(
-    async (name: string, email: string, password: string, role: UserRole) => {
-      setAuthState((prev) => ({ ...prev, loading: true, error: null }));
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      const newUser: User = {
-        id: `user_${Date.now()}`,
-        name,
-        email,
-        password,
-        role,
-        createdAt: new Date().toISOString(),
-      };
-
-      MOCK_USERS.push(newUser);
-
-      const token = `token_${newUser.id}_${Date.now()}`;
+  const logout = useCallback(async () => {
+    try {
+      const token = localStorage.getItem('auth_access_token');
+      if (token) {
+        await authService.logout(token);
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      // Clear state and storage regardless of API response
       setAuthState({
-        user: { ...newUser, password: undefined },
-        token,
-        isAuthenticated: true,
+        user: null,
+        token: null,
+        isAuthenticated: false,
         loading: false,
         error: null,
       });
-      localStorage.setItem('auth_token', token);
-      localStorage.setItem('auth_user', JSON.stringify(newUser));
+      localStorage.removeItem('auth_access_token');
+      localStorage.removeItem('auth_refresh_token');
+      localStorage.removeItem('auth_user');
+    }
+  }, []);
+
+  const register = useCallback(
+    async (name: string, email: string, password: string, role: UserRole, phone?: string, address?: string) => {
+      setAuthState((prev) => ({ ...prev, loading: true, error: null }));
+      try {
+        const registerData: RegisterRequest = {
+          fullName: name,
+          email,
+          password,
+          role,
+          provider: 1, // local provider
+          phone,
+          address,
+        };
+        await authService.register(registerData);
+        
+        // Auto-login after successful registration
+        await login(email, password);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Registration failed';
+        setAuthState((prev) => ({
+          ...prev,
+          loading: false,
+          error: errorMessage,
+        }));
+        throw error;
+      }
     },
-    []
+    [login]
   );
 
   const updateProfile = useCallback(
     async (name: string, phone: string, address: string) => {
-      if (!authState.user) return;
+      if (!authState.user || !authState.token) return;
 
       setAuthState((prev) => ({ ...prev, loading: true, error: null }));
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      // Update mock users database
-      const userIndex = MOCK_USERS.findIndex((u) => u.id === authState.user?.id);
-      if (userIndex !== -1) {
-        MOCK_USERS[userIndex] = {
-          ...MOCK_USERS[userIndex],
-          name,
+      try {
+        const updateData: UpdateProfileRequest = {
+          fullName: name,
           phone,
           address,
         };
+        const updatedProfile = await profileService.updateMyProfile(updateData, authState.token);
+        
+        // Update auth state with new profile data
+        const updatedUser = {
+          ...authState.user,
+          name: updatedProfile.fullName,
+          phone: updatedProfile.phone,
+          address: updatedProfile.address,
+        };
+        
+        setAuthState({
+          ...authState,
+          user: updatedUser,
+          loading: false,
+        });
+        
+        localStorage.setItem('auth_user', JSON.stringify(updatedUser));
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Profile update failed';
+        setAuthState((prev) => ({
+          ...prev,
+          loading: false,
+          error: errorMessage,
+        }));
+        throw error;
       }
-
-      // Update auth state
-      const updatedUser = { ...authState.user, name, phone, address };
-      setAuthState({
-        ...authState,
-        user: { ...updatedUser, password: undefined },
-        loading: false,
-      });
-
-      localStorage.setItem('auth_user', JSON.stringify(updatedUser));
     },
     [authState]
   );
@@ -163,59 +182,57 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     async (name: string, email: string, password: string, role: UserRole, phone: string) => {
       setAuthState((prev) => ({ ...prev, loading: true, error: null }));
       
-      // Simulate API call delay
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      // Check if email already exists
-      const existingUser = MOCK_USERS.find((u) => u.email === email);
-      if (existingUser) {
+      try {
+        const registerData: RegisterRequest = {
+          fullName: name,
+          email,
+          password,
+          role,
+          provider: 1, // local provider
+          phone,
+        };
+        await authService.register(registerData);
+        
+        setAuthState((prev) => ({ ...prev, loading: false, error: null }));
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Failed to add staff';
         setAuthState((prev) => ({
           ...prev,
           loading: false,
-          error: 'Email already exists',
+          error: errorMessage,
         }));
-        throw new Error('Email already exists');
+        throw error;
       }
-
-      // Create new staff member
-      const newStaff: User = {
-        id: `staff_${Date.now()}`,
-        name,
-        email,
-        password,
-        role,
-        phone,
-        createdAt: new Date().toISOString(),
-      };
-
-      // Add to mock database
-      MOCK_USERS.push(newStaff);
-
-      setAuthState((prev) => ({ ...prev, loading: false }));
-
-      // Persist to localStorage
-      localStorage.setItem('mock_users', JSON.stringify(MOCK_USERS));
     },
     []
   );
 
   const getJwtToken = useCallback((): string | null => {
-    // Return mock JWT token that includes role information
-    // Format: Bearer_ROLE_userId
-    if (!authState.user || !authState.token) {
-      return null;
+    // Return the actual JWT access token from localStorage
+    const token = localStorage.getItem('auth_access_token');
+    return token || authState.token;
+  }, [authState.token]);
+
+  const refreshToken = useCallback(async () => {
+    const refreshTok = localStorage.getItem('auth_refresh_token');
+    if (!refreshTok) {
+      throw new Error('No refresh token available');
     }
     
-    const roleString = Object.keys(UserRole).find(
-      key => UserRole[key as keyof typeof UserRole] === authState.user?.role
-    );
-    
-    return `Bearer_${roleString}_${authState.user.id}`;
-  }, [authState.user, authState.token]);
+    try {
+      const response = await authService.refreshAccessToken({ refreshToken: refreshTok });
+      localStorage.setItem('auth_access_token', response.accessToken);
+      setAuthState((prev) => ({ ...prev, token: response.accessToken }));
+    } catch (error) {
+      // Refresh failed, logout user
+      await logout();
+      throw error;
+    }
+  }, [logout]);
 
   const value = useMemo(
-    () => ({ ...authState, login, logout, register, updateProfile, addStaff, getJwtToken }),
-    [authState, login, logout, register, updateProfile, addStaff, getJwtToken]
+    () => ({ ...authState, login, logout, register, updateProfile, addStaff, getJwtToken, refreshToken }),
+    [authState, login, logout, register, updateProfile, addStaff, getJwtToken, refreshToken]
   );
 
   return (
@@ -232,3 +249,4 @@ export const useAuth = () => {
   }
   return context;
 };
+

@@ -58,7 +58,7 @@ export default function CustomerRegisterPage() {
       } else {
         navigate('/customer');
       }
-    } catch (err) {
+    } catch {
       setError('An error occurred during registration');
     } finally {
       setLoading(false);
@@ -214,3 +214,4 @@ export default function CustomerRegisterPage() {
     </div>
   );
 }
+

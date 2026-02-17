@@ -11,7 +11,6 @@ export default function KitchenDashboardPage() {
   const { user } = useAuth();
   const { orders, updateOrderStatus, getOrdersByStatus } = useOrders();
   const [selectedOrder, setSelectedOrder] = useState<string | null>(null);
-  const [loading, _setLoading] = useState(false);
 
   const pendingOrders = getOrdersByStatus(OrderStatus.PENDING);
   const preparingOrders = getOrdersByStatus(OrderStatus.PREPARING);
@@ -83,8 +82,7 @@ export default function KitchenDashboardPage() {
                         e.stopPropagation();
                         handleStartPreparing(order.id);
                       }}
-                      disabled={loading}
-                      className="w-full py-2 px-3 bg-yellow-600 hover:bg-yellow-700 text-white rounded font-semibold transition-colors text-sm disabled:opacity-50 flex items-center justify-center gap-1"
+                      className="w-full py-2 px-3 bg-yellow-600 hover:bg-yellow-700 text-white rounded font-semibold transition-colors text-sm flex items-center justify-center gap-1"
                     >
                       <FaChalkboardUser /> Start Cooking
                     </button>
@@ -130,8 +128,7 @@ export default function KitchenDashboardPage() {
                         e.stopPropagation();
                         handleMarkReady(order.id);
                       }}
-                      disabled={loading}
-                      className="w-full py-2 px-3 bg-green-600 hover:bg-green-700 text-white rounded font-semibold transition-colors text-sm disabled:opacity-50 flex items-center justify-center gap-1"
+                      className="w-full py-2 px-3 bg-green-600 hover:bg-green-700 text-white rounded font-semibold transition-colors text-sm flex items-center justify-center gap-1"
                     >
                       <MdCheckCircle /> Ready for Pickup
                     </button>
@@ -231,3 +228,4 @@ export default function KitchenDashboardPage() {
     </div>
   );
 }
+

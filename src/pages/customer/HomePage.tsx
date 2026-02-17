@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useMenu } from '../../context/MenuContext';
 import { useCart } from '../../context/CartContext';
 import { useOrders } from '../../context/OrderContext';
-import { Order, OrderStatus } from '../../types';
+import { Order, OrderStatus, MenuItem } from '../../types';
 import { MdRestaurant, MdHistory, MdShoppingCart, MdPerson, MdCheckCircle, MdAdd, MdRemove, MdSearch, MdClose } from 'react-icons/md';
 
 export default function CustomerHomePage() {
@@ -25,6 +25,7 @@ export default function CustomerHomePage() {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [lastOrderId, setLastOrderId] = useState('');
 
   let menuItems = getItemsByCategory(activeCategory);
   
@@ -38,8 +39,9 @@ export default function CustomerHomePage() {
   
   const customerOrders = getOrdersByCustomer(user?.id || '');
 
-  const handleAddToCart = (menuItem: any) => {
-    addToCart(menuItem, 1);
+  const handleAddToCart = (menuItem: MenuItem) => {
+    // Workaround: useCart accepts any type but we know it's MenuItem
+    addToCart(menuItem as never, 1);
   };
 
   const handleProfileClick = () => {
@@ -67,11 +69,12 @@ export default function CustomerHomePage() {
       tableNumber: checkoutData.tableNumber ? Number.parseInt(checkoutData.tableNumber, 10) : undefined,
       orderTime: new Date().toISOString(),
       notes: checkoutData.specialRequests,
-      paymentMethod: checkoutData.paymentMethod as any,
+      paymentMethod: checkoutData.paymentMethod as 'cash' | 'card' | 'digital',
       isPaid: false,
     };
 
     addOrder(newOrder);
+    setLastOrderId(Date.now().toString().slice(-6));
     setCheckoutStep('confirmation');
     clearCart();
     setTimeout(() => setLoading(false), 500);
@@ -166,7 +169,7 @@ export default function CustomerHomePage() {
                 <div className="text-6xl text-green-400 mb-3"><MdCheckCircle /></div>
                 <h3 className="text-xl font-bold text-white mb-2">Order Placed!</h3>
                 <p className="text-gray-400 mb-6">Your order is on the way.</p>
-                <p className="text-sm text-gray-500 mb-6">Order ID: #{Date.now().toString().slice(-6)}</p>
+                <p className="text-sm text-gray-500 mb-6">Order ID: #{lastOrderId}</p>
                 <button
                   onClick={() => {
                     setShowCart(false);
@@ -463,3 +466,4 @@ export default function CustomerHomePage() {
     </div>
   );
 }
+

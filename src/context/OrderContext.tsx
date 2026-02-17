@@ -1,8 +1,9 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useCallback, useMemo, ReactNode, useEffect } from 'react';
 import { Order, OrderStatus } from '../types';
 import { generateMockOrders } from '../data/mockData';
 import { initializeMockOrders } from '../services/kitchenService';
-import { orderService, CreateOrderRequest, UserOrderSummary, TableOrdersResponse } from '../services/orderService';
+import { orderService, CreateOrderRequest, TableOrdersResponse } from '../services/orderService';
 import { useAuth } from './AuthContext';
 
 interface OrderContextType {
@@ -17,7 +18,7 @@ interface OrderContextType {
   createOrderAPI: (orderData: CreateOrderRequest) => Promise<Order>;
   updateOrderStatusAPI: (orderId: string, status: string) => Promise<Order>;
   getActiveOrdersAPI: () => Promise<Order[]>;
-  getUserOrdersAPI: () => Promise<UserOrderSummary[]>;
+  getUserOrdersAPI: () => Promise<Order[]>;
   getTableOrdersAPI: (tableNumber: number) => Promise<TableOrdersResponse>;
   loadingAPI: boolean;
   errorAPI: string | null;
@@ -132,7 +133,7 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     }
   }, []);
 
-  const getUserOrdersAPI = useCallback(async (): Promise<UserOrderSummary[]> => {
+  const getUserOrdersAPI = useCallback(async (): Promise<Order[]> => {
     setLoadingAPI(true);
     setErrorAPI(null);
     try {
@@ -214,3 +215,4 @@ export const useOrders = () => {
   }
   return context;
 };
+

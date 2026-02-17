@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useMemo, ReactNode, useEffect } from 'react';
 import { MenuItem, MenuCategory } from '../types';
 import { menuService } from '../services/menuService';
@@ -148,6 +149,7 @@ export const MenuProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       deleteMenuItem,
       toggleAvailability,
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [menuItems, categories, loading, error]
   );
 
@@ -165,3 +167,4 @@ export const useMenu = () => {
   }
   return context;
 };
+

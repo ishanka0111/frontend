@@ -14,3 +14,4 @@ export default function ProfilePage() {
   // Roles 2, 3, 4 = Staff (Admin, Kitchen, Waiter)
   return user.role === 1 ? <CustomerProfilePage /> : <StaffProfilePage />;
 }
+

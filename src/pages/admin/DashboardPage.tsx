@@ -16,7 +16,6 @@ export default function AdminDashboardPage() {
   const { menuItems, updateMenuItem, createMenuItem, deleteMenuItem: deleteMenuItemService } = useMenu();
   const { tables } = useTables();
   const [activeTab, setActiveTab] = useState<'overview' | 'orders' | 'staff' | 'menu' | 'tables' | 'analytics'>('overview');
-  const [loading, _setLoading] = useState(false);
   
   // Analytics state
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
@@ -139,7 +138,7 @@ export default function AdminDashboardPage() {
     });
   };
 
-  const handleMenuEditChange = (field: keyof MenuItem, value: any) => {
+  const handleMenuEditChange = (field: keyof MenuItem, value: unknown) => {
     setMenuEditForm((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -654,7 +653,7 @@ export default function AdminDashboardPage() {
                         </select>
                       </td>
                       <td className="px-6 py-4 text-sm">
-                        <button disabled={loading} className="text-brand-primary hover:text-orange-400 font-medium transition-colors disabled:opacity-50">View Details</button>
+                        <button className="text-brand-primary hover:text-orange-400 font-medium transition-colors">View Details</button>
                       </td>
                     </tr>
                   ))}
@@ -1230,3 +1229,4 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
+

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useCallback, useMemo, ReactNode } from 'react';
 import { Table, TableStatus } from '../types';
 import { MOCK_TABLES } from '../data/mockData';
@@ -81,3 +82,4 @@ export const useTables = () => {
   }
   return context;
 };
+

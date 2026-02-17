@@ -11,3 +11,4 @@ export const AdminDownloads: React.FC = () => {
 };
 
 export default AdminDownloads;
+

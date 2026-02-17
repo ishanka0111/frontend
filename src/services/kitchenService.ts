@@ -1,4 +1,5 @@
 import { Order, OrderStatus } from '../types';
+import { apiRequest } from '../config/api';
 
 // ============================================
 // TYPES & INTERFACES
@@ -33,15 +34,15 @@ export interface HealthCheckResponse {
 }
 
 // ============================================
-// MOCK DATA PERSISTENCE
+// MOCK DATA PERSISTENCE (For cross-service sync)
 // ============================================
 
-// Shared mock orders store (simulates database)
-// In production, this would be replaced by actual database queries
+// Shared mock orders store (for OrderContext/KitchenService sync)
+// Can be removed once backend fully syncs orders
 let mockOrders: Order[] = [];
 
 /**
- * Initialize mock orders (called from OrderContext or can be populated separately)
+ * Initialize mock orders (called from OrderContext)
  */
 export const initializeMockOrders = (orders: Order[]): void => {
   mockOrders = orders;
@@ -49,7 +50,7 @@ export const initializeMockOrders = (orders: Order[]): void => {
 };
 
 /**
- * Get current mock orders (for syncing)
+ * Get current mock orders (for syncing with OrderContext)
  */
 export const getMockOrders = (): Order[] => {
   return mockOrders;
@@ -66,54 +67,206 @@ export const updateMockOrder = (orderId: string, updates: Partial<Order>): void 
 };
 
 // ============================================
-// HELPER FUNCTIONS
+// KITCHEN API ENDPOINTS
 // ============================================
 
 /**
- * Simulates API delay for realistic behavior
+ * GET /api/orders?status=PENDING,CONFIRMED,PREPARING
+ * Returns all orders that need kitchen attention
+ * 
+ * @param accessToken - JWT access token (Kitchen or Admin role)
+ * @returns Array of kitchen orders
  */
-const simulateDelay = (min: number = 150, max: number = 400): Promise<void> => {
-  const delay = Math.floor(Math.random() * (max - min + 1)) + min;
-  return new Promise((resolve) => setTimeout(resolve, delay));
+const getKitchenOrders = async (accessToken?: string): Promise<KitchenOrder[]> => {
+  try {
+    const token = accessToken || localStorage.getItem('auth_access_token');
+    if (!token) {
+      throw new Error('Unauthorized: No access token');
+    }
+
+    const response = await apiRequest<Order[]>(
+      '/api/orders?status=PENDING,CONFIRMED,PREPARING',
+      {
+        jwt: token,
+      }
+    );
+
+    // Transform to kitchen order format and sort by priority
+    const kitchenOrders = response.map((order) => ({
+      orderId: order.id,
+      items: order.items.map((item) => ({
+        id: item.id,
+        name: item.menuItem.name,
+        quantity: item.quantity,
+        specialRequests: item.specialRequests,
+      })),
+      tableNumber: order.tableNumber,
+      customerName: order.customerName,
+      status: order.status,
+      orderTime: order.orderTime,
+      priority: determinePriority(order),
+    }));
+
+    // Sort by priority and time
+    kitchenOrders.sort((a, b) => {
+      const priorityWeight = { high: 3, normal: 2, low: 1 };
+      const priorityDiff = priorityWeight[b.priority!] - priorityWeight[a.priority!];
+      if (priorityDiff !== 0) return priorityDiff;
+      return new Date(a.orderTime).getTime() - new Date(b.orderTime).getTime();
+    });
+
+    console.log('[kitchenService] Retrieved', kitchenOrders.length, 'orders');
+    return kitchenOrders;
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Failed to fetch kitchen orders';
+    console.error('[kitchenService] Failed to fetch kitchen orders:', message);
+    throw new Error(message);
+  }
 };
 
 /**
- * Validates JWT token (mock)
- * Checks if user has kitchen staff role
+ * PATCH /api/orders/:id
+ * Marks order as created/confirmed
+ * 
+ * @param orderId - Order ID
+ * @param accessToken - JWT access token
+ * @returns Status update confirmation
  */
-const validateKitchenToken = (token?: string): boolean => {
-  if (!token) {
-    console.warn('[kitchenService] No JWT token provided');
-    return false;
+const markOrderCreated = async (
+  orderId: string,
+  accessToken?: string
+): Promise<StatusUpdateResponse> => {
+  try {
+    const token = accessToken || localStorage.getItem('auth_access_token');
+    if (!token) {
+      throw new Error('Unauthorized: No access token');
+    }
+
+    await apiRequest<Order>(
+      `/api/orders/${orderId}`,
+      {
+        method: 'PATCH',
+        jwt: token,
+        body: JSON.stringify({ status: OrderStatus.CONFIRMED }),
+      }
+    );
+
+    console.log('[kitchenService] Order marked as created:', orderId);
+    return {
+      orderId,
+      status: OrderStatus.CONFIRMED,
+      message: 'Order confirmed and added to kitchen queue',
+      timestamp: new Date().toISOString(),
+    };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Failed to update order';
+    console.error('[kitchenService] Failed to mark order created:', message);
+    throw new Error(message);
   }
-  
-  // Mock: assume token format is "Bearer_ROLE_userId"
-  // Accept KITCHEN or ADMIN roles
-  const hasKitchenAccess = token.includes('KITCHEN') || token.includes('ADMIN');
-  if (!hasKitchenAccess) {
-    console.warn('[kitchenService] User does not have kitchen access');
-  }
-  return hasKitchenAccess;
 };
 
 /**
- * Transforms Order to KitchenOrder (simplified view for kitchen staff)
+ * PATCH /api/orders/:id
+ * Marks order as being prepared
+ * 
+ * @param orderId - Order ID
+ * @param accessToken - JWT access token
+ * @returns Status update confirmation
  */
-const transformToKitchenOrder = (order: Order): KitchenOrder => {
-  return {
-    orderId: order.id,
-    items: order.items.map((item) => ({
-      id: item.id,
-      name: item.menuItem.name,
-      quantity: item.quantity,
-      specialRequests: item.specialRequests,
-    })),
-    tableNumber: order.tableNumber,
-    customerName: order.customerName,
-    status: order.status,
-    orderTime: order.orderTime,
-    priority: determinePriority(order),
-  };
+const markOrderPreparing = async (
+  orderId: string,
+  accessToken?: string
+): Promise<StatusUpdateResponse> => {
+  try {
+    const token = accessToken || localStorage.getItem('auth_access_token');
+    if (!token) {
+      throw new Error('Unauthorized: No access token');
+    }
+
+    await apiRequest<Order>(
+      `/api/orders/${orderId}`,
+      {
+        method: 'PATCH',
+        jwt: token,
+        body: JSON.stringify({ status: OrderStatus.PREPARING }),
+      }
+    );
+
+    console.log('[kitchenService] Order marked as preparing:', orderId);
+    return {
+      orderId,
+      status: OrderStatus.PREPARING,
+      message: 'Order is now being prepared',
+      timestamp: new Date().toISOString(),
+    };
+  } catch (error: unknown) {
+    console.error('[kitchenService] Failed to mark order preparing:', error.message);
+    throw new Error(error.message || 'Failed to update order');
+  }
+};
+
+/**
+ * PATCH /api/orders/:id
+ * Marks order as ready for pickup
+ * 
+ * @param orderId - Order ID
+ * @param accessToken - JWT access token
+ * @returns Status update confirmation
+ */
+const markOrderReady = async (
+  orderId: string,
+  accessToken?: string
+): Promise<StatusUpdateResponse> => {
+  try {
+    const token = accessToken || localStorage.getItem('auth_access_token');
+    if (!token) {
+      throw new Error('Unauthorized: No access token');
+    }
+
+    await apiRequest<Order>(
+      `/api/orders/${orderId}`,
+      {
+        method: 'PATCH',
+        jwt: token,
+        body: JSON.stringify({ status: OrderStatus.READY }),
+      }
+    );
+
+    console.log('[kitchenService] Order marked as ready:', orderId);
+    return {
+      orderId,
+      status: OrderStatus.READY,
+      message: 'Order is ready for pickup',
+      timestamp: new Date().toISOString(),
+    };
+  } catch (error: unknown) {
+    console.error('[kitchenService] Failed to mark order ready:', error.message);
+    throw new Error(error.message || 'Failed to update order');
+  }
+};
+
+/**
+ * GET /api/admin/analytics/kitchen-health
+ * Health check endpoint (No JWT required)
+ * 
+ * @returns Health status
+ */
+const getKitchenHealth = async (): Promise<HealthCheckResponse> => {
+  try {
+    const response = await apiRequest<HealthCheckResponse>(
+      '/api/admin/analytics/kitchen-health'
+    );
+
+    console.log('[kitchenService] Health check:', response.status);
+    return response;
+  } catch (error: unknown) {
+    console.error('[kitchenService] Health check failed:', error.message);
+    // Return degraded status instead of throwing
+    return {
+      status: 'DOWN',
+      timestamp: new Date().toISOString(),
+    };
+  }
 };
 
 /**
@@ -135,237 +288,6 @@ const determinePriority = (order: Order): 'low' | 'normal' | 'high' => {
 };
 
 // ============================================
-// KITCHEN API ENDPOINTS
-// ============================================
-
-/**
- * GET /api/kitchen/orders
- * Returns all orders that need kitchen attention (PENDING, CONFIRMED, PREPARING)
- * 
- * @param jwtToken - JWT token for authentication (Kitchen or Admin role)
- * @returns Array of kitchen orders
- */
-const getKitchenOrders = async (jwtToken?: string): Promise<KitchenOrder[]> => {
-  await simulateDelay();
-  
-  // Validate token
-  if (!validateKitchenToken(jwtToken)) {
-    throw new Error('Unauthorized: Kitchen staff access required');
-  }
-  
-  // TODO: Replace with real API call
-  // const response = await fetch('/api/kitchen/orders', {
-  //   headers: {
-  //     Authorization: `Bearer ${jwtToken}`,
-  //   },
-  // });
-  // if (!response.ok) throw new Error('Failed to fetch kitchen orders');
-  // return response.json();
-  
-  // Filter orders that kitchen needs to handle
-  const kitchenOrders = mockOrders.filter(
-    (order) =>
-      order.status === OrderStatus.PENDING ||
-      order.status === OrderStatus.CONFIRMED ||
-      order.status === OrderStatus.PREPARING
-  );
-  
-  // Transform to kitchen order format
-  const transformedOrders = kitchenOrders.map(transformToKitchenOrder);
-  
-  // Sort by priority and time (oldest first)
-  transformedOrders.sort((a, b) => {
-    const priorityWeight = { high: 3, normal: 2, low: 1 };
-    const priorityDiff = priorityWeight[b.priority!] - priorityWeight[a.priority!];
-    if (priorityDiff !== 0) return priorityDiff;
-    return new Date(a.orderTime).getTime() - new Date(b.orderTime).getTime();
-  });
-  
-  console.log('[kitchenService] Retrieved', transformedOrders.length, 'orders');
-  return transformedOrders;
-};
-
-/**
- * POST /api/kitchen/orders/{id}/created
- * Marks order as created/confirmed by kitchen staff
- * 
- * @param orderId - Order ID
- * @param jwtToken - JWT token for authentication
- * @returns Status update confirmation
- */
-const markOrderCreated = async (
-  orderId: string,
-  jwtToken?: string
-): Promise<StatusUpdateResponse> => {
-  await simulateDelay();
-  
-  // Validate token
-  if (!validateKitchenToken(jwtToken)) {
-    throw new Error('Unauthorized: Kitchen staff access required');
-  }
-  
-  // TODO: Replace with real API call
-  // const response = await fetch(`/api/kitchen/orders/${orderId}/created`, {
-  //   method: 'POST',
-  //   headers: {
-  //     Authorization: `Bearer ${jwtToken}`,
-  //   },
-  // });
-  // if (!response.ok) throw new Error('Failed to update order status');
-  // return response.json();
-  
-  // Find and update order
-  const order = mockOrders.find((o) => o.id === orderId);
-  if (!order) {
-    throw new Error(`Order not found: ${orderId}`);
-  }
-  
-  // Update status to CONFIRMED
-  updateMockOrder(orderId, { status: OrderStatus.CONFIRMED });
-  
-  console.log('[kitchenService] Order marked as created:', orderId);
-  
-  return {
-    orderId,
-    status: OrderStatus.CONFIRMED,
-    message: 'Order confirmed and added to kitchen queue',
-    timestamp: new Date().toISOString(),
-  };
-};
-
-/**
- * POST /api/kitchen/orders/{id}/preparing
- * Marks order as being prepared by kitchen staff
- * 
- * @param orderId - Order ID
- * @param jwtToken - JWT token for authentication
- * @returns Status update confirmation
- */
-const markOrderPreparing = async (
-  orderId: string,
-  jwtToken?: string
-): Promise<StatusUpdateResponse> => {
-  await simulateDelay();
-  
-  // Validate token
-  if (!validateKitchenToken(jwtToken)) {
-    throw new Error('Unauthorized: Kitchen staff access required');
-  }
-  
-  // TODO: Replace with real API call
-  // const response = await fetch(`/api/kitchen/orders/${orderId}/preparing`, {
-  //   method: 'POST',
-  //   headers: {
-  //     Authorization: `Bearer ${jwtToken}`,
-  //   },
-  // });
-  // if (!response.ok) throw new Error('Failed to update order status');
-  // return response.json();
-  
-  // Find and update order
-  const order = mockOrders.find((o) => o.id === orderId);
-  if (!order) {
-    throw new Error(`Order not found: ${orderId}`);
-  }
-  
-  // Update status to PREPARING
-  updateMockOrder(orderId, { status: OrderStatus.PREPARING });
-  
-  console.log('[kitchenService] Order marked as preparing:', orderId);
-  
-  return {
-    orderId,
-    status: OrderStatus.PREPARING,
-    message: 'Order is now being prepared',
-    timestamp: new Date().toISOString(),
-  };
-};
-
-/**
- * POST /api/kitchen/orders/{id}/ready
- * Marks order as ready for pickup by waiter
- * 
- * @param orderId - Order ID
- * @param jwtToken - JWT token for authentication
- * @returns Status update confirmation
- */
-const markOrderReady = async (
-  orderId: string,
-  jwtToken?: string
-): Promise<StatusUpdateResponse> => {
-  await simulateDelay();
-  
-  // Validate token
-  if (!validateKitchenToken(jwtToken)) {
-    throw new Error('Unauthorized: Kitchen staff access required');
-  }
-  
-  // TODO: Replace with real API call
-  // const response = await fetch(`/api/kitchen/orders/${orderId}/ready`, {
-  //   method: 'POST',
-  //   headers: {
-  //     Authorization: `Bearer ${jwtToken}`,
-  //   },
-  // });
-  // if (!response.ok) throw new Error('Failed to update order status');
-  // return response.json();
-  
-  // Find and update order
-  const order = mockOrders.find((o) => o.id === orderId);
-  if (!order) {
-    throw new Error(`Order not found: ${orderId}`);
-  }
-  
-  // Update status to READY
-  updateMockOrder(orderId, { status: OrderStatus.READY });
-  
-  console.log('[kitchenService] Order marked as ready:', orderId);
-  
-  return {
-    orderId,
-    status: OrderStatus.READY,
-    message: 'Order is ready for pickup',
-    timestamp: new Date().toISOString(),
-  };
-};
-
-/**
- * GET /api/kitchen/health
- * Health check endpoint (No JWT required)
- * 
- * @returns Health status
- */
-const getKitchenHealth = async (): Promise<HealthCheckResponse> => {
-  await simulateDelay(50, 150);
-  
-  // TODO: Replace with real API call
-  // const response = await fetch('/api/kitchen/health');
-  // if (!response.ok) throw new Error('Health check failed');
-  // return response.json();
-  
-  // Simulate health check
-  const isHealthy = true; // In production, check database connection, etc.
-  
-  return {
-    status: isHealthy ? 'UP' : 'DOWN',
-    timestamp: new Date().toISOString(),
-    version: '1.0.0',
-  };
-};
-
-// ============================================
-// ADDITIONAL HELPERS
-// ============================================
-
-/**
- * Resets all mock data (for testing)
- */
-const resetMockData = (): void => {
-  mockOrders = [];
-  console.log('[kitchenService] Mock data reset');
-};
-
-// ============================================
 // EXPORTED SERVICE
 // ============================================
 
@@ -377,8 +299,7 @@ export const kitchenService = {
   markOrderReady,
   getKitchenHealth,
   
-  // Data management helpers
+  // Data management helpers (for OrderContext sync)
   initializeMockOrders,
   getMockOrders,
-  resetMockData,
-};
+  updateMockOrder,};

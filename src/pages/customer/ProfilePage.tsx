@@ -31,7 +31,7 @@ export default function CustomerProfilePage() {
     try {
       await updateProfile(formData.name, formData.phone, formData.address);
       setIsEditing(false);
-    } catch (err) {
+    } catch {
       setError('Failed to update profile');
     } finally {
       setLoading(false);
@@ -200,3 +200,4 @@ export default function CustomerProfilePage() {
     </div>
   );
 }
+
